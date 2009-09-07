@@ -40,6 +40,18 @@
 - (IBAction)refreshProjects:(id)sender
 {	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+	
+	// First Launch
+	BOOL launchedBefore = [defaults boolForKey:@"launchedBefore"];
+	if(!launchedBefore) {
+		NSString * hostname = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoHostName"];
+		NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:hostname, @"hostname",@"", @"username", @"", @"password", nil];
+		NSDictionary * accounts = [NSDictionary dictionaryWithObject:demoAccount forKey:hostname];
+		[defaults setObject:accounts forKey:@"accounts"];	
+		[defaults setBool:YES forKey:@"launchedBefore"];
+		[defaults synchronize];		
+	}
+	
     NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
 	
 	for(NSDictionary * account in accounts)
