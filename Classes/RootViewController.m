@@ -44,9 +44,11 @@
 	// First Launch
 	BOOL launchedBefore = [defaults boolForKey:@"launchedBefore"];
 	if(!launchedBefore) {
-		NSString * hostname = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoHostName"];
-		NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:hostname, @"hostname",@"", @"username", @"", @"password", nil];
-		NSDictionary * accounts = [NSDictionary dictionaryWithObject:demoAccount forKey:hostname];
+		NSString * demoHostName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoHostName"];
+		NSString * redmineHostName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RedmineHostName"];
+		NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:demoHostName, @"hostname",@"", @"username", @"", @"password", nil];
+		NSDictionary * redmineAccount = [NSDictionary dictionaryWithObjectsAndKeys:redmineHostName, @"hostname",@"", @"username", @"", @"password", nil];
+		NSDictionary * accounts = [NSDictionary dictionaryWithObjectsAndKeys:demoAccount,demoHostName,redmineAccount,redmineHostName,nil];
 		[defaults setObject:accounts forKey:@"accounts"];	
 		[defaults setBool:YES forKey:@"launchedBefore"];
 		[defaults synchronize];		
