@@ -34,6 +34,8 @@
 		02732B97100F6ED6007592D0 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 02732B96100F6ED6007592D0 /* back.png */; };
 		0278ED5C0F9E40CA000E8EED /* ProjectTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278ED5B0F9E40CA000E8EED /* ProjectTableController.m */; };
 		028C0B0B0FD7EEF700E28E01 /* header.png in Resources */ = {isa = PBXBuildFile; fileRef = 028C0B0A0FD7EEF700E28E01 /* header.png */; };
+		02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02937CB710738AE30069E480 /* SystemConfiguration.framework */; };
+		02937CD510738D6D0069E480 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 02937CD410738D6D0069E480 /* Reachability.m */; };
 		0297070F0FA0CEB4000B9588 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0297070E0FA0CEB4000B9588 /* badge.png */; };
 		029A1DF90FB30E6C00AA99A0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029A1DF80FB30E6C00AA99A0 /* WebViewController.m */; };
 		029A1E0D0FB31C3C00AA99A0 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029A1E0C0FB31C3C00AA99A0 /* WebView.xib */; };
@@ -82,6 +84,9 @@
 		0278ED5A0F9E40CA000E8EED /* ProjectTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectTableController.h; sourceTree = "<group>"; };
 		0278ED5B0F9E40CA000E8EED /* ProjectTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectTableController.m; sourceTree = "<group>"; };
 		028C0B0A0FD7EEF700E28E01 /* header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header.png; sourceTree = "<group>"; };
+		02937CB710738AE30069E480 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		02937CD310738D6D0069E480 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		02937CD410738D6D0069E480 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		0297070E0FA0CEB4000B9588 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
 		029A1DF70FB30E6C00AA99A0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		029A1DF80FB30E6C00AA99A0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
@@ -119,6 +124,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
+				02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +221,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				02937CD310738D6D0069E480 /* Reachability.h */,
+				02937CD410738D6D0069E480 /* Reachability.m */,
 				1D3623240D0F684500981E51 /* iRedmineAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */,
 				02D86C570F8E75E500EB1658 /* RMParser.h */,
@@ -243,7 +251,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				0203D7BF10358BCE005E98F4 /* Entitlements.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -261,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107310486CEB800E47090 /* Info.plist */,
+				0203D7BF10358BCE005E98F4 /* Entitlements.plist */,
 				0278ED7F0F9E41EA000E8EED /* Images */,
 				02CEF7670F9E427600FCB183 /* Interface Builder */,
 			);
@@ -270,6 +278,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02937CB710738AE30069E480 /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
@@ -375,6 +384,7 @@
 				02E2EDB40F9F57D2003DDCB0 /* WWFeedReader.m in Sources */,
 				029A1DF90FB30E6C00AA99A0 /* WebViewController.m in Sources */,
 				023A0C0810272978009F3E46 /* WWURL.m in Sources */,
+				02937CD510738D6D0069E480 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

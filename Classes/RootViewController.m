@@ -39,6 +39,15 @@
 
 - (IBAction)refreshProjects:(id)sender
 {	
+	// Check internet connection
+    Reachability * internetReach = [Reachability reachabilityForInternetConnection];
+	if(internetReach == NotReachable)
+	{
+		NSString * errorString = NSLocalizedString(@"Please connect to the internet and refresh the accounts.", @"Please connect to the internet and refresh the accounts.");
+		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No internet connection",@"No internet connection") message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[errorAlert show];
+	}
+		
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	
 	// First Launch
