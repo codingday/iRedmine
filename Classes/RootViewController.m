@@ -40,12 +40,13 @@
 - (IBAction)refreshProjects:(id)sender
 {	
 	// Check internet connection
-    Reachability * internetReach = [Reachability reachabilityForInternetConnection];
-	if(internetReach == NotReachable)
+    NetworkStatus networkStatus = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
+	if(networkStatus == NotReachable)
 	{
 		NSString * errorString = NSLocalizedString(@"Please connect to the internet and refresh the accounts.", @"Please connect to the internet and refresh the accounts.");
 		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No internet connection",@"No internet connection") message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[errorAlert show];
+		return;
 	}
 		
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -66,11 +67,21 @@
     NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
 	
 	for(NSDictionary * account in accounts)
-	{
+	{		
 		NSString * password = [account valueForKey:@"password"];
 		NSString * username = [account valueForKey:@"username"];
 		NSString * hostname = [account valueForKey:@"hostname"];
 			
+		// Check host connection
+		Reachability * hostReach = [Reachability reachabilityWithHostName:hostname];
+		if(hostReach == NotReachable)
+		{
+			NSString * errorString = [NSString stringWithFormat:NSLocalizedString(@"No connection to the host '%@' possible.", @"No connection to the host '%@' possible."),hostname];
+			UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Host not reachable",@"Host not reachable") message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[errorAlert show];
+			continue;
+		}
+		
 		NSURL * feedURL = [NSURL URLWithString:[NSString  stringWithFormat:@"http://%@/projects?format=atom",hostname]];
 		NSMutableURLRequest * request;
 		
