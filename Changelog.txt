@@ -1,0 +1,4 @@
+* Tue Aug 25th 2009 Thomas Stägemann <ts@weisshuhn.de> 0.1
+- Initial Release
+
+* Fri Dec 4th 2009 Thomas Stägemann <ts@weisshuhn.de> 0.1.1

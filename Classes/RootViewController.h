@@ -10,7 +10,6 @@
 #import "AddViewController.h"
 #import "BadgeCell.h"
 #import "ProjectTableController.h"
-#import "WWFeedReader.h"
 
 #import <sys/socket.h>
 #import <netinet/in.h>
@@ -21,6 +20,11 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "Reachability.h"
+#import "ASIFormDataRequest.h"
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
+#import "NSDataAdditions.h"
+#import "TBXML.h"
 
 @interface RootViewController : UITableViewController
 {
@@ -29,6 +33,7 @@
 	ProjectTableController * projectTableController;
 	ProjectViewController * projectViewController;
 	UITableView * accountTable;
+	ASINetworkQueue *networkQueue;
 }
 
 @property(nonatomic,retain) IBOutlet BadgeCell * badgeCell;
@@ -36,8 +41,11 @@
 @property(nonatomic,retain) ProjectTableController * projectTableController;
 @property(nonatomic,retain) ProjectViewController * projectViewController;
 @property(nonatomic,retain) IBOutlet UITableView * accountTable;
+@property(nonatomic,retain) ASINetworkQueue *networkQueue;
 
 - (IBAction)openPreferences:(id)sender;
 - (IBAction)refreshProjects:(id)sender;
+- (NSArray *)arrayOfDictionariesWithXML:(TBXML *)xml forKeyPaths:(NSArray *)keys;
+- (ASIFormDataRequest *)requestWithAccount:(NSDictionary *)account URLPath:(NSString *)path;
 
 @end

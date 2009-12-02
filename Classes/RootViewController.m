@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 #import "iRedmineAppDelegate.h"
 
-
 @implementation RootViewController
 
 @synthesize badgeCell;
@@ -17,13 +16,16 @@
 @synthesize projectTableController;
 @synthesize projectViewController;
 @synthesize accountTable;
+@synthesize networkQueue;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	[self setTitle:@"iRedmine"];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	networkQueue = [[ASINetworkQueue queue] retain];	
+	[self refreshProjects:self];
 }
 
 - (IBAction)openPreferences:(id)sender
@@ -39,16 +41,6 @@
 
 - (IBAction)refreshProjects:(id)sender
 {	
-	// Check internet connection
-    NetworkStatus networkStatus = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
-	if(networkStatus == NotReachable)
-	{
-		NSString * errorString = NSLocalizedString(@"Please connect to the internet and refresh the accounts.", @"Please connect to the internet and refresh the accounts.");
-		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No internet connection",@"No internet connection") message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[errorAlert show];
-		return;
-	}
-		
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	
 	// First Launch
@@ -65,63 +57,178 @@
 	}
 	
     NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
-	
+	[networkQueue cancelAllOperations];
+	[networkQueue setRequestDidStartSelector:@selector(fetchBegins:)];
+	[networkQueue setRequestDidFinishSelector:@selector(fetchComplete:)];
+	[networkQueue setRequestDidFailSelector:@selector(fetchFailed:)];
+	[networkQueue setQueueDidFinishSelector:@selector(queueDidFinish:)];
+	[networkQueue setShowAccurateProgress:YES];
+	[networkQueue setShouldCancelAllRequestsOnFailure:NO];
+	[networkQueue setDelegate:self];
+
 	for(NSDictionary * account in accounts)
-	{		
+	{								
+		ASIFormDataRequest * projectsRequest = [[self requestWithAccount:account URLPath:@"projects?format=atom"] retain];
+		[projectsRequest setUserInfo:[NSDictionary dictionaryWithObject:@"projects" forKey:@"feed"]];
+		[networkQueue addOperation:projectsRequest];
+		
 		NSString * password = [account valueForKey:@"password"];
 		NSString * username = [account valueForKey:@"username"];
-		NSString * hostname = [account valueForKey:@"hostname"];
+		if([password length] > 0 && [username length] > 0){
+			ASIFormDataRequest * assignedRequest = [[self requestWithAccount:account URLPath:@"issues?format=atom&assigned_to_id=me"] retain];
+			[assignedRequest setUserInfo:[NSDictionary dictionaryWithObject:@"assigned" forKey:@"feed"]];
+			[networkQueue addOperation:assignedRequest];
 			
-		// Check host connection
-		Reachability * hostReach = [Reachability reachabilityWithHostName:hostname];
-		if(hostReach == NotReachable)
-		{
-			NSString * errorString = [NSString stringWithFormat:NSLocalizedString(@"No connection to the host '%@' possible.", @"No connection to the host '%@' possible."),hostname];
-			UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Host not reachable",@"Host not reachable") message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[errorAlert show];
-			continue;
+			ASIFormDataRequest * reportedRequest = [[self requestWithAccount:account URLPath:@"issues?format=atom&author_id=me"] retain];
+			[reportedRequest setUserInfo:[NSDictionary dictionaryWithObject:@"reported" forKey:@"feed"]];
+			[networkQueue addOperation:reportedRequest];
 		}
-		
-		NSURL * feedURL = [NSURL URLWithString:[NSString  stringWithFormat:@"http://%@/projects?format=atom",hostname]];
-		NSMutableURLRequest * request;
-		
-		if(([password length] > 0) && ([username length] > 0))
-		{
-			NSURL * loginURL = [NSURL URLWithString:[NSString  stringWithFormat:@"http://%@/login",hostname]];
-			NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@&back_url=%@",username,password,[feedURL absoluteString]];
-			request = [NSMutableURLRequest requestWithURL:loginURL];
-			NSString *msgLength = [NSString stringWithFormat:@"%d",[postString length]];
-			[request addValue:msgLength forHTTPHeaderField:@"Content-Length"];
-			[request setHTTPMethod:@"POST"];
-			[request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-		}
-		else
-		{
-			request = [NSMutableURLRequest requestWithURL:feedURL];
-		}
-		
-		[[WWFeedReader alloc] initWithRequest:request keyForItems:@"entry" arrayOfKeys:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",nil] delegate:self];		
 	}
-	
-}
-
-- (void)feedReader:(WWFeedReader *)feedReader didEndWithResult:(NSArray *)result
-{
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary * accounts = [NSMutableDictionary dictionaryWithDictionary:[defaults dictionaryForKey:@"accounts"]];
-	NSMutableDictionary * account = [NSMutableDictionary dictionaryWithDictionary:[accounts valueForKey:[[[feedReader request] URL] host]]];
-	[account setValue:result forKeyPath:@"projects"];
-	[accounts setValue:account forKey:[[[feedReader request] URL] host]];
-	[defaults setObject:accounts forKey:@"accounts"];
-	[defaults synchronize];
+	[networkQueue go];
 	[accountTable reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated 
-{
+- (ASIFormDataRequest *)requestWithAccount:(NSDictionary *)account URLPath:(NSString *)path{
+	BOOL useSSL			= [[account valueForKey:@"ssl"] boolValue];
+	NSString * password = [account valueForKey:@"password"];
+	NSString * username = [account valueForKey:@"username"];
+	NSString * hostname = [account valueForKey:@"hostname"];
+	NSString * protocol = useSSL? @"https" : @"http";
+	int port			= [[account valueForKey:@"port"] intValue];
+	if(!port && useSSL){
+		port = 443;
+	} else if (!port){
+		port = 80;
+	}
+
+	NSURL * loginURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/login",protocol,hostname,port]];
+	NSURL * feedURL  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/%@",protocol,hostname,port,path]];
+	
+	ASIFormDataRequest * request;
+	if(([password length] > 0) && ([username length] > 0)){
+		request = [ASIFormDataRequest requestWithURL:loginURL];
+		[request setPostValue:username forKey:@"username"];
+		[request setPostValue:password forKey:@"password"];
+		[request setPostValue:[feedURL absoluteString] forKey:@"back_url"];
+	} else {
+		request = [ASIFormDataRequest requestWithURL:feedURL];
+	}
+	
+	[request setTimeOutSeconds:200];
+	[request setUseKeychainPersistance:YES];
+	[request setShouldPresentAuthenticationDialog:YES];
+	return request;
+}
+
+- (void)fetchBegins:(id)request{
+}
+
+- (void)fetchFailed:(id)request{
+	if ([[request error] code] != ASIRequestCancelledErrorType) {
+		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[[request url] host] message:[[request error] localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[errorAlert show];
+	}
+}
+
+- (void)fetchComplete:(id)request{
+	NSString * host = [[request url] host];
+	//NSLog(@"Fetch from %@ completed: %@",host,[request responseString]);
+	
+	// Load and parse the xml response
+	TBXML * xml = [[TBXML alloc] initWithXMLString:[request responseString]];
+	
+	if (![[request responseString] hasPrefix:@"<?xml"]) {
+		//NSLog(@"Fetch from %@ with invalid xml: %@",host,[request responseString]);
+		NSString * errorString = NSLocalizedString(@"Invalid XML, password or user name are probably incorrect.",@"Invalid XML, password or user name are probably incorrect.");
+		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:host message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[errorAlert show];
+	}
+	// if root element is valid
+	else if ([xml rootXMLElement]) {
+		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+		NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
+		NSMutableDictionary * account = [[accounts valueForKey:host] mutableCopy];
+
+		NSString * feedInfo = [[request userInfo] valueForKey:@"feed"];
+		if ([feedInfo isEqualToString:@"projects"]) {
+			NSArray * projects = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",nil]];
+			[account setValue:projects forKey:@"projects"];
+
+			for (id project in projects) {
+				int projectId = [[[project valueForKey:@"id"] lastPathComponent] intValue];
+				
+				NSString * issuesPath = [NSString  stringWithFormat:@"projects/%d/issues?format=atom",projectId];
+				ASIFormDataRequest * issuesRequest = [[self requestWithAccount:account URLPath:issuesPath] retain];
+				[issuesRequest setUserInfo:[NSDictionary dictionaryWithObject:@"issues" forKey:@"feed"]];
+				[networkQueue addOperation:issuesRequest];
+				
+				NSString * activityPath = [NSString  stringWithFormat:@"projects/%d/activity?format=atom",projectId];
+				ASIFormDataRequest * activityRequest = [[self requestWithAccount:account URLPath:activityPath] retain];
+				[activityRequest setUserInfo:[NSDictionary dictionaryWithObject:@"activity" forKey:@"feed"]];
+				[networkQueue addOperation:activityRequest];
+			}
+		} else if ([feedInfo isEqualToString:@"assigned"]) {
+			NSArray * assignedIssues = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
+			[account setValue:assignedIssues forKey:@"assigned"];
+		} else if ([feedInfo isEqualToString:@"reported"]) {
+			NSArray * reportedIssues = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
+			[account setValue:reportedIssues forKey:@"reported"];
+		} else if ([feedInfo isEqualToString:@"issues"]) {
+			NSArray * projectIssues = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
+			//[account setValue:reportedIssues forKey:@"reported"];
+		} else if ([feedInfo isEqualToString:@"activity"]) {
+			NSArray * projectActivities = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
+			//[account setValue:reportedIssues forKey:@"reported"];
+		}
+		
+		[accounts setValue:account forKey:host];
+		[defaults setObject:accounts forKey:@"accounts"];
+		[defaults synchronize];
+		[accountTable reloadData];		
+	}
+}
+
+- (void)queueDidFinish:(ASINetworkQueue *)queue{
+	[accountTable reloadData];		
+}
+
+- (NSArray *)arrayOfDictionariesWithXML:(TBXML *)xml forKeyPaths:(NSArray *)keyPaths{
+	// Obtain root element
+	TBXMLElement * root = [xml rootXMLElement];
+	
+	// instantiate an array to hold child dictionaries
+	NSMutableArray * array = [NSMutableArray array];
+	
+	// search for the first child element within the root element's children
+	TBXMLElement * entry = [xml childElementNamed:@"entry" parentElement:root];
+	
+	// if an child element was found
+	while (entry != nil) {	
+		NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+		
+		for (NSString * keyPath in keyPaths) {
+			NSArray * components = [keyPath componentsSeparatedByString:@"."];	
+			TBXMLElement * parent = entry;
+			TBXMLElement * element;
+			for (NSString * component in components) {
+				element = [xml childElementNamed:component parentElement:parent];
+				parent = element;
+			}
+			[dict setValue:[[xml textForElement:element] stringByUnescapingHTML] forKey:keyPath];
+		}		
+		
+		[array addObject:dict];
+		
+		// find the next sibling element named "entry"
+		entry = [xml nextSiblingNamed:@"entry" searchFromElement:entry];
+	}
+	
+	return array;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-	// Fetch projects
-	[self refreshProjects:self];
+	[accountTable reloadData];
 }
 
 /*
@@ -129,7 +236,6 @@
  [super viewWillAppear:animated];
  }
  */
-
 /*
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
@@ -141,13 +247,11 @@
 }
 */
 
-/*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // Return YES for supporting all orientations
+	return YES;
 }
-*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
@@ -186,21 +290,56 @@
 	NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@"Username: %@"),username];
 	[badgeCell setCellDataWithTitle:[accountDict valueForKey:@"hostname"] subTitle:subtitle];
 	[badgeCell setBadge:[[accountDict valueForKey:@"projects"] count]];
-	[badgeCell setEditingStyle:UITableViewCellEditingStyleDelete];
+	if([[accountDict valueForKey:@"projects"] count] == 0){
+		[badgeCell setAccessoryType:UITableViewCellAccessoryNone];
+	} else {
+		[badgeCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+	}
+	if ([networkQueue isNetworkActive]) {
+		NSString * hostname = [accountDict valueForKey:@"hostname"];
+		for (id request in [networkQueue operations]) {
+			if([[[request url] host] isEqualToString:hostname]){
+				UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+				[activityIndicator startAnimating];
+				[badgeCell setAccessoryView:activityIndicator];
+			}			
+		}
+	}  
 	return badgeCell;
 }
 
-- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)    
-	{
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+	return UITableViewCellEditingStyleDelete;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete){
 		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-		NSMutableDictionary * accounts = [NSMutableDictionary dictionaryWithDictionary:[defaults valueForKey:@"accounts"]];
+		NSMutableDictionary * accounts = [[defaults valueForKey:@"accounts"] mutableCopy];
 		NSString * key = [[accounts allKeys] objectAtIndex:indexPath.row];
 		[accounts removeObjectForKey:key];
 		[defaults setValue:accounts forKey:@"accounts"];
-		[accountTable reloadData];
+		[defaults synchronize];
+		// Delete the row from the data source
+		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
     }
+}
+
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary * accountDict = [[[defaults dictionaryForKey:@"accounts"] allValues] objectAtIndex:indexPath.row];
+	
+	if ([networkQueue isNetworkActive]) {
+		NSString * hostname = [accountDict valueForKey:@"hostname"];
+		for (id request in [networkQueue operations]) {
+			if([[[request url] host] isEqualToString:hostname]) return NO;
+		}
+	}  
+	
+	// Return NO if you do not want the specified item to be editable.
+	return YES;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -208,69 +347,33 @@
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary * accountDict = [[[defaults dictionaryForKey:@"accounts"] allValues] objectAtIndex:indexPath.row];
 	
-	NSArray * projectArray	= [accountDict valueForKey:@"projects"];
-	NSString * username		= [accountDict valueForKey:@"username"];
-	NSString * password		= [accountDict valueForKey:@"password"];	
-	
-	if(([projectArray count] == 1) && ([password length] == 0) && ([username length] == 0))
-	{
+	if ([networkQueue isNetworkActive]) {
+		NSString * hostname = [accountDict valueForKey:@"hostname"];
+		for (id request in [networkQueue operations]) {
+			if([[[request url] host] isEqualToString:hostname]) return;
+		}
+	}  
+
+	NSString * password = [accountDict valueForKey:@"password"];
+	NSString * username = [accountDict valueForKey:@"username"];
+	NSArray  * projects = [accountDict valueForKey:@"projects"];
+
+	if ([projects count] == 1 && ([username length] == 0 || [password length] == 0)) {
 		if(self.projectViewController == nil)
 			self.projectViewController = [[ProjectViewController alloc] initWithNibName:@"ProjectView" bundle:nil];
 		
-		// Set up the text view...
-		NSMutableDictionary * project = [NSMutableDictionary dictionaryWithDictionary:[projectArray objectAtIndex:0]];
-		
-		[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
-		NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
-		[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-		NSString * date = [dateFormatter stringFromDate:[RMParser dateWithString:[project valueForKey:@"updated"]]];
-		
-		self.projectViewController.project = project;
-		self.projectViewController.loginData = accountDict;
-		
-		[self.navigationController pushViewController:self.projectViewController animated:YES];	
-		
-		[self.projectViewController.descriptionText loadHTMLString:[project valueForKey:@"content"] baseURL:nil];
-		self.projectViewController.titleLabel.text = [project valueForKey:@"title"];
-		self.projectViewController.dateLabel.text = date;
+		self.projectViewController.project = [projects objectAtIndex:0];		
+		[self.navigationController pushViewController:self.projectViewController animated:YES];
 	}
-	else if([[accountDict valueForKey:@"projects"] count] > 0)
-	{
+	else if ([projects count] > 0){
 		if(self.projectTableController == nil)
 			self.projectTableController = [[ProjectTableController alloc] initWithNibName:@"ProjectTableView" bundle:nil];
 		
-		self.projectTableController.loginData = accountDict;
-		self.projectTableController.projectArray = [accountDict valueForKey:@"projects"];
-		[self.projectTableController setTitle:[accountDict valueForKey:@"hostname"]];
-		
+		self.projectTableController.accountDict = accountDict;	
 		[self.navigationController pushViewController:self.projectTableController animated:YES];
 	}
+
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
 
 /*
 // Override to support rearranging the table view.
@@ -294,7 +397,7 @@
 	[projectTableController release];
 	[projectViewController release];
 	[accountTable release];
-	
+	[networkQueue release];
     [super dealloc];
 }
 

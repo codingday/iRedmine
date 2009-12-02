@@ -14,30 +14,20 @@
 @synthesize _issues;
 @synthesize activityIndicator;
 @synthesize subtitleCell;
-@synthesize _loginData;
 @synthesize webViewController;
 
-+ (id)initWithArray:(NSArray *)array title:(NSString*)title loginData:(NSDictionary*)loginData
-{
++ (id)initWithArray:(NSArray *)array title:(NSString*)title{
 	IssueTableController * _sharedIssueTableController = [[IssueTableController alloc] initWithNibName:@"IssueTableView" bundle:nil];
 	[_sharedIssueTableController setIssues:array];
-	[_sharedIssueTableController setLoginData:loginData];
 	[_sharedIssueTableController setTitle:title];
 	return _sharedIssueTableController;	
 }
 
-- (void)setIssues:(NSArray*)array
-{
-	_issues = array;
+- (void)setIssues:(NSArray*)array{
+	_issues = [array copy];
 }
 
-- (void)setLoginData:(NSDictionary*)loginData
-{
-	_loginData = loginData;
-}
-
-- (void)viewWillAppear:(BOOL)animated 
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 	[issuesTable reloadData];
 }
@@ -83,13 +73,12 @@
     [super viewDidLoad];
 }
 */
-/*
+
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // Return YES for supporting all orientations
+	return YES;
 }
-*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
@@ -102,8 +91,7 @@
 
 
 // Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_issues count];
 }
 
@@ -111,16 +99,26 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+	NSMutableDictionary * issue = [_issues objectAtIndex:indexPath.row];
+	NSString * subtitle = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
+	NSString * title	= [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:1];
+	NSString * author	= [issue valueForKey:@"author.name"];	
+	NSString * type		= [[subtitle componentsSeparatedByString:@" - "] objectAtIndex:1];
+	
     static NSString *CellIdentifier = @"IssueCell";
     
 	subtitleCell = (SubtitleCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (subtitleCell == nil)
-        [[NSBundle mainBundle] loadNibNamed:@"RevisionCell" owner:self options:nil];
-    
-	NSMutableDictionary * issue = [_issues objectAtIndex:indexPath.row];
-	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@":"] objectAtIndex:0];
-	NSString * subtitle = [[[issue valueForKey:@"title"] componentsSeparatedByString:@":"] objectAtIndex:1];
-	NSString * author = [issue valueForKey:@"name"];	
+    if (subtitleCell == nil){
+		if ([type hasPrefix:@"Feature"]) {
+			[[NSBundle mainBundle] loadNibNamed:@"FeatureCell" owner:self options:nil];
+		} else if ([type hasPrefix:@"Support"] || [type hasPrefix:@"Unterstützung"]) {
+			[[NSBundle mainBundle] loadNibNamed:@"SupportCell" owner:self options:nil];
+		} else if ([type hasPrefix:@"Fehler"] || [type hasPrefix:@"Bug"]) {
+			[[NSBundle mainBundle] loadNibNamed:@"ErrorCell" owner:self options:nil];
+		} else {
+			[[NSBundle mainBundle] loadNibNamed:@"RevisionCell" owner:self options:nil];
+		}
+	}
 	
 	[subtitleCell setCellDataWithTitle:title author:author];
 	[subtitleCell setSubtitle:subtitle];
@@ -128,36 +126,16 @@
 	return subtitleCell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
-{		
-	NSMutableDictionary * issue = [_issues objectAtIndex:indexPath.row];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {		
+	NSDictionary * issue = [_issues objectAtIndex:indexPath.row];
 	if(self.webViewController == nil)
 		self.webViewController = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
 	
-	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@":"] objectAtIndex:0];
+	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
 	[self.webViewController setTitle:title];
 
-	NSString * password = [_loginData valueForKey:@"password"];
-	NSString * username = [_loginData valueForKey:@"username"];
-	NSString * hostname = [_loginData valueForKey:@"hostname"];
-	NSString * trimLink = [[[issue valueForKey:@"id"] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+	NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[issue valueForKey:@"id"]]];
 
-	NSMutableURLRequest * request;
-	if(([password length] > 0) && ([username length] > 0))
-	{
-		NSURL * xmlURL = [NSURL URLWithString:[NSString  stringWithFormat:@"http://%@/login",hostname]];
-		NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@&back_url=%@",[WWURL encode:username],[WWURL encode:password],[WWURL encode:trimLink]];
-		
-		request = [NSMutableURLRequest requestWithURL:xmlURL];
-		[request addValue:[NSString stringWithFormat:@"%d",[postString length]] forHTTPHeaderField:@"Content-Length"];
-		[request setHTTPMethod:@"POST"];
-		[request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-	}
-	else
-	{
-		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:trimLink]];
-	}
-	
 	[self.navigationController pushViewController:self.webViewController animated:YES];
 	[self.webViewController.webView loadRequest:request];	
 }
@@ -201,14 +179,12 @@
  }
  */
 
-- (void)dealloc 
-{
+- (void)dealloc {
 	[activityIndicator release];
 	[_issues release];
 	[issuesTable release];
-	[_loginData release];
 	[webViewController release];
-
+	[subtitleCell release];
     [super dealloc];
 }
 

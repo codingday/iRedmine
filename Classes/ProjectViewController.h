@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "IssueTableController.h"
-#import "WWURL.h"
+#import "NSDateAdditions.h"
+#import "NSStringAdditions.h"
+#import "Reachability.h"
+#import "ASIFormDataRequest.h"
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
 
 @interface ProjectViewController : UIViewController <UITabBarDelegate> 
 {
-	NSMutableDictionary * project;
+	NSDictionary * project;
 	UITabBarItem * homeItem;
 	UITabBarItem * issuesItem;
 	UITabBarItem * activityItem;
@@ -20,18 +25,15 @@
 	UILabel * dateLabel;
 	UIWebView * descriptionText;
 	NSDictionary * loginData;
+	ASINetworkQueue *networkQueue;
 }
 
-@property(nonatomic,retain) NSMutableDictionary * project;
+@property(nonatomic,retain) NSDictionary * project;
 @property(nonatomic,retain) IBOutlet UITabBarItem * homeItem;
 @property(nonatomic,retain) IBOutlet UITabBarItem * issuesItem;
 @property(nonatomic,retain) IBOutlet UITabBarItem * activityItem;
 @property(nonatomic,retain) IBOutlet UILabel * titleLabel;
 @property(nonatomic,retain) IBOutlet UILabel * dateLabel;
 @property(nonatomic,retain) IBOutlet UIWebView * descriptionText;
-@property(nonatomic,retain) NSDictionary * loginData;
-
-- (IBAction)fetchIssues:(id)sender;
-- (IBAction)fetchActivities:(id)sender;
 
 @end

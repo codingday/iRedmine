@@ -13,10 +13,6 @@
 	[badgeLabel setText:[NSString stringWithFormat:@"%d",badge]];
 	[badgeLabel setHidden:badge == 0];
 	[badgeImage setHidden:badge == 0];
-	if(badge == 0)
-		self.accessoryType = UITableViewCellAccessoryNone;
-	else
-		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 - (void)dealloc {

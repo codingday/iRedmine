@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class RootViewController;
 
 @interface AddViewController : UIViewController {
 	UITextField * loginField;
 	UITextField * hostField;
 	UITextField * passwordField;
+	UITextField * portField;
+	UISwitch * sslSwitch;
 	
 	UIBarStyle oldBarStyle;
 	UIStatusBarStyle oldStatusBarStyle;
@@ -22,6 +25,8 @@
 @property(nonatomic,retain) IBOutlet UITextField * loginField;
 @property(nonatomic,retain) IBOutlet UITextField * hostField;
 @property(nonatomic,retain) IBOutlet UITextField * passwordField;
+@property(nonatomic,retain) IBOutlet UITextField * portField;
+@property(nonatomic,retain) IBOutlet UISwitch * sslSwitch;
 @property(nonatomic,copy) UIColor * oldTintColor;
 
 + (AddViewController *)sharedAddViewController;

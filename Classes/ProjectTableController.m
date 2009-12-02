@@ -11,24 +11,20 @@
 
 @implementation ProjectTableController
 
-@synthesize projectArray;
+@synthesize accountDict;
 @synthesize projectTable;
 @synthesize projectViewController;
 @synthesize reportedIssuesViewController;
 @synthesize assignedIssuesViewController;
 @synthesize badgeCell;
-@synthesize loginData;
-@synthesize reportedIssues;
-@synthesize assignedIssues;
 
-- (void)viewWillLoad {
-    //[super viewWillLoad];
-	
-	[self setTitle:NSLocalizedString(@"Projects",@"Projects")];
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+/*
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
+*/
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
     // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -45,17 +41,10 @@
 }
 */
 
-- (void)viewWillAppear:(BOOL)animated 
-{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-	
-	assignedIssues = [[NSMutableArray array] retain];
-	reportedIssues = [[NSMutableArray array] retain];
-
 	[projectTable reloadData];
-	
-	[self fetchAssignedIssues:self];
-	[self fetchReportedIssues:self];
+	[self setTitle:[accountDict valueForKey:@"hostname"]];
 }
 
 /*
@@ -74,87 +63,30 @@
 }
 */
 
-/*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // Return YES for supporting all orientations
+	return YES;
 }
-*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
 }
 
-- (IBAction)fetchAssignedIssues:(id)sender
-{
-	NSString * password = [WWURL encode:[loginData valueForKey:@"password"]];
-	NSString * username = [WWURL encode:[loginData valueForKey:@"username"]];
-	NSString * hostname = [loginData valueForKey:@"hostname"];
-	
-	NSString * feedURL = [WWURL encode:[NSString stringWithFormat:@"http://%@/issues?format=atom&assigned_to_id=me",hostname]];
-	NSMutableURLRequest * request;
-	
-	NSURL * loginURL = [NSURL URLWithString:[NSString  stringWithFormat:@"http://%@/login",hostname]];
-	NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@&back_url=%@",username,password,feedURL];
-	request = [NSMutableURLRequest requestWithURL:loginURL];
-	NSString *msgLength = [NSString stringWithFormat:@"%d",[postString length]];
-	[request addValue:msgLength forHTTPHeaderField:@"Content-Length"];
-	[request setHTTPMethod:@"POST"];
-	[request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[[WWFeedReader alloc] initWithRequest:request keyForItems:@"entry" arrayOfKeys:[NSArray arrayWithObjects:@"title",@"content",@"name",@"updated",@"id",nil] delegate:self];
-}
-
-- (IBAction)fetchReportedIssues:(id)sender
-{
-	NSString * password = [WWURL encode:[loginData valueForKey:@"password"]];
-	NSString * username = [WWURL encode:[loginData valueForKey:@"username"]];
-	NSString * hostname = [loginData valueForKey:@"hostname"];
-	
-	NSString * feedURL = [WWURL encode:[NSString stringWithFormat:@"http://%@/issues?format=atom&author_id=me",hostname]];
-	NSMutableURLRequest * request;
-	
-	NSURL * loginURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/login",hostname]];
-	NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@&back_url=%@",username,password,feedURL];
-	request = [NSMutableURLRequest requestWithURL:loginURL];
-	NSString *msgLength = [NSString stringWithFormat:@"%d",[postString length]];
-	[request addValue:msgLength forHTTPHeaderField:@"Content-Length"];
-	[request setHTTPMethod:@"POST"];
-	[request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[[WWFeedReader alloc] initWithRequest:request keyForItems:@"entry" arrayOfKeys:[NSArray arrayWithObjects:@"title",@"content",@"name",@"updated",nil] delegate:self];
-}
-
-- (void)feedReader:(WWFeedReader *)feedReader didEndWithResult:(NSArray *)result
-{
-	NSString* postString = [[[NSString alloc] initWithData:[[feedReader request] HTTPBody] encoding:NSUTF8StringEncoding] lastPathComponent];
-	
-	if([[postString componentsSeparatedByString:@"assigned_to_id"] count] > 1)
-	{
-		assignedIssues = [[result mutableCopy] retain];
-		//NSLog(@"assigned issues: %@",assignedIssues);
-	}
-	else if([[postString componentsSeparatedByString:@"author_id"] count] > 1)
-	{
-		reportedIssues = [[result mutableCopy] retain];
-		//NSLog(@"reported issues: %@",reportedIssues);
-	}
-	
-	[projectTable reloadData];
-}
-
 #pragma mark Table view methods
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
 {
+	NSString * password = [accountDict valueForKey:@"password"];
+	NSString * username = [accountDict valueForKey:@"username"];
+
 	switch (section) 
 	{
 		case 0: 
-			return NSLocalizedString(@"Projects",@"Projects");
+			if ([password length] > 0 && [username length] > 0) return NSLocalizedString(@"My Page",@"My Page"); 
 		case 1:	
-			return NSLocalizedString(@"My Page",@"My Page"); 
+			return NSLocalizedString(@"Projects",@"Projects");
 		default: 
 			return nil;
 	}
@@ -162,27 +94,26 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
-	NSString * username = [loginData valueForKey:@"username"];
-	NSString * password = [loginData valueForKey:@"password"];	
-	
-	if(([password length] > 0) && ([username length] > 0))
-		return 2;
-	else
-		return 1;
-}
+	NSString * password = [accountDict valueForKey:@"password"];
+	NSString * username = [accountDict valueForKey:@"username"];
 
+	if ([password length] > 0 && [username length] > 0) return 2; 
+	return 1;
+}
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-	switch (section) 
-	{
+	NSString * password = [accountDict valueForKey:@"password"];
+	NSString * username = [accountDict valueForKey:@"username"];
+
+	switch (section) {
 		case 0:  
-			// Projects
-			return [projectArray count]; 
-		case 1:	 
 			// My Page
-			return 2; 
+			if ([password length] > 0 && [username length] > 0) return 2; 
+		case 1:	 
+			// Projects
+			return [[accountDict valueForKey:@"projects"] count]; 
 		default: 
 			return 0;
 	}
@@ -191,42 +122,53 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"ProjectCell";
+    static NSString *cellIdentifier = @"ProjectCell";
     
-	badgeCell = (BadgeCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	badgeCell = (BadgeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (badgeCell == nil)
         [[NSBundle mainBundle] loadNibNamed:@"BadgeCell" owner:self options:nil];
-    
+
+	NSString * password = [accountDict valueForKey:@"password"];
+	NSString * username = [accountDict valueForKey:@"username"];
+
 	// Set up the cell...
-	switch (indexPath.section) 
-	{
+	switch (indexPath.section){
 		case 0:  
+			// My Page
+			if ([password length] > 0 && [username length] > 0) {
+				NSArray * assignedIssues = [accountDict valueForKey:@"assigned"];
+				NSArray * reportedIssues = [accountDict valueForKey:@"reported"];
+
+				switch (indexPath.row){
+					case 0:
+						[badgeCell setCellDataWithTitle:NSLocalizedString(@"Issues assigned to me",@"Issues assigned to me") subTitle:nil];
+						[badgeCell setBadge:[assignedIssues count]];
+						//NSLog(@"assigned issues: %@",assignedIssues);
+						break;
+					case 1:
+						[badgeCell setCellDataWithTitle:NSLocalizedString(@"Reported issues",@"Reported issues") subTitle:nil];
+						[badgeCell setBadge:[reportedIssues count]];
+						//NSLog(@"reported issues: %@",reportedIssues);
+						break;
+					default:
+						break;
+				}
+				break;
+			}
+		case 1:	 
 			// Projects
 			[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 			NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 			[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-			NSString * subtitle = [dateFormatter stringFromDate:[RMParser dateWithString:[[projectArray objectAtIndex:indexPath.row] valueForKey:@"updated"]]];
-			NSString * subtitleWithLabel = [NSString stringWithFormat:NSLocalizedString(@"Last Update: %@",@"Last Update: %@"),subtitle];
-			[badgeCell setCellDataWithTitle:[[projectArray objectAtIndex:indexPath.row] valueForKey:@"title"] subTitle:subtitleWithLabel];
-			break;
-		case 1:	 
-			// My Page
-			switch (indexPath.row) 
-			{
-				case 0:
-					[badgeCell setCellDataWithTitle:NSLocalizedString(@"Issues assigned to me",@"Issues assigned to me") subTitle:nil];
-  					[badgeCell setBadge:[assignedIssues count]];
-					//NSLog(@"assigned issues: %@",assignedIssues);
-					break;
-				case 1:
-					[badgeCell setCellDataWithTitle:NSLocalizedString(@"Reported issues",@"Reported issues") subTitle:nil];
-					[badgeCell setBadge:[reportedIssues count]];
-					//NSLog(@"reported issues: %@",reportedIssues);
-					break;
-				default:
-					break;
-			}
+			
+			NSArray * projects = [accountDict valueForKey:@"projects"];
+			NSDictionary * project = [projects objectAtIndex:indexPath.row];
+			
+			NSDate * date = [NSDate dataFromRedmineString:[project valueForKey:@"updated"]];
+			NSString * subtitleWithLabel = [NSString stringWithFormat:NSLocalizedString(@"Last Update: %@",@"Last Update: %@"),[dateFormatter stringFromDate:date]];
+			NSString * title = [[[project valueForKey:@"title"] componentsSeparatedByString:@" - "] objectAtIndex:0];
+			[badgeCell setCellDataWithTitle:title subTitle:subtitleWithLabel];
 			break;
 		default: 
 			break;
@@ -238,56 +180,55 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	switch (indexPath.section) 
-	{
+	NSArray * assignedIssues = [accountDict valueForKey:@"assigned"];
+	NSArray * reportedIssues = [accountDict valueForKey:@"reported"];
+	NSString * password		 = [accountDict valueForKey:@"password"];
+	NSString * username		 = [accountDict valueForKey:@"username"];
+
+	switch (indexPath.section){
 		case 0:
+			if ([password length] > 0 && [username length] > 0) {
+				// My Page
+				switch (indexPath.row){
+					case 0:
+						if ([assignedIssues count] == 0) break;
+						
+						// Issues assigned to me
+						if(self.assignedIssuesViewController == nil)
+							self.assignedIssuesViewController = [IssueTableController initWithArray:assignedIssues title:NSLocalizedString(@"Assigned Issues",@"Assigned Issues")];
+						
+						[self.navigationController pushViewController:self.assignedIssuesViewController animated:YES];
+						break;
+					case 1:
+						if ([reportedIssues count] == 0) break;
+						
+						// Reported issues
+						if(self.reportedIssuesViewController == nil)
+							self.reportedIssuesViewController = [IssueTableController initWithArray:reportedIssues title:NSLocalizedString(@"Reported Issues",@"Reported Issues")];
+						
+						[self.navigationController pushViewController:self.reportedIssuesViewController animated:YES];
+						break;
+					default:
+						break;
+				}
+				break;
+			}
+		case 1:
+			// Projects
 			if(self.projectViewController == nil)
 				self.projectViewController = [[ProjectViewController alloc] initWithNibName:@"ProjectView" bundle:nil];
 			
 			// Set up the text view...
-			NSMutableDictionary * project = [NSMutableDictionary dictionaryWithDictionary:[projectArray objectAtIndex:indexPath.row]];
-			
 			[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 			NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 			[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-			NSString * date = [dateFormatter stringFromDate:[RMParser dateWithString:[project valueForKey:@"updated"]]];
 			
-			self.projectViewController.project = project;
-			self.projectViewController.loginData = loginData;
+			NSArray * projects = [accountDict valueForKey:@"projects"];
+			NSDictionary * project = [projects objectAtIndex:indexPath.row];
 			
+			self.projectViewController.project = project;			
 			[self.navigationController pushViewController:self.projectViewController animated:YES];
-			
-			[self.projectViewController.descriptionText loadHTMLString:[project valueForKey:@"content"] baseURL:nil];
-			self.projectViewController.titleLabel.text = [project valueForKey:@"title"];
-			self.projectViewController.dateLabel.text = date;
-			
-			break;
-		case 1:
-			// My Page
-			switch (indexPath.row) 
-			{
-				case 0:
-					if ([assignedIssues count] == 0) break;
-					
-					// Issues assigned to me
-					if(self.assignedIssuesViewController == nil)
-						self.assignedIssuesViewController = [IssueTableController initWithArray:assignedIssues title:NSLocalizedString(@"Assigned Issues",@"Assigned Issues") loginData:loginData];
-					
-					[self.navigationController pushViewController:self.assignedIssuesViewController animated:YES];
-					break;
-				case 1:
-					if ([reportedIssues count] == 0) break;
-					
-					// Reported issues
-					if(self.reportedIssuesViewController == nil)
-						self.reportedIssuesViewController = [IssueTableController initWithArray:reportedIssues title:NSLocalizedString(@"Reported Issues",@"Reported Issues") loginData:loginData];
-					
-					[self.navigationController pushViewController:self.reportedIssuesViewController animated:YES];
-					break;
-				default:
-					break;
-			}
 			break;
 		default:
 			break;
@@ -334,15 +275,13 @@
 }
 */
 
-- (void)dealloc 
-{
-	[projectArray release];
+- (void)dealloc{
+	[accountDict release];
 	[projectTable release];
 	[projectViewController release];
-	[loginData release];
-	[assignedIssues release];
-	[reportedIssues release];
-
+	[reportedIssuesViewController release];
+	[assignedIssuesViewController release];
+	[badgeCell release];	
     [super dealloc];
 }
 
