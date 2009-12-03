@@ -25,7 +25,22 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	networkQueue = [[ASINetworkQueue queue] retain];	
-	[self refreshProjects:self];
+
+	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+	
+	// First Launch
+	BOOL launchedBefore = [defaults boolForKey:@"launchedBefore"];
+	if(!launchedBefore) {
+		NSString * demoHostName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoHostName"];
+		NSString * redmineHostName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RedmineHostName"];
+		NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:demoHostName, @"hostname",@"", @"username", @"", @"password", nil];
+		NSDictionary * redmineAccount = [NSDictionary dictionaryWithObjectsAndKeys:redmineHostName, @"hostname",@"", @"username", @"", @"password", nil];
+		NSDictionary * accounts = [NSDictionary dictionaryWithObjectsAndKeys:demoAccount,demoHostName,redmineAccount,redmineHostName,nil];
+		[defaults setObject:accounts forKey:@"accounts"];	
+		[defaults setBool:YES forKey:@"launchedBefore"];
+		[defaults synchronize];		
+		[self refreshProjects:self];
+	}	
 }
 
 - (IBAction)openPreferences:(id)sender
@@ -42,21 +57,8 @@
 - (IBAction)refreshProjects:(id)sender
 {	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+	NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
 	
-	// First Launch
-	BOOL launchedBefore = [defaults boolForKey:@"launchedBefore"];
-	if(!launchedBefore) {
-		NSString * demoHostName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoHostName"];
-		NSString * redmineHostName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RedmineHostName"];
-		NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:demoHostName, @"hostname",@"", @"username", @"", @"password", nil];
-		NSDictionary * redmineAccount = [NSDictionary dictionaryWithObjectsAndKeys:redmineHostName, @"hostname",@"", @"username", @"", @"password", nil];
-		NSDictionary * accounts = [NSDictionary dictionaryWithObjectsAndKeys:demoAccount,demoHostName,redmineAccount,redmineHostName,nil];
-		[defaults setObject:accounts forKey:@"accounts"];	
-		[defaults setBool:YES forKey:@"launchedBefore"];
-		[defaults synchronize];		
-	}
-	
-    NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
 	[networkQueue cancelAllOperations];
 	[networkQueue setRequestDidStartSelector:@selector(fetchBegins:)];
 	[networkQueue setRequestDidFinishSelector:@selector(fetchComplete:)];
@@ -66,23 +68,10 @@
 	[networkQueue setShouldCancelAllRequestsOnFailure:NO];
 	[networkQueue setDelegate:self];
 
-	for(NSDictionary * account in accounts)
-	{								
+	for(NSDictionary * account in accounts)	{								
 		ASIFormDataRequest * projectsRequest = [[self requestWithAccount:account URLPath:@"projects?format=atom"] retain];
 		[projectsRequest setUserInfo:[NSDictionary dictionaryWithObject:@"projects" forKey:@"feed"]];
-		[networkQueue addOperation:projectsRequest];
-		
-		NSString * password = [account valueForKey:@"password"];
-		NSString * username = [account valueForKey:@"username"];
-		if([password length] > 0 && [username length] > 0){
-			ASIFormDataRequest * assignedRequest = [[self requestWithAccount:account URLPath:@"issues?format=atom&assigned_to_id=me"] retain];
-			[assignedRequest setUserInfo:[NSDictionary dictionaryWithObject:@"assigned" forKey:@"feed"]];
-			[networkQueue addOperation:assignedRequest];
-			
-			ASIFormDataRequest * reportedRequest = [[self requestWithAccount:account URLPath:@"issues?format=atom&author_id=me"] retain];
-			[reportedRequest setUserInfo:[NSDictionary dictionaryWithObject:@"reported" forKey:@"feed"]];
-			[networkQueue addOperation:reportedRequest];
-		}
+		[networkQueue addOperation:projectsRequest];		
 	}
 	[networkQueue go];
 	[accountTable reloadData];
@@ -103,6 +92,7 @@
 
 	NSURL * loginURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/login",protocol,hostname,port]];
 	NSURL * feedURL  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/%@",protocol,hostname,port,path]];
+	//NSLog(@"feed URL: %@",feedURL);
 	
 	ASIFormDataRequest * request;
 	if(([password length] > 0) && ([username length] > 0)){
@@ -114,9 +104,12 @@
 		request = [ASIFormDataRequest requestWithURL:feedURL];
 	}
 	
-	[request setTimeOutSeconds:200];
+	[request setTimeOutSeconds:300];
 	[request setUseKeychainPersistance:YES];
 	[request setShouldPresentAuthenticationDialog:YES];
+	if ([[[request url] scheme] isEqualToString:@"https"]) {
+		[request setValidatesSecureCertificate:NO];
+	}
 	return request;
 }
 
@@ -136,15 +129,8 @@
 	
 	// Load and parse the xml response
 	TBXML * xml = [[TBXML alloc] initWithXMLString:[request responseString]];
-	
-	if (![[request responseString] hasPrefix:@"<?xml"]) {
-		//NSLog(@"Fetch from %@ with invalid xml: %@",host,[request responseString]);
-		NSString * errorString = NSLocalizedString(@"Invalid XML, password or user name are probably incorrect.",@"Invalid XML, password or user name are probably incorrect.");
-		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:host message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[errorAlert show];
-	}
-	// if root element is valid
-	else if ([xml rootXMLElement]) {
+
+	if ([[request responseString] hasPrefix:@"<?xml"] && [xml rootXMLElement]) {
 		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 		NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
 		NSMutableDictionary * account = [[accounts valueForKey:host] mutableCopy];
@@ -154,17 +140,30 @@
 			NSArray * projects = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",nil]];
 			[account setValue:projects forKey:@"projects"];
 
+			NSString * password = [account valueForKey:@"password"];
+			NSString * username = [account valueForKey:@"username"];
+			if([password length] > 0 && [username length] > 0){
+				ASIFormDataRequest * assignedRequest = [[self requestWithAccount:account URLPath:@"issues?format=atom&assigned_to_id=me"] retain];
+				[assignedRequest setUserInfo:[NSDictionary dictionaryWithObject:@"assigned" forKey:@"feed"]];
+				[networkQueue addOperation:assignedRequest];
+				
+				ASIFormDataRequest * reportedRequest = [[self requestWithAccount:account URLPath:@"issues?format=atom&author_id=me"] retain];
+				[reportedRequest setUserInfo:[NSDictionary dictionaryWithObject:@"reported" forKey:@"feed"]];
+				[networkQueue addOperation:reportedRequest];
+			}
+			
+			int i = 0;
 			for (id project in projects) {
 				int projectId = [[[project valueForKey:@"id"] lastPathComponent] intValue];
 				
-				NSString * issuesPath = [NSString  stringWithFormat:@"projects/%d/issues?format=atom",projectId];
+				NSString * issuesPath = [NSString stringWithFormat:@"projects/%d/issues?format=atom",projectId];
 				ASIFormDataRequest * issuesRequest = [[self requestWithAccount:account URLPath:issuesPath] retain];
-				[issuesRequest setUserInfo:[NSDictionary dictionaryWithObject:@"issues" forKey:@"feed"]];
+				[issuesRequest setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"issues",@"feed",[NSNumber numberWithInt:i],@"project",nil]];
 				[networkQueue addOperation:issuesRequest];
 				
-				NSString * activityPath = [NSString  stringWithFormat:@"projects/%d/activity?format=atom",projectId];
+				NSString * activityPath = [NSString stringWithFormat:@"projects/activity/%d?format=atom",projectId];
 				ASIFormDataRequest * activityRequest = [[self requestWithAccount:account URLPath:activityPath] retain];
-				[activityRequest setUserInfo:[NSDictionary dictionaryWithObject:@"activity" forKey:@"feed"]];
+				[activityRequest setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"activity",@"feed",[NSNumber numberWithInt:i++],@"project",nil]];
 				[networkQueue addOperation:activityRequest];
 			}
 		} else if ([feedInfo isEqualToString:@"assigned"]) {
@@ -175,17 +174,35 @@
 			[account setValue:reportedIssues forKey:@"reported"];
 		} else if ([feedInfo isEqualToString:@"issues"]) {
 			NSArray * projectIssues = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
-			//[account setValue:reportedIssues forKey:@"reported"];
+			NSMutableArray * projects = [[account valueForKey:@"projects"] mutableCopy];
+			NSMutableDictionary * project = [[projects objectAtIndex:[[[request userInfo] valueForKey:@"project"] intValue]] mutableCopy];
+			[project setValue:projectIssues forKey:@"issues"];
+			[projects replaceObjectAtIndex:[[[request userInfo] valueForKey:@"project"] intValue] withObject:project];
+			[account setValue:projects forKey:@"projects"];
+			//NSLog(@"issues: %@",projectIssues);
 		} else if ([feedInfo isEqualToString:@"activity"]) {
-			NSArray * projectActivities = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
-			//[account setValue:reportedIssues forKey:@"reported"];
+			NSArray * projectActivity = [self arrayOfDictionariesWithXML:xml forKeyPaths:[NSArray arrayWithObjects:@"title",@"content",@"id",@"updated",@"author.name",nil]];
+			NSMutableArray * projects = [[account valueForKey:@"projects"] mutableCopy];
+			NSMutableDictionary * project = [[projects objectAtIndex:[[[request userInfo] valueForKey:@"project"] intValue]] mutableCopy];
+			[project setValue:projectActivity forKey:@"activity"];
+			[projects replaceObjectAtIndex:[[[request userInfo] valueForKey:@"project"] intValue] withObject:project];
+			[account setValue:projects forKey:@"projects"];
+			//NSLog(@"activity: %@",projectActivity);
 		}
 		
 		[accounts setValue:account forKey:host];
 		[defaults setObject:accounts forKey:@"accounts"];
 		[defaults synchronize];
 		[accountTable reloadData];		
+	} else {
+		//NSLog(@"Fetch from %@ with invalid xml: %@",host,[request responseString]);
+		NSString * errorString = NSLocalizedString(@"Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted",@"Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted");
+		NSDictionary * errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:errorString,NSLocalizedDescriptionKey,nil];
+		NSError * error = [NSError errorWithDomain:@"InvalidXMLResponse" code:ASIUnhandledExceptionError userInfo:errorUserInfo];
+		[request setError:error];
+		[self fetchFailed:request];
 	}
+
 }
 
 - (void)queueDidFinish:(ASINetworkQueue *)queue{

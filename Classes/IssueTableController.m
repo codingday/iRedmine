@@ -100,23 +100,29 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	NSMutableDictionary * issue = [_issues objectAtIndex:indexPath.row];
-	NSString * subtitle = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
-	NSString * title	= [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:1];
+
+	NSArray * titleComponents	 = [[issue valueForKey:@"title"] componentsSeparatedByString:@": "];
+	NSString * subtitle = [titleComponents objectAtIndex:0];
+	NSString * title	= [titleComponents lastObject];
 	NSString * author	= [issue valueForKey:@"author.name"];	
-	NSString * type		= [[subtitle componentsSeparatedByString:@" - "] objectAtIndex:1];
-	
-    static NSString *CellIdentifier = @"IssueCell";
+
+	NSArray * subtitleComponents = [subtitle componentsSeparatedByString:@" - "];
+	NSString * type		= [subtitleComponents lastObject];
+
+	 static NSString *CellIdentifier = @"IssueCell";
     
 	subtitleCell = (SubtitleCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (subtitleCell == nil){
-		if ([type hasPrefix:@"Feature"]) {
+		// Dirty Hack
+		// TODO: Definitions for Cell from Info.plist
+		if ([type hasPrefix:@"Feature"] || [type hasPrefix:@"Funktion"] || [type hasPrefix:@"Patch"]) {
 			[[NSBundle mainBundle] loadNibNamed:@"FeatureCell" owner:self options:nil];
-		} else if ([type hasPrefix:@"Support"] || [type hasPrefix:@"Unterstützung"]) {
-			[[NSBundle mainBundle] loadNibNamed:@"SupportCell" owner:self options:nil];
-		} else if ([type hasPrefix:@"Fehler"] || [type hasPrefix:@"Bug"]) {
+		} else if ([type hasPrefix:@"Revision"]) {
+			[[NSBundle mainBundle] loadNibNamed:@"RevisionCell" owner:self options:nil];
+		} else if ([type hasPrefix:@"Fehler"] || [type hasPrefix:@"Bug"] || [type hasPrefix:@"Defekt"] || [type hasPrefix:@"Defect"]) {
 			[[NSBundle mainBundle] loadNibNamed:@"ErrorCell" owner:self options:nil];
 		} else {
-			[[NSBundle mainBundle] loadNibNamed:@"RevisionCell" owner:self options:nil];
+			[[NSBundle mainBundle] loadNibNamed:@"SupportCell" owner:self options:nil];
 		}
 	}
 	
@@ -127,17 +133,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {		
-	NSDictionary * issue = [_issues objectAtIndex:indexPath.row];
 	if(self.webViewController == nil)
 		self.webViewController = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
 	
-	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
-	[self.webViewController setTitle:title];
-
-	NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[issue valueForKey:@"id"]]];
-
+	[self.webViewController setIssue:[_issues objectAtIndex:indexPath.row]];
 	[self.navigationController pushViewController:self.webViewController animated:YES];
-	[self.webViewController.webView loadRequest:request];	
 }
 
 /*

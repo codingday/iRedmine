@@ -14,10 +14,12 @@
 	UITabBarItem * homeItem;
 	UITabBarItem * safariItem;
 	UIWebView * webView;
+	NSDictionary * issue;
 }
 
 @property(nonatomic,retain) IBOutlet UITabBarItem * homeItem;
 @property(nonatomic,retain) IBOutlet UITabBarItem * safariItem;
 @property(nonatomic,retain) IBOutlet UIWebView * webView;
+@property(nonatomic,retain) NSDictionary * issue;
 
 @end

@@ -50,9 +50,20 @@
 	NSString * content = [project valueForKey:@"content"];
 	[descriptionText loadHTMLString:[content stringByUnescapingHTML] baseURL:nil];
 	
-	[issuesItem setBadgeValue:nil];
-	[activityItem setBadgeValue:nil];
+	int issuesCount = [[project valueForKey:@"issues"] count];
+	if (issuesCount > 0) {
+		[issuesItem setBadgeValue:[NSString stringWithFormat:@"%d",issuesCount]];
+	} else {
+		[issuesItem setBadgeValue:nil];
+	}
 
+	int activityCount = [[project valueForKey:@"activity"] count];
+	if (activityCount > 0) {
+		[activityItem setBadgeValue:[NSString stringWithFormat:@"%d",activityCount]];
+	} else {
+		[activityItem setBadgeValue:nil];
+	}
+	
 	NSDate * date = [NSDate dataFromRedmineString:[project valueForKey:@"updated"]];
 	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 	NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -83,7 +94,7 @@
 		IssueTableController * issuesViewController = [IssueTableController initWithArray:[project valueForKey:@"issues"] title:NSLocalizedString(@"Issues",@"Issues")];		
 		[self.navigationController pushViewController:issuesViewController animated:YES];			
 	} else if((item == activityItem) && ([[activityItem badgeValue] intValue] > 0))	{
-		IssueTableController * activityViewController = [IssueTableController initWithArray:[project valueForKey:@"activities"] title:NSLocalizedString(@"Activities",@"Activities")];
+		IssueTableController * activityViewController = [IssueTableController initWithArray:[project valueForKey:@"activity"] title:NSLocalizedString(@"Activities",@"Activities")];
 		[self.navigationController pushViewController:activityViewController animated:YES];
 	}
 	[tabBar setSelectedItem:nil];

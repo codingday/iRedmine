@@ -14,6 +14,7 @@
 @synthesize homeItem;
 @synthesize webView;
 @synthesize safariItem;
+@synthesize issue;
 
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
@@ -44,15 +45,31 @@
 	return YES;
 }
 
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-	if(item == homeItem) 
-	{
-		[self.navigationController popToRootViewControllerAnimated:YES];
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
+	[self setTitle:title];
+	
+	NSURL * url;
+	if ([title hasPrefix:@"Revision"]) {
+		url = [NSURL URLWithString:[issue valueForKey:@"id"]];
+	} else {
+		url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?format=pdf",[issue valueForKey:@"id"]]];
 	}
-	else if(item == safariItem)
-	{	
-		[[UIApplication sharedApplication] openURL:[webView.request URL]];
+
+	NSURLRequest * request = [NSURLRequest requestWithURL:url];
+	if (![request isEqual:[webView request]]) {
+		[webView loadRequest:request];	
+	}
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+	if(item == homeItem) {
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	} else if(item == safariItem) {	
+		NSURL * url = [NSURL URLWithString:[issue valueForKey:@"id"]];
+		[[UIApplication sharedApplication] openURL:url];
 	}
 	[tabBar setSelectedItem:nil];
 }
@@ -67,6 +84,7 @@
  	[webView release];
 	[safariItem release];
 	[homeItem release];
+	[issue release];
 	[super dealloc];
 }
 
