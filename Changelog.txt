@@ -2,3 +2,12 @@
 - Initial Release
 
 * Fri Dec 4th 2009 Thomas Stägemann <ts@weisshuhn.de> 0.1.1
+- Added landscape orientation
+- Added usage of different icons for some trackers
+- Added SSL support
+- Added support of different ports
+- Optimized the keyboard behaviour in add view
+- Fetching all issues in root view
+- Fixed XML parse errors
+- Fixed bug with negative time zones
+- Fixed several bugs

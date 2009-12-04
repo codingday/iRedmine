@@ -2,8 +2,8 @@
 //  ProjectTableController.m
 //  iRedmine
 //
-//  Created by Thomas St√§gemann on 21.04.09.
-//  Copyright 2009 Thomas St√§gemann. All rights reserved.
+//  Created by Thomas Stägemann on 21.04.09.
+//  Copyright 2009 Thomas Stägemann. All rights reserved.
 //
 
 #import "ProjectTableController.h"
