@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.1.1</string>
+	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
@@ -30,5 +30,25 @@
 	<string>demo.redmine.org</string>
 	<key>RedmineHostName</key>
 	<string>www.redmine.org</string>
+	<key>RevisionCellTypes</key>
+	<array>
+		<string>revision</string>
+	</array>
+	<key>ErrorCellTypes</key>
+	<array>
+		<string>error</string>
+		<string>bug</string>
+		<string>defect</string>
+		<string>incident</string>
+		<string>fehler</string>
+		<string>defekt</string>
+		<string>störfall</string>
+	</array>
+	<key>FeatureCellTypes</key>
+	<array>
+		<string>feature</string>
+		<string>patch</string>
+		<string>funktion</string>
+	</array>
 </dict>
 </plist>

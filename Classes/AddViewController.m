@@ -89,7 +89,7 @@ static AddViewController *_sharedAddViewController = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.view.backgroundColor = [UIColor viewFlipsideBackgroundColor];      
-	[self setTitle:NSLocalizedString(@"Add Account",@"Add Account")];
+	[self setTitle:NSLocalizedString(@"New account",@"New account")];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

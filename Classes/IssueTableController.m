@@ -106,20 +106,24 @@
 	NSString * title	= [titleComponents lastObject];
 	NSString * author	= [issue valueForKey:@"author.name"];	
 
-	NSArray * subtitleComponents = [subtitle componentsSeparatedByString:@" - "];
-	NSString * type		= [subtitleComponents lastObject];
-
 	 static NSString *CellIdentifier = @"IssueCell";
     
 	subtitleCell = (SubtitleCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (subtitleCell == nil){
-		// Dirty Hack
-		// TODO: Definitions for Cell from Info.plist
-		if ([type hasPrefix:@"Feature"] || [type hasPrefix:@"Funktion"] || [type hasPrefix:@"Patch"]) {
+		NSArray * featureTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FeatureCellTypes"];
+		NSString * featurePattern = [NSString stringWithFormat:@".*(%@).*",[featureTypes componentsJoinedByString:@"|"]];
+		
+		NSArray * revisionTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RevisionCellTypes"];
+		NSString * revisionPattern = [NSString stringWithFormat:@".*(%@).*",[revisionTypes componentsJoinedByString:@"|"]];
+
+		NSArray * errorTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ErrorCellTypes"];
+		NSString * errorPattern = [NSString stringWithFormat:@".*(%@).*",[errorTypes componentsJoinedByString:@"|"]];
+		
+		if ([subtitle matchedByPattern:featurePattern options:REG_ICASE]) {
 			[[NSBundle mainBundle] loadNibNamed:@"FeatureCell" owner:self options:nil];
-		} else if ([type hasPrefix:@"Revision"]) {
+		} else if ([subtitle matchedByPattern:revisionPattern options:REG_ICASE]) {
 			[[NSBundle mainBundle] loadNibNamed:@"RevisionCell" owner:self options:nil];
-		} else if ([type hasPrefix:@"Fehler"] || [type hasPrefix:@"Bug"] || [type hasPrefix:@"Defekt"] || [type hasPrefix:@"Defect"]) {
+		} else if ([subtitle matchedByPattern:errorPattern options:REG_ICASE]) {
 			[[NSBundle mainBundle] loadNibNamed:@"ErrorCell" owner:self options:nil];
 		} else {
 			[[NSBundle mainBundle] loadNibNamed:@"SupportCell" owner:self options:nil];

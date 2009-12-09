@@ -195,7 +195,7 @@
 						
 						// Issues assigned to me
 						if(self.assignedIssuesViewController == nil)
-							self.assignedIssuesViewController = [IssueTableController initWithArray:assignedIssues title:NSLocalizedString(@"Assigned Issues",@"Assigned Issues")];
+							self.assignedIssuesViewController = [IssueTableController initWithArray:assignedIssues title:NSLocalizedString(@"Issues assigned to me",@"Issues assigned to me")];
 						
 						[self.navigationController pushViewController:self.assignedIssuesViewController animated:YES];
 						break;
@@ -204,7 +204,7 @@
 						
 						// Reported issues
 						if(self.reportedIssuesViewController == nil)
-							self.reportedIssuesViewController = [IssueTableController initWithArray:reportedIssues title:NSLocalizedString(@"Reported Issues",@"Reported Issues")];
+							self.reportedIssuesViewController = [IssueTableController initWithArray:reportedIssues title:NSLocalizedString(@"Reported issues",@"Reported issues")];
 						
 						[self.navigationController pushViewController:self.reportedIssuesViewController animated:YES];
 						break;

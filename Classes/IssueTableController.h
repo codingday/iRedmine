@@ -10,6 +10,7 @@
 #import "SubtitleCell.h"
 #import "WebViewController.h"
 #import "NSStringAdditions.h"
+#import "CSRegex.h"
 
 @interface IssueTableController : UITableViewController {
 	UITableView * issuesTable;

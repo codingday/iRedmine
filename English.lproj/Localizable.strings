@@ -5,3 +5,17 @@
    Created by Thomas Stägemann on 26.11.09.
    Copyright 2009 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
  */
+
+"Issues"					= "Issues";
+"Activities"				= "Activities";
+"My Page"					= "My Page";
+"Projects"					= "Projects";
+"Issues assigned to me"		= "Issues assigned to me";
+"Reported issues"			= "Reported issues";
+"Last Update: %@"			= "Last Update: %@";
+"Error adding account"		= "Error adding account";
+"Please enter a valid host" = "Please enter a valid host";
+"New account"				= "New account";
+"Username: %@"				= "Username: %@";
+"Anonymous"					= "Anonymous";
+"Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted";

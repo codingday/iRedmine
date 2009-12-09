@@ -11,3 +11,8 @@
 - Fixed XML parse errors
 - Fixed bug with negative time zones
 - Fixed several bugs
+
+* Mon Dec 9th 2009 Thomas Stägemann <ts@weisshuhn.de> 1.0
+- Added german localization
+- Optimized icon selection for issue cells
+- Fixed bug in detail view

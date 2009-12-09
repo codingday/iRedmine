@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CSRegex.h"
+#import "ASIFormDataRequest.h"
 
 
 @interface WebViewController : UIViewController 

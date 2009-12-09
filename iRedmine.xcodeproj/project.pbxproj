@@ -14,11 +14,8 @@
 		020C07330FA731E2008954EF /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 020C07320FA731E2008954EF /* error.png */; };
 		020C08290FA74D91008954EF /* feature.png in Resources */ = {isa = PBXBuildFile; fileRef = 020C08270FA74D91008954EF /* feature.png */; };
 		020C082A0FA74D91008954EF /* revision.png in Resources */ = {isa = PBXBuildFile; fileRef = 020C08280FA74D91008954EF /* revision.png */; };
-		0216AFD010C6B3BF003A2E61 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029A1E0C0FB31C3C00AA99A0 /* WebView.xib */; };
 		0216AFD110C6B3C0003A2E61 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
 		0216AFD210C6B3C0003A2E61 /* RootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E55F0DE3E45000AC0155 /* RootView.xib */; };
-		0216AFD310C6B3C0003A2E61 /* ProjectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 023218E50F94DEA900A95381 /* ProjectView.xib */; };
-		0216AFD410C6B3C0003A2E61 /* AddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0222E7FA0F8D3EC700445AAD /* AddView.xib */; };
 		0216AFD510C6B3C0003A2E61 /* ProjectTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */; };
 		0216AFD610C6B3C0003A2E61 /* IssueTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 023218600F94D45600A95381 /* IssueTableView.xib */; };
 		0216AFD710C6B3C0003A2E61 /* BadgeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E2B1EB0F8393A500E49BD6 /* BadgeCell.xib */; };
@@ -42,6 +39,10 @@
 		0241088B0F8E67BD008CAB10 /* SubtitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0241088A0F8E67BD008CAB10 /* SubtitleCell.m */; };
 		02434FCC1030847600C62C58 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02434FCB1030847600C62C58 /* Default.png */; };
 		024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */; };
+		0252E05710CD3D03003881B2 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E05610CD3D03003881B2 /* WebView.xib */; };
+		0252E05E10CD3DD7003881B2 /* ProjectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E05D10CD3DD7003881B2 /* ProjectView.xib */; };
+		0252E06410CD3E36003881B2 /* AddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E06310CD3E36003881B2 /* AddView.xib */; };
+		0252E07710CD4913003881B2 /* CSRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0252E07610CD4913003881B2 /* CSRegex.m */; };
 		025BBAC10FC6EB80002BD488 /* safari.png in Resources */ = {isa = PBXBuildFile; fileRef = 025BBAC00FC6EB80002BD488 /* safari.png */; };
 		02732B97100F6ED6007592D0 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 02732B96100F6ED6007592D0 /* back.png */; };
 		0278ED5C0F9E40CA000E8EED /* ProjectTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278ED5B0F9E40CA000E8EED /* ProjectTableController.m */; };
@@ -79,7 +80,7 @@
 		020C082D0FA74E67008954EF /* SupportCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SupportCell.xib; sourceTree = "<group>"; };
 		0222E7ED0F8D3D5000445AAD /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		0222E7EE0F8D3D5000445AAD /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
-		0222E7FA0F8D3EC700445AAD /* AddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddView.xib; sourceTree = "<group>"; };
+		0222E7FA0F8D3EC700445AAD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AddView.xib; sourceTree = "<group>"; };
 		022ABE9710C020880023AD77 /* Changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Changelog.txt; sourceTree = "<group>"; };
 		0231285F10BEE12A0097675F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0231290F10BEF5380097675F /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
@@ -100,13 +101,19 @@
 		023218600F94D45600A95381 /* IssueTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueTableView.xib; sourceTree = "<group>"; };
 		023218E00F94DE2100A95381 /* ProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
 		023218E10F94DE2100A95381 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
-		023218E50F94DEA900A95381 /* ProjectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectView.xib; sourceTree = "<group>"; };
+		023218E50F94DEA900A95381 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ProjectView.xib; sourceTree = "<group>"; };
 		024108860F8E677E008CAB10 /* ErrorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorCell.xib; sourceTree = "<group>"; };
 		024108890F8E67BD008CAB10 /* SubtitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubtitleCell.h; sourceTree = "<group>"; };
 		0241088A0F8E67BD008CAB10 /* SubtitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleCell.m; sourceTree = "<group>"; };
 		02434FCB1030847600C62C58 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
 		024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
+		0252E02110CD304C003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0252E05810CD3D0A003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/WebView.xib; sourceTree = "<group>"; };
+		0252E05F10CD3DDC003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/ProjectView.xib; sourceTree = "<group>"; };
+		0252E06610CD3E3B003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/AddView.xib; sourceTree = "<group>"; };
+		0252E07510CD4913003881B2 /* CSRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRegex.h; sourceTree = "<group>"; };
+		0252E07610CD4913003881B2 /* CSRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRegex.m; sourceTree = "<group>"; };
 		025BBAC00FC6EB80002BD488 /* safari.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = safari.png; sourceTree = "<group>"; };
 		02732B96100F6ED6007592D0 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		0278ED5A0F9E40CA000E8EED /* ProjectTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectTableController.h; sourceTree = "<group>"; };
@@ -116,7 +123,7 @@
 		0297070E0FA0CEB4000B9588 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
 		029A1DF70FB30E6C00AA99A0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		029A1DF80FB30E6C00AA99A0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		029A1E0C0FB31C3C00AA99A0 /* WebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
+		029A1E0C0FB31C3C00AA99A0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WebView.xib; sourceTree = "<group>"; };
 		029A33950FA9B056003E5600 /* support.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support.png; sourceTree = "<group>"; };
 		02A8B04B0F98D6830077AB7F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectTableView.xib; sourceTree = "<group>"; };
@@ -170,6 +177,8 @@
 		0231292010BEF5E90097675F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0252E07510CD4913003881B2 /* CSRegex.h */,
+				0252E07610CD4913003881B2 /* CSRegex.m */,
 				02E54AA710C406450054F37F /* NSDataAdditions.h */,
 				02E54AA810C406450054F37F /* NSDataAdditions.m */,
 				02E54AA910C406450054F37F /* TBXML.h */,
@@ -240,11 +249,11 @@
 		02CEF7670F9E427600FCB183 /* Interface Builder */ = {
 			isa = PBXGroup;
 			children = (
-				029A1E0C0FB31C3C00AA99A0 /* WebView.xib */,
+				0252E05610CD3D03003881B2 /* WebView.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				2899E55F0DE3E45000AC0155 /* RootView.xib */,
-				023218E50F94DEA900A95381 /* ProjectView.xib */,
-				0222E7FA0F8D3EC700445AAD /* AddView.xib */,
+				0252E05D10CD3DD7003881B2 /* ProjectView.xib */,
+				0252E06310CD3E36003881B2 /* AddView.xib */,
 				02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */,
 				023218600F94D45600A95381 /* IssueTableView.xib */,
 				02E2B1EB0F8393A500E49BD6 /* BadgeCell.xib */,
@@ -402,10 +411,10 @@
 				0216AFD110C6B3C0003A2E61 /* MainWindow.xib in Resources */,
 				0216AFD210C6B3C0003A2E61 /* RootView.xib in Resources */,
 				0216AFD710C6B3C0003A2E61 /* BadgeCell.xib in Resources */,
-				0216AFD410C6B3C0003A2E61 /* AddView.xib in Resources */,
+				0252E06410CD3E36003881B2 /* AddView.xib in Resources */,
 				0216AFD810C6B3C0003A2E61 /* ErrorCell.xib in Resources */,
 				0216AFD610C6B3C0003A2E61 /* IssueTableView.xib in Resources */,
-				0216AFD310C6B3C0003A2E61 /* ProjectView.xib in Resources */,
+				0252E05E10CD3DD7003881B2 /* ProjectView.xib in Resources */,
 				02A8B04C0F98D6830077AB7F /* logo.png in Resources */,
 				020720E10F9E0AC1000277FD /* clock.png in Resources */,
 				020720E70F9E0BE3000277FD /* house.png in Resources */,
@@ -419,7 +428,7 @@
 				0216AFDA10C6B3C0003A2E61 /* RevisionCell.xib in Resources */,
 				0216AFDB10C6B3C1003A2E61 /* SupportCell.xib in Resources */,
 				029A33960FA9B056003E5600 /* support.png in Resources */,
-				0216AFD010C6B3BF003A2E61 /* WebView.xib in Resources */,
+				0252E05710CD3D03003881B2 /* WebView.xib in Resources */,
 				025BBAC10FC6EB80002BD488 /* safari.png in Resources */,
 				028C0B0B0FD7EEF700E28E01 /* header.png in Resources */,
 				02732B97100F6ED6007592D0 /* back.png in Resources */,
@@ -459,6 +468,7 @@
 				02E54AAB10C406450054F37F /* NSDataAdditions.m in Sources */,
 				02E54AAC10C406450054F37F /* TBXML.m in Sources */,
 				024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */,
+				0252E07710CD4913003881B2 /* CSRegex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,8 +479,36 @@
 			isa = PBXVariantGroup;
 			children = (
 				0231285F10BEE12A0097675F /* English */,
+				0252E02110CD304C003881B2 /* German */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		0252E05610CD3D03003881B2 /* WebView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				029A1E0C0FB31C3C00AA99A0 /* English */,
+				0252E05810CD3D0A003881B2 /* German */,
+			);
+			name = WebView.xib;
+			sourceTree = "<group>";
+		};
+		0252E05D10CD3DD7003881B2 /* ProjectView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				023218E50F94DEA900A95381 /* English */,
+				0252E05F10CD3DDC003881B2 /* German */,
+			);
+			name = ProjectView.xib;
+			sourceTree = "<group>";
+		};
+		0252E06310CD3E36003881B2 /* AddView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0222E7FA0F8D3EC700445AAD /* English */,
+				0252E06610CD3E3B003881B2 /* German */,
+			);
+			name = AddView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

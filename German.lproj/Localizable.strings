@@ -1,0 +1,21 @@
+/* 
+   Localizable.strings
+   iRedmine
+
+   Created by Thomas Stägemann on 26.11.09.
+   Copyright 2009 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
+ */
+
+"Issues"					= "Tickets";
+"Activities"				= "Aktivitäten";
+"My Page"					= "Meine Seite";
+"Projects"					= "Projekte";
+"Issues assigned to me"		= "Mir zugewiesene Tickets";
+"Reported issues"			= "Gemeldete Tickets";
+"Last Update: %@"			= "Letztes Update: %@";
+"Error adding account"		= "Fehler beim Konto hinzufügen";
+"Please enter a valid host" = "Bitte geben Sie einen gültigen Host ein";
+"New account"				= "Neues Konto";
+"Username: %@"				= "Mitgliedsname: %@";
+"Anonymous"					= "Anonymus";
+"Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Ungültiges XML zurückgegeben\n\nMögliche Gründe:\n1. Passwort oder Benutzername falsch\n2. Zu viele Anfragen\n3. Mobile skin beschädigt";
