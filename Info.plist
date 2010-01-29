@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>logo.png</string>
 	<key>CFBundleIdentifier</key>
-	<string>ZF5E7523C5.de.weisshuhn.${PRODUCT_NAME:identifier}</string>
+	<string>de.weisshuhn.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
