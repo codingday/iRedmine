@@ -70,24 +70,17 @@
 		format = @"?format=pdf";
 	}
 
-	NSURL * url = [NSURL URLWithString:[issue valueForKey:@"id"]];
+	NSURL * issueURL = [NSURL URLWithString:[issue valueForKey:@"id"]];
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary * accounts = [defaults dictionaryForKey:@"accounts"];
-	NSDictionary * account  = [accounts valueForKey:[url host]];
-	BOOL useSSL			= [[account valueForKey:@"ssl"] boolValue];
-	NSString * password = [account valueForKey:@"password"];
-	NSString * username = [account valueForKey:@"username"];
-	NSString * hostname = [account valueForKey:@"hostname"];
-	NSString * protocol = useSSL? @"https" : @"http";
-	int port			= [[account valueForKey:@"port"] intValue];
-	if(!port && useSSL){
-		port = 443;
-	} else if (!port){
-		port = 80;
-	}
+	NSDictionary * account  = [accounts valueForKey:[issueURL host]];
+	NSString * password  = [account valueForKey:@"password"];
+	NSString * username  = [account valueForKey:@"username"];
+	NSString * urlString = [account valueForKey:@"url"];
+	NSURL * url = [NSURL URLWithString:urlString];
 	
-	NSURL * loginURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/login",protocol,hostname,port]];
-	NSURL * feedURL  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d%@%@",protocol,hostname,port,[url relativePath],format]];
+	NSURL * loginURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/login",[url scheme],[url host],[url port]]];
+	NSURL * feedURL  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d%@%@",[url scheme],[url host],[url port],[issueURL relativePath],format]];
 	// NSLog(@"feed URL: %@",feedURL);
 	
 	ASIFormDataRequest * request;
@@ -123,7 +116,7 @@
 	}
 	else
 	{
-		NSURL * baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/",protocol,hostname,port]];
+		NSURL * baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/",[url scheme],[url host],[url port]]];
 		[webView loadData:[request responseData] MIMEType:MIMEType textEncodingName:@"utf-8" baseURL:baseURL];
 	}	
 }

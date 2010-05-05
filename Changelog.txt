@@ -16,3 +16,6 @@
 - Added german localization
 - Optimized icon selection for issue cells
 - Fixed bug in detail view
+
+* Wed May 5th 2010 Thomas Stägemann <ts@weisshuhn.de> 1.1
+- It's now possible to enter path installations like: http://demo.redmine.org/redmine

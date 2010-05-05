@@ -14,12 +14,11 @@ static AddViewController *_sharedAddViewController = nil;
 
 @synthesize loginField;
 @synthesize passwordField;
-@synthesize hostField;
-@synthesize portField;
-@synthesize sslSwitch;
+@synthesize urlField;
 @synthesize oldTintColor;
 
-+ (AddViewController *)sharedAddViewController{
++ (AddViewController *)sharedAddViewController
+{
 	if (!_sharedAddViewController) {
 		_sharedAddViewController = [[self alloc] initWithNibName:@"AddView" bundle:nil];
 	}
@@ -27,7 +26,7 @@ static AddViewController *_sharedAddViewController = nil;
 }
 	 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == hostField) {
+	if (textField == urlField) {
 		[textField resignFirstResponder];
 		[loginField becomeFirstResponder];
 	} else if (textField == loginField) {
@@ -45,22 +44,20 @@ static AddViewController *_sharedAddViewController = nil;
 }
 
 - (IBAction)acceptAction:(id)sender{
-	if([[hostField.text stringByReplacingOccurrencesOfString:@" " withString:@""] length] == 0){
+	if([[urlField.text stringByReplacingOccurrencesOfString:@" " withString:@""] length] == 0){
 		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error adding account",@"Error adding account") message:NSLocalizedString(@"Please enter a valid host",@"Please enter a valid host") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[errorAlert show];
-		[hostField becomeFirstResponder];
+		[urlField becomeFirstResponder];
 		return;
 	}
 
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
 	NSMutableDictionary * newAccount = [NSMutableDictionary dictionary];
-	[newAccount setValue:[hostField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"hostname"];
+	[newAccount setValue:[urlField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"url"];
 	[newAccount setValue:[loginField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"username"];
 	[newAccount setValue:[passwordField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"password"];
-	[newAccount setValue:[NSNumber numberWithBool:sslSwitch.on] forKey:@"ssl"];
-	[newAccount setValue:[NSNumber numberWithInt:[portField.text intValue]] forKey:@"port"];
-	[accounts setValue:newAccount forKey:hostField.text];
+	[accounts setValue:newAccount forKey:urlField.text];
 	[defaults setObject:accounts forKey:@"accounts"];	
 	[defaults synchronize];
 	NSArray * viewControllers = [self.navigationController viewControllers];
@@ -109,7 +106,7 @@ static AddViewController *_sharedAddViewController = nil;
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	oldTintColor = [self.navigationController.navigationBar.tintColor retain];	
 	self.navigationController.navigationBar.tintColor = [UIColor blackColor];		
-	[hostField becomeFirstResponder];
+	[urlField becomeFirstResponder];
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -133,9 +130,7 @@ static AddViewController *_sharedAddViewController = nil;
 - (void)dealloc {
 	[loginField release];
 	[passwordField release];
-	[hostField release];
-	[portField release];
-	[sslSwitch release];
+	[urlField release];
 	[oldTintColor release];
     [super dealloc];
 }

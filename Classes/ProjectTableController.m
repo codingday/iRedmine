@@ -44,7 +44,9 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 	[projectTable reloadData];
-	[self setTitle:[accountDict valueForKey:@"hostname"]];
+	
+	NSURL * url = [NSURL URLWithString:[accountDict valueForKey:@"url"]];
+	[self setTitle:[url host]];
 }
 
 /*

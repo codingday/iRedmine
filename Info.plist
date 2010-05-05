@@ -26,10 +26,11 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
-	<key>DemoHostName</key>
-	<string>demo.redmine.org</string>
-	<key>RedmineHostName</key>
-	<string>www.redmine.org</string>
+	<key>DemoURLs</key>
+	<array>
+		<string>http://demo.redmine.org/</string>
+		<string>http://www.redmine.org/</string>
+	</array>
 	<key>RevisionCellTypes</key>
 	<array>
 		<string>revision</string>
