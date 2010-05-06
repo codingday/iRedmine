@@ -11,7 +11,7 @@
 
 @implementation NSDate (NSDateAdditions)
 
-+ (NSDate *)dataFromRedmineString:(NSString *)string{
++ (NSDate *)dateFromRedmineString:(NSString *)string{
 	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 	NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZ"];

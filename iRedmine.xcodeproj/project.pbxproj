@@ -59,6 +59,10 @@
 		02E54AAB10C406450054F37F /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E54AA810C406450054F37F /* NSDataAdditions.m */; };
 		02E54AAC10C406450054F37F /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E54AAA10C406450054F37F /* TBXML.m */; };
 		02EAC61310C583CC0076DBFB /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 02EAC61210C583CC0076DBFB /* time.png */; };
+		02F400151192F60500E0B194 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400141192F60500E0B194 /* XPathQuery.m */; };
+		02F400B31192F97F00E0B194 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F400B21192F97F00E0B194 /* libxml2.2.dylib */; };
+		02F4FFEA1192F35D00E0B194 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F4FFE71192F35D00E0B194 /* TFHpple.m */; };
+		02F4FFEB1192F35D00E0B194 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F4FFE91192F35D00E0B194 /* TFHppleElement.m */; };
 		1D3623260D0F684500981E51 /* iRedmineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -141,6 +145,13 @@
 		02E54AA910C406450054F37F /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
 		02E54AAA10C406450054F37F /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
 		02EAC61210C583CC0076DBFB /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time.png; sourceTree = "<group>"; };
+		02F400131192F60500E0B194 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = ../hpple/XPathQuery.h; sourceTree = SOURCE_ROOT; };
+		02F400141192F60500E0B194 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = ../hpple/XPathQuery.m; sourceTree = SOURCE_ROOT; };
+		02F400B21192F97F00E0B194 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		02F4FFE61192F35D00E0B194 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = ../hpple/TFHpple.h; sourceTree = SOURCE_ROOT; };
+		02F4FFE71192F35D00E0B194 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = ../hpple/TFHpple.m; sourceTree = SOURCE_ROOT; };
+		02F4FFE81192F35D00E0B194 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHppleElement.h; path = ../hpple/TFHppleElement.h; sourceTree = SOURCE_ROOT; };
+		02F4FFE91192F35D00E0B194 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHppleElement.m; path = ../hpple/TFHppleElement.m; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* iRedmineAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmineAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRedmineAppDelegate.m; sourceTree = "<group>"; };
@@ -168,6 +179,7 @@
 				0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */,
 				0231295A10BEF6CF0097675F /* Security.framework in Frameworks */,
 				0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */,
+				02F400B31192F97F00E0B194 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,26 +189,13 @@
 		0231292010BEF5E90097675F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				02F400BF1192FA7800E0B194 /* TBXML */,
+				02F400BB1192F9F400E0B194 /* ASIHTTPRequest */,
+				02F400BA1192F9E000E0B194 /* TFHpple */,
 				0252E07510CD4913003881B2 /* CSRegex.h */,
 				0252E07610CD4913003881B2 /* CSRegex.m */,
-				02E54AA710C406450054F37F /* NSDataAdditions.h */,
-				02E54AA810C406450054F37F /* NSDataAdditions.m */,
-				02E54AA910C406450054F37F /* TBXML.h */,
-				02E54AAA10C406450054F37F /* TBXML.m */,
 				0231293210BEF65E0097675F /* Reachability.h */,
 				0231293310BEF65E0097675F /* Reachability.m */,
-				02DC40A410BF057B00391C77 /* ASINSStringAdditions.h */,
-				02DC40A510BF057B00391C77 /* ASINSStringAdditions.m */,
-				02DC40A110BF057100391C77 /* ASIFormDataRequest.h */,
-				02DC40A210BF057100391C77 /* ASIFormDataRequest.m */,
-				0231292810BEF60F0097675F /* ASIInputStream.h */,
-				0231292910BEF60F0097675F /* ASIInputStream.m */,
-				0231291D10BEF5E50097675F /* ASIAuthenticationDialog.h */,
-				0231291E10BEF5E50097675F /* ASIAuthenticationDialog.m */,
-				023129CE10BEFCAD0097675F /* ASINetworkQueue.h */,
-				023129CF10BEFCAD0097675F /* ASINetworkQueue.m */,
-				0231290F10BEF5380097675F /* ASIHTTPRequest.h */,
-				0231291010BEF5380097675F /* ASIHTTPRequest.m */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -289,6 +288,49 @@
 			name = "WWK Library";
 			sourceTree = "<group>";
 		};
+		02F400BA1192F9E000E0B194 /* TFHpple */ = {
+			isa = PBXGroup;
+			children = (
+				02F400131192F60500E0B194 /* XPathQuery.h */,
+				02F400141192F60500E0B194 /* XPathQuery.m */,
+				02F4FFE61192F35D00E0B194 /* TFHpple.h */,
+				02F4FFE71192F35D00E0B194 /* TFHpple.m */,
+				02F4FFE81192F35D00E0B194 /* TFHppleElement.h */,
+				02F4FFE91192F35D00E0B194 /* TFHppleElement.m */,
+			);
+			name = TFHpple;
+			sourceTree = "<group>";
+		};
+		02F400BB1192F9F400E0B194 /* ASIHTTPRequest */ = {
+			isa = PBXGroup;
+			children = (
+				02DC40A410BF057B00391C77 /* ASINSStringAdditions.h */,
+				02DC40A510BF057B00391C77 /* ASINSStringAdditions.m */,
+				02DC40A110BF057100391C77 /* ASIFormDataRequest.h */,
+				02DC40A210BF057100391C77 /* ASIFormDataRequest.m */,
+				0231292810BEF60F0097675F /* ASIInputStream.h */,
+				0231292910BEF60F0097675F /* ASIInputStream.m */,
+				0231291D10BEF5E50097675F /* ASIAuthenticationDialog.h */,
+				0231291E10BEF5E50097675F /* ASIAuthenticationDialog.m */,
+				023129CE10BEFCAD0097675F /* ASINetworkQueue.h */,
+				023129CF10BEFCAD0097675F /* ASINetworkQueue.m */,
+				0231290F10BEF5380097675F /* ASIHTTPRequest.h */,
+				0231291010BEF5380097675F /* ASIHTTPRequest.m */,
+			);
+			name = ASIHTTPRequest;
+			sourceTree = "<group>";
+		};
+		02F400BF1192FA7800E0B194 /* TBXML */ = {
+			isa = PBXGroup;
+			children = (
+				02E54AA710C406450054F37F /* NSDataAdditions.h */,
+				02E54AA810C406450054F37F /* NSDataAdditions.m */,
+				02E54AA910C406450054F37F /* TBXML.h */,
+				02E54AAA10C406450054F37F /* TBXML.m */,
+			);
+			name = TBXML;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,6 +397,7 @@
 				0231294010BEF6A50097675F /* CFNetwork.framework */,
 				0231295910BEF6CF0097675F /* Security.framework */,
 				0231297010BEF76F0097675F /* libz.1.2.3.dylib */,
+				02F400B21192F97F00E0B194 /* libxml2.2.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -384,6 +427,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH";
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iRedmine" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
@@ -469,6 +515,9 @@
 				02E54AAC10C406450054F37F /* TBXML.m in Sources */,
 				024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */,
 				0252E07710CD4913003881B2 /* CSRegex.m in Sources */,
+				02F4FFEA1192F35D00E0B194 /* TFHpple.m in Sources */,
+				02F4FFEB1192F35D00E0B194 /* TFHppleElement.m in Sources */,
+				02F400151192F60500E0B194 /* XPathQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,10 +631,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-lxml2";
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 			};
@@ -599,8 +648,11 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-ObjC";
+				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+				);
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 				USER_HEADER_SEARCH_PATHS = "";

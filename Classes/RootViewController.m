@@ -60,7 +60,8 @@
 - (IBAction)refreshProjects:(id)sender
 {	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
+	NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"url" ascending:YES];
+	NSArray * accounts = [[[defaults dictionaryForKey:@"accounts"] allValues] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 	
 	[networkQueue cancelAllOperations];
 	[networkQueue setRequestDidStartSelector:@selector(fetchBegins:)];
@@ -334,7 +335,8 @@
 	if([username length] == 0) username = NSLocalizedString(@"Anonymous",@"Anonymous");
 		
 	NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@"Username: %@"),username];
-	NSURL * url = [NSURL URLWithString:[accountDict valueForKey:@"url"]];
+	NSString * urlString = [accountDict valueForKey:@"url"];
+	NSURL * url = [NSURL URLWithString:urlString];
 	
 	[badgeCell setCellDataWithTitle:[url host] subTitle:subtitle];
 	[badgeCell setBadge:[[accountDict valueForKey:@"projects"] count]];

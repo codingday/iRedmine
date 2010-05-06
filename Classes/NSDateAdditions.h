@@ -11,6 +11,6 @@
 
 @interface NSDate (NSDateAdditions)
 
-+ (NSDate *)dataFromRedmineString:(NSString *)string;
++ (NSDate *)dateFromRedmineString:(NSString *)string;
 
 @end
