@@ -17,16 +17,12 @@
 	NSDictionary * accountDict;
 	UITableView * projectTable;
 	ProjectViewController * projectViewController;
-	IssueTableController * assignedIssuesViewController;
-	IssueTableController * reportedIssuesViewController;	
 	BadgeCell * badgeCell;
 }
 
 @property(nonatomic,retain) NSDictionary * accountDict;
 @property(nonatomic,retain) IBOutlet UITableView * projectTable;
 @property(nonatomic,retain) ProjectViewController * projectViewController;
-@property(nonatomic,retain) IssueTableController * assignedIssuesViewController;
-@property(nonatomic,retain) IssueTableController * reportedIssuesViewController;	
 @property(nonatomic,retain) IBOutlet BadgeCell * badgeCell;
 
 @end

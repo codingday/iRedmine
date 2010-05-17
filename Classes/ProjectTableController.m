@@ -14,8 +14,6 @@
 @synthesize accountDict;
 @synthesize projectTable;
 @synthesize projectViewController;
-@synthesize reportedIssuesViewController;
-@synthesize assignedIssuesViewController;
 @synthesize badgeCell;
 
 /*
@@ -78,15 +76,13 @@
 
 #pragma mark Table view methods
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section 
-{
-	NSString * password = [accountDict valueForKey:@"password"];
-	NSString * username = [accountDict valueForKey:@"username"];
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	NSArray * myPage = [accountDict valueForKeyPath:@"data.myPage"];
 
-	switch (section) 
-	{
-		case 0: 
-			if ([password length] > 0 && [username length] > 0) return NSLocalizedString(@"My Page",@"My Page"); 
+	switch (section) {
+		case 0:
+			if (myPage && [myPage count] > 0) 
+				return NSLocalizedString(@"My Page",@"My Page"); 
 		case 1:	
 			return NSLocalizedString(@"Projects",@"Projects");
 		default: 
@@ -94,28 +90,27 @@
 	}
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
-{
-	NSString * password = [accountDict valueForKey:@"password"];
-	NSString * username = [accountDict valueForKey:@"username"];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	NSDictionary * myPage = [accountDict valueForKeyPath:@"data.myPage"];
 
-	if ([password length] > 0 && [username length] > 0) return 2; 
+	if (myPage && [myPage count] > 0) 
+		return 2;
+	
 	return 1;
 }
 
 // Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
-{
-	NSString * password = [accountDict valueForKey:@"password"];
-	NSString * username = [accountDict valueForKey:@"username"];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	NSArray * myPage = [accountDict valueForKeyPath:@"data.myPage"];
 
 	switch (section) {
 		case 0:  
 			// My Page
-			if ([password length] > 0 && [username length] > 0) return 2; 
+			if (myPage && [myPage count] > 0) 
+				return 2; 
 		case 1:	 
 			// Projects
-			return [[accountDict valueForKey:@"projects"] count]; 
+			return [[accountDict valueForKeyPath:@"data.projects.content"] count]; 
 		default: 
 			return 0;
 	}
@@ -130,31 +125,19 @@
     if (badgeCell == nil)
         [[NSBundle mainBundle] loadNibNamed:@"BadgeCell" owner:self options:nil];
 
-	NSString * password = [accountDict valueForKey:@"password"];
-	NSString * username = [accountDict valueForKey:@"username"];
+	NSDictionary * myPage = [accountDict valueForKeyPath:@"data.myPage"];
 
 	// Set up the cell...
 	switch (indexPath.section){
 		case 0:  
 			// My Page
-			if ([password length] > 0 && [username length] > 0) {
-				NSArray * assignedIssues = [accountDict valueForKey:@"assigned"];
-				NSArray * reportedIssues = [accountDict valueForKey:@"reported"];
+			if (myPage && [myPage count] > 0) {
+				NSDictionary * dict = [[myPage allValues] objectAtIndex:indexPath.row];
+				[badgeCell setCellDataWithTitle:[dict valueForKey:@"title"] subTitle:nil];
 
-				switch (indexPath.row){
-					case 0:
-						[badgeCell setCellDataWithTitle:NSLocalizedString(@"Issues assigned to me",@"Issues assigned to me") subTitle:nil];
-						[badgeCell setBadge:[assignedIssues count]];
-						//NSLog(@"assigned issues: %@",assignedIssues);
-						break;
-					case 1:
-						[badgeCell setCellDataWithTitle:NSLocalizedString(@"Reported issues",@"Reported issues") subTitle:nil];
-						[badgeCell setBadge:[reportedIssues count]];
-						//NSLog(@"reported issues: %@",reportedIssues);
-						break;
-					default:
-						break;
-				}
+				NSArray * issues = [dict valueForKey:@"content"];
+				if (issues && [issues count] > 0) 
+					[badgeCell setBadge:[issues count]];
 				break;
 			}
 		case 1:	 
@@ -164,8 +147,8 @@
 			[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 			
-			NSArray * projects = [accountDict valueForKey:@"projects"];
-			NSDictionary * project = [projects objectAtIndex:indexPath.row];
+			NSDictionary * projects = [accountDict valueForKeyPath:@"data.projects.content"];
+			NSDictionary * project = [[projects allValues] objectAtIndex:indexPath.row];
 			
 			NSDate * date = [NSDate dateFromRedmineString:[project valueForKey:@"updated"]];
 			NSString * subtitleWithLabel = [NSString stringWithFormat:NSLocalizedString(@"Last Update: %@",@"Last Update: %@"),[dateFormatter stringFromDate:date]];
@@ -181,37 +164,17 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	NSArray * assignedIssues = [accountDict valueForKey:@"assigned"];
-	NSArray * reportedIssues = [accountDict valueForKey:@"reported"];
-	NSString * password		 = [accountDict valueForKey:@"password"];
-	NSString * username		 = [accountDict valueForKey:@"username"];
+	NSDictionary * myPage = [accountDict valueForKeyPath:@"data.myPage"];
 
 	switch (indexPath.section){
 		case 0:
-			if ([password length] > 0 && [username length] > 0) {
-				// My Page
-				switch (indexPath.row){
-					case 0:
-						if ([assignedIssues count] == 0) break;
-						
-						// Issues assigned to me
-						if(self.assignedIssuesViewController == nil)
-							self.assignedIssuesViewController = [IssueTableController initWithArray:assignedIssues title:NSLocalizedString(@"Issues assigned to me",@"Issues assigned to me")];
-						
-						[self.navigationController pushViewController:self.assignedIssuesViewController animated:YES];
-						break;
-					case 1:
-						if ([reportedIssues count] == 0) break;
-						
-						// Reported issues
-						if(self.reportedIssuesViewController == nil)
-							self.reportedIssuesViewController = [IssueTableController initWithArray:reportedIssues title:NSLocalizedString(@"Reported issues",@"Reported issues")];
-						
-						[self.navigationController pushViewController:self.reportedIssuesViewController animated:YES];
-						break;
-					default:
-						break;
+			// My Page
+			if (myPage && [myPage count] > 0) {
+				NSDictionary * dict = [[myPage allValues] objectAtIndex:indexPath.row];
+				NSArray * issues = [[dict valueForKey:@"content"] allValues];
+				if (issues && [issues count] > 0) { 
+					IssueTableController * issuesViewController = [IssueTableController initWithArray:issues title:[dict valueForKey:@"title"]];
+					[self.navigationController pushViewController:issuesViewController animated:YES];
 				}
 				break;
 			}
@@ -226,8 +189,8 @@
 			[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 			
-			NSArray * projects = [accountDict valueForKey:@"projects"];
-			NSDictionary * project = [projects objectAtIndex:indexPath.row];
+			NSDictionary * projects = [accountDict valueForKeyPath:@"data.projects.content"];
+			NSDictionary * project = [[projects allValues] objectAtIndex:indexPath.row];
 			
 			self.projectViewController.project = project;			
 			[self.navigationController pushViewController:self.projectViewController animated:YES];
@@ -281,8 +244,6 @@
 	[accountDict release];
 	[projectTable release];
 	[projectViewController release];
-	[reportedIssuesViewController release];
-	[assignedIssuesViewController release];
 	[badgeCell release];	
     [super dealloc];
 }

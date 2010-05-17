@@ -43,21 +43,29 @@ static AddViewController *_sharedAddViewController = nil;
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(acceptAction:)] autorelease];
 }
 
-- (IBAction)acceptAction:(id)sender{
-	if([[urlField.text stringByReplacingOccurrencesOfString:@" " withString:@""] length] == 0){
-		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error adding account",@"Error adding account") message:NSLocalizedString(@"Please enter a valid host",@"Please enter a valid host") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+- (IBAction)acceptAction:(id)sender
+{	
+	NSURL * url = [NSURL URLWithString:[urlField.text stringByReplacingOccurrencesOfString:@" " withString:@""]];
+	if (url == nil) 
+	{
+		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error adding account",@"Error adding account") message:NSLocalizedString(@"Please enter a valid URL",@"Please enter a valid URL") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[errorAlert show];
 		[urlField becomeFirstResponder];
 		return;
 	}
-
+	
+	NSString * urlString = [url absoluteString];
+	NSString * lastChar  = [urlString substringFromIndex:[urlString length]];
+	if(![lastChar isEqualToString:@"/"])
+		urlString = [urlString stringByAppendingString:@"/"];
+	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
 	NSMutableDictionary * newAccount = [NSMutableDictionary dictionary];
-	[newAccount setValue:[urlField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"url"];
+	[newAccount setValue:urlString forKey:@"url"];
 	[newAccount setValue:[loginField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"username"];
 	[newAccount setValue:[passwordField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"password"];
-	[accounts setValue:newAccount forKey:urlField.text];
+	[accounts setValue:newAccount forKey:urlString];
 	[defaults setObject:accounts forKey:@"accounts"];	
 	[defaults synchronize];
 	NSArray * viewControllers = [self.navigationController viewControllers];

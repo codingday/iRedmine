@@ -49,6 +49,10 @@
 		028C0B0B0FD7EEF700E28E01 /* header.png in Resources */ = {isa = PBXBuildFile; fileRef = 028C0B0A0FD7EEF700E28E01 /* header.png */; };
 		02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02937CB710738AE30069E480 /* SystemConfiguration.framework */; };
 		0297070F0FA0CEB4000B9588 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0297070E0FA0CEB4000B9588 /* badge.png */; };
+		029902F2119AE1B200A47158 /* attention.png in Resources */ = {isa = PBXBuildFile; fileRef = 029902F0119AE1B200A47158 /* attention.png */; };
+		029902F3119AE1B200A47158 /* ssl.png in Resources */ = {isa = PBXBuildFile; fileRef = 029902F1119AE1B200A47158 /* ssl.png */; };
+		0299032C119AEEEE00A47158 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0299032B119AEEEE00A47158 /* AccountCell.xib */; };
+		02990334119AEF2300A47158 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02990333119AEF2300A47158 /* AccountCell.m */; };
 		029A1DF90FB30E6C00AA99A0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029A1DF80FB30E6C00AA99A0 /* WebViewController.m */; };
 		029A33960FA9B056003E5600 /* support.png in Resources */ = {isa = PBXBuildFile; fileRef = 029A33950FA9B056003E5600 /* support.png */; };
 		02A8B04C0F98D6830077AB7F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* logo.png */; };
@@ -61,6 +65,7 @@
 		02EAC61310C583CC0076DBFB /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 02EAC61210C583CC0076DBFB /* time.png */; };
 		02F400151192F60500E0B194 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400141192F60500E0B194 /* XPathQuery.m */; };
 		02F400B31192F97F00E0B194 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F400B21192F97F00E0B194 /* libxml2.2.dylib */; };
+		02F400CC119307F100E0B194 /* RMConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400CB119307F100E0B194 /* RMConnector.m */; };
 		02F4FFEA1192F35D00E0B194 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F4FFE71192F35D00E0B194 /* TFHpple.m */; };
 		02F4FFEB1192F35D00E0B194 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F4FFE91192F35D00E0B194 /* TFHppleElement.m */; };
 		1D3623260D0F684500981E51 /* iRedmineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */; };
@@ -125,6 +130,11 @@
 		028C0B0A0FD7EEF700E28E01 /* header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header.png; sourceTree = "<group>"; };
 		02937CB710738AE30069E480 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		0297070E0FA0CEB4000B9588 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
+		029902F0119AE1B200A47158 /* attention.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attention.png; sourceTree = "<group>"; };
+		029902F1119AE1B200A47158 /* ssl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssl.png; sourceTree = "<group>"; };
+		0299032B119AEEEE00A47158 /* AccountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountCell.xib; sourceTree = "<group>"; };
+		02990332119AEF2300A47158 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
+		02990333119AEF2300A47158 /* AccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountCell.m; sourceTree = "<group>"; };
 		029A1DF70FB30E6C00AA99A0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		029A1DF80FB30E6C00AA99A0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		029A1E0C0FB31C3C00AA99A0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WebView.xib; sourceTree = "<group>"; };
@@ -148,6 +158,8 @@
 		02F400131192F60500E0B194 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = ../hpple/XPathQuery.h; sourceTree = SOURCE_ROOT; };
 		02F400141192F60500E0B194 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = ../hpple/XPathQuery.m; sourceTree = SOURCE_ROOT; };
 		02F400B21192F97F00E0B194 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		02F400CA119307F100E0B194 /* RMConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMConnector.h; sourceTree = "<group>"; };
+		02F400CB119307F100E0B194 /* RMConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMConnector.m; sourceTree = "<group>"; };
 		02F4FFE61192F35D00E0B194 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = ../hpple/TFHpple.h; sourceTree = SOURCE_ROOT; };
 		02F4FFE71192F35D00E0B194 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = ../hpple/TFHpple.m; sourceTree = SOURCE_ROOT; };
 		02F4FFE81192F35D00E0B194 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHppleElement.h; path = ../hpple/TFHppleElement.h; sourceTree = SOURCE_ROOT; };
@@ -203,6 +215,8 @@
 		0278ED7F0F9E41EA000E8EED /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				029902F0119AE1B200A47158 /* attention.png */,
+				029902F1119AE1B200A47158 /* ssl.png */,
 				02EAC61210C583CC0076DBFB /* time.png */,
 				02434FCB1030847600C62C58 /* Default.png */,
 				02732B96100F6ED6007592D0 /* back.png */,
@@ -241,6 +255,8 @@
 				02E2B1E80F83924700E49BD6 /* BadgeCell.m */,
 				024108890F8E67BD008CAB10 /* SubtitleCell.h */,
 				0241088A0F8E67BD008CAB10 /* SubtitleCell.m */,
+				02990332119AEF2300A47158 /* AccountCell.h */,
+				02990333119AEF2300A47158 /* AccountCell.m */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -255,6 +271,7 @@
 				0252E06310CD3E36003881B2 /* AddView.xib */,
 				02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */,
 				023218600F94D45600A95381 /* IssueTableView.xib */,
+				0299032B119AEEEE00A47158 /* AccountCell.xib */,
 				02E2B1EB0F8393A500E49BD6 /* BadgeCell.xib */,
 				024108860F8E677E008CAB10 /* ErrorCell.xib */,
 				020C082B0FA74E67008954EF /* FeatureCell.xib */,
@@ -280,6 +297,8 @@
 		02E2EDB10F9F572F003DDCB0 /* WWK Library */ = {
 			isa = PBXGroup;
 			children = (
+				02F400CA119307F100E0B194 /* RMConnector.h */,
+				02F400CB119307F100E0B194 /* RMConnector.m */,
 				02D86C570F8E75E500EB1658 /* NSDateAdditions.h */,
 				02D86C580F8E75F400EB1658 /* NSDateAdditions.m */,
 				024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */,
@@ -483,6 +502,9 @@
 				0231286210BEE1310097675F /* Localizable.strings in Resources */,
 				022ABE9810C020880023AD77 /* Changelog.txt in Resources */,
 				02EAC61310C583CC0076DBFB /* time.png in Resources */,
+				029902F2119AE1B200A47158 /* attention.png in Resources */,
+				029902F3119AE1B200A47158 /* ssl.png in Resources */,
+				0299032C119AEEEE00A47158 /* AccountCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +540,8 @@
 				02F4FFEA1192F35D00E0B194 /* TFHpple.m in Sources */,
 				02F4FFEB1192F35D00E0B194 /* TFHppleElement.m in Sources */,
 				02F400151192F60500E0B194 /* XPathQuery.m in Sources */,
+				02F400CC119307F100E0B194 /* RMConnector.m in Sources */,
+				02990334119AEF2300A47158 /* AccountCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

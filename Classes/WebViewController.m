@@ -40,14 +40,12 @@
 */
 
 // Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supporting all orientations
 	return YES;
 }
 
-- (void)viewDidAppear:(BOOL)animated 
-{
+- (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -61,106 +59,60 @@
 	NSString * format = @"";
 	NSString * MIMEType;
 	if ([title matchedByPattern:revisionPattern options:REG_ICASE]) 
-	{
 		MIMEType = @"text/html";
-	} 
-	else 
-	{
+	else {
 		MIMEType = @"application/pdf";
 		format = @"?format=pdf";
 	}
 
-	NSURL * issueURL = [NSURL URLWithString:[issue valueForKey:@"id"]];
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSDictionary * accounts = [defaults dictionaryForKey:@"accounts"];
-	NSDictionary * account  = [accounts valueForKey:[issueURL host]];
-	NSString * password  = [account valueForKey:@"password"];
-	NSString * username  = [account valueForKey:@"username"];
-	NSString * urlString = [account valueForKey:@"url"];
-	NSURL * url = [NSURL URLWithString:urlString];
-	
-	NSURL * loginURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/login",[url scheme],[url host],[url port]]];
-	NSURL * feedURL  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d%@%@",[url scheme],[url host],[url port],[issueURL relativePath],format]];
-	// NSLog(@"feed URL: %@",feedURL);
-	
-	ASIFormDataRequest * request;
-	if(([password length] > 0) && ([username length] > 0))
-	{
-		request = [ASIFormDataRequest requestWithURL:loginURL];
-		[request setPostValue:username forKey:@"username"];
-		[request setPostValue:password forKey:@"password"];
-		[request setPostValue:@"1"     forKey:@"autologin"];
-		[request setPostValue:[feedURL absoluteString] forKey:@"back_url"];
-	} 
-	else 
-	{
-		request = [ASIFormDataRequest requestWithURL:feedURL];
-	}
-	
-	[request setTimeOutSeconds:100];
+	NSURL * url = [NSURL URLWithString:[issue valueForKey:@"href"]];
+	ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
+	[request setTimeOutSeconds:300];
 	[request setUseKeychainPersistance:YES];
 	[request setShouldPresentAuthenticationDialog:YES];
 	if ([[[request url] scheme] isEqualToString:@"https"]) 
-	{
 		[request setValidatesSecureCertificate:NO];
-	}	
 	
 	[request start];	
 	NSError *error = [request error];
 	
-	if (error) 
-	{
+	if (error) {
 		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[[request url] host] message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[errorAlert show];
 	}
 	else
-	{
-		NSURL * baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%d/",[url scheme],[url host],[url port]]];
-		[webView loadData:[request responseData] MIMEType:MIMEType textEncodingName:@"utf-8" baseURL:baseURL];
-	}	
+		[webView loadData:[request responseData] MIMEType:MIMEType textEncodingName:@"utf-8" baseURL:[url baseURL]];
 }
 
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-	if(item == homeItem) 
-	{
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+	if(item == homeItem)
 		[self.navigationController popToRootViewControllerAnimated:YES];
-	} 
-	else if(item == safariItem) 
-	{	
-		NSURL * url = [NSURL URLWithString:[issue valueForKey:@"id"]];
-		[[UIApplication sharedApplication] openURL:url];
-	}
+	else if(item == safariItem)
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[issue valueForKey:@"href"]]];
 	[tabBar setSelectedItem:nil];
 }
 
-- (void)didReceiveMemoryWarning 
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
+- (void)webViewDidStartLoad:(UIWebView *)webView {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	NSURL * url = [NSURL URLWithString:[issue valueForKey:@"id"]];
-	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[url host] message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[issue valueForKey:@"href"] message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[errorAlert show];
 }
 
-- (void)dealloc 
-{
+- (void)dealloc {
  	[webView release];
 	[safariItem release];
 	[homeItem release];

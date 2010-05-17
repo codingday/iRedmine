@@ -19,33 +19,29 @@
 #import <netdb.h>
 
 #import <SystemConfiguration/SystemConfiguration.h>
-#import "Reachability.h"
-#import "ASIFormDataRequest.h"
-#import "ASIHTTPRequest.h"
-#import "ASINetworkQueue.h"
-#import "NSDataAdditions.h"
-#import "TBXML.h"
+#import "iRedmineAppDelegate.h"
+#import "RMConnector.h"
+#import "AccountCell.h"
 
 @interface RootViewController : UITableViewController
 {
-	BadgeCell * badgeCell;
+	AccountCell * accountCell;
 	AddViewController * addViewController;
 	ProjectTableController * projectTableController;
 	ProjectViewController * projectViewController;
 	UITableView * accountTable;
-	ASINetworkQueue *networkQueue;
+	NSMutableArray * activeConnects;
 }
 
-@property(nonatomic,retain) IBOutlet BadgeCell * badgeCell;
+@property(nonatomic,retain) IBOutlet BadgeCell * accountCell;
 @property(nonatomic,retain) AddViewController * addViewController;
 @property(nonatomic,retain) ProjectTableController * projectTableController;
 @property(nonatomic,retain) ProjectViewController * projectViewController;
 @property(nonatomic,retain) IBOutlet UITableView * accountTable;
-@property(nonatomic,retain) ASINetworkQueue *networkQueue;
+@property(retain,readonly) NSMutableArray * activeConnects;
 
-- (IBAction)openPreferences:(id)sender;
+- (IBAction)addAccount:(id)sender;
 - (IBAction)refreshProjects:(id)sender;
-- (NSArray *)arrayOfDictionariesWithXML:(TBXML *)xml forKeyPaths:(NSArray *)keys;
-- (ASIFormDataRequest *)requestWithAccount:(NSDictionary *)account URLPath:(NSString *)path;
+- (void)updateControls;
 
 @end

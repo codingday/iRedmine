@@ -104,9 +104,10 @@
 	NSArray * titleComponents	 = [[issue valueForKey:@"title"] componentsSeparatedByString:@": "];
 	NSString * subtitle = [titleComponents objectAtIndex:0];
 	NSString * title	= [titleComponents lastObject];
-	NSString * author	= [issue valueForKey:@"author.name"];	
+	NSString * author	= [issue valueForKey:@"author"];	
+	NSString * email	= [issue valueForKey:@"email"];	
 
-	 static NSString *CellIdentifier = @"IssueCell";
+	static NSString *CellIdentifier = @"IssueCell";
     
 	subtitleCell = (SubtitleCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (subtitleCell == nil){
@@ -130,7 +131,7 @@
 		}
 	}
 	
-	[subtitleCell setCellDataWithTitle:title author:author];
+	[subtitleCell setCellDataWithTitle:title author:[NSString stringWithFormat:@"%@ <%@>",author,email]];
 	[subtitleCell setSubtitle:subtitle];
 	
 	return subtitleCell;

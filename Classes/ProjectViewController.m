@@ -47,8 +47,9 @@
 {
     [super viewWillAppear:animated];
 	
-	NSString * content = [project valueForKey:@"content"];
-	[descriptionText loadHTMLString:[content stringByUnescapingHTML] baseURL:nil];
+	NSString * content = [[project valueForKey:@"content"] stringByUnescapingHTML];
+	NSString * html    = [NSString stringWithFormat:@"<html><body style=\"padding-top:10px;\">%@</body></html>",content];
+	[descriptionText loadHTMLString:html baseURL:nil];
 	
 	int issuesCount = [[project valueForKey:@"issues"] count];
 	if (issuesCount > 0) {
