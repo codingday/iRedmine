@@ -134,10 +134,13 @@
 			if (myPage && [myPage count] > 0) {
 				NSDictionary * dict = [[myPage allValues] objectAtIndex:indexPath.row];
 				[badgeCell setCellDataWithTitle:[dict valueForKey:@"title"] subTitle:nil];
+				[badgeCell setAccessoryType:UITableViewCellAccessoryNone];
 
 				NSArray * issues = [dict valueForKey:@"content"];
-				if (issues && [issues count] > 0) 
+				if (issues && [issues count] > 0) {
 					[badgeCell setBadge:[issues count]];
+					[badgeCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+				}
 				break;
 			}
 		case 1:	 

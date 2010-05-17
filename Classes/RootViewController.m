@@ -216,8 +216,8 @@
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary * accountDict = [[[defaults dictionaryForKey:@"accounts"] allValues] objectAtIndex:indexPath.row];
 	
-	NSArray * myPage   = [accountDict valueForKeyPath:@"data.myPage"];
-	NSArray * projects = [accountDict valueForKeyPath:@"data.projects.content"];
+	NSDictionary * myPage   = [accountDict valueForKeyPath:@"data.myPage"];
+	NSDictionary * projects = [accountDict valueForKeyPath:@"data.projects.content"];
 
 	if ((projects == nil) || ([projects count] == 0))
 		return;
@@ -226,7 +226,7 @@
 		if(self.projectViewController == nil)
 			self.projectViewController = [[ProjectViewController alloc] initWithNibName:@"ProjectView" bundle:nil];
 		
-		self.projectViewController.project = [projects objectAtIndex:0];		
+		self.projectViewController.project = [[projects allValues] objectAtIndex:0];		
 		[self.navigationController pushViewController:self.projectViewController animated:YES];
 		return;
 	}
