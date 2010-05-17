@@ -60,8 +60,6 @@
 		02DC40A310BF057100391C77 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DC40A210BF057100391C77 /* ASIFormDataRequest.m */; };
 		02DC40A610BF057B00391C77 /* ASINSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DC40A510BF057B00391C77 /* ASINSStringAdditions.m */; };
 		02E2B1E90F83924700E49BD6 /* BadgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E2B1E80F83924700E49BD6 /* BadgeCell.m */; };
-		02E54AAB10C406450054F37F /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E54AA810C406450054F37F /* NSDataAdditions.m */; };
-		02E54AAC10C406450054F37F /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E54AAA10C406450054F37F /* TBXML.m */; };
 		02EAC61310C583CC0076DBFB /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 02EAC61210C583CC0076DBFB /* time.png */; };
 		02F400151192F60500E0B194 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400141192F60500E0B194 /* XPathQuery.m */; };
 		02F400B31192F97F00E0B194 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F400B21192F97F00E0B194 /* libxml2.2.dylib */; };
@@ -150,10 +148,6 @@
 		02E2B1E70F83924700E49BD6 /* BadgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeCell.h; sourceTree = "<group>"; };
 		02E2B1E80F83924700E49BD6 /* BadgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeCell.m; sourceTree = "<group>"; };
 		02E2B1EB0F8393A500E49BD6 /* BadgeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeCell.xib; sourceTree = "<group>"; };
-		02E54AA710C406450054F37F /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
-		02E54AA810C406450054F37F /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
-		02E54AA910C406450054F37F /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
-		02E54AAA10C406450054F37F /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
 		02EAC61210C583CC0076DBFB /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time.png; sourceTree = "<group>"; };
 		02F400131192F60500E0B194 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = ../hpple/XPathQuery.h; sourceTree = SOURCE_ROOT; };
 		02F400141192F60500E0B194 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = ../hpple/XPathQuery.m; sourceTree = SOURCE_ROOT; };
@@ -201,7 +195,6 @@
 		0231292010BEF5E90097675F /* External */ = {
 			isa = PBXGroup;
 			children = (
-				02F400BF1192FA7800E0B194 /* TBXML */,
 				02F400BB1192F9F400E0B194 /* ASIHTTPRequest */,
 				02F400BA1192F9E000E0B194 /* TFHpple */,
 				0252E07510CD4913003881B2 /* CSRegex.h */,
@@ -337,17 +330,6 @@
 				0231291010BEF5380097675F /* ASIHTTPRequest.m */,
 			);
 			name = ASIHTTPRequest;
-			sourceTree = "<group>";
-		};
-		02F400BF1192FA7800E0B194 /* TBXML */ = {
-			isa = PBXGroup;
-			children = (
-				02E54AA710C406450054F37F /* NSDataAdditions.h */,
-				02E54AA810C406450054F37F /* NSDataAdditions.m */,
-				02E54AA910C406450054F37F /* TBXML.h */,
-				02E54AAA10C406450054F37F /* TBXML.m */,
-			);
-			name = TBXML;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -533,8 +515,6 @@
 				023129D010BEFCAD0097675F /* ASINetworkQueue.m in Sources */,
 				02DC40A310BF057100391C77 /* ASIFormDataRequest.m in Sources */,
 				02DC40A610BF057B00391C77 /* ASINSStringAdditions.m in Sources */,
-				02E54AAB10C406450054F37F /* NSDataAdditions.m in Sources */,
-				02E54AAC10C406450054F37F /* TBXML.m in Sources */,
 				024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */,
 				0252E07710CD4913003881B2 /* CSRegex.m in Sources */,
 				02F4FFEA1192F35D00E0B194 /* TFHpple.m in Sources */,
