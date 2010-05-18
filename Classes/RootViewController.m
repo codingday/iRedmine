@@ -37,7 +37,7 @@
 		[defaults setObject:accounts forKey:@"accounts"];	
 		[defaults setBool:YES forKey:@"launchedBefore"];
 		[defaults synchronize];		
-		[self refreshProjects:self];
+		[self refreshAccounts:self];
 	}	
 }
 
@@ -48,21 +48,21 @@
 	[self.navigationController pushViewController:self.addViewController animated:YES];	
 }
 
-- (IBAction)refreshProjects:(id)sender {	
+- (IBAction)refreshAccounts:(id)sender {	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSArray * accounts = [[defaults dictionaryForKey:@"accounts"] allValues];
 	
-	for(NSDictionary * account in accounts)	{		
-		NSString * urlString = [account valueForKey:@"url"];
-		NSString * password  = [account valueForKey:@"password"];
-		NSString * username  = [account valueForKey:@"username"];
-		RMConnector * conn = [[RMConnector connectorWithUrlString:urlString username:username password:password] retain];
-		[conn setDelegate:self];
-		[conn setDidStartSelector:@selector(connectBegan:)];
-		[conn setDidFinishSelector:@selector(connectCompleted:)];
-		[conn setDidFailSelector:@selector(connectFailed:)];
-		[conn start];
-	}
+	for(NSDictionary * account in accounts)
+		[self connectWithURLString:[account valueForKey:@"url"] username:[account valueForKey:@"username"] password:[account valueForKey:@"password"]];
+}
+
+- (void)connectWithURLString:(NSString *)urlString username:(NSString *)username password:(NSString *)password {
+	RMConnector * conn = [[RMConnector connectorWithUrlString:urlString username:username password:password] retain];
+	[conn setDelegate:self];
+	[conn setDidStartSelector:@selector(connectBegan:)];
+	[conn setDidFinishSelector:@selector(connectCompleted:)];
+	[conn setDidFailSelector:@selector(connectFailed:)];
+	[conn start];	
 }
 
 - (void)connectBegan:(RMConnector *)connector {
