@@ -69,7 +69,6 @@
 	NSLog(@"refreshing: %@",[connector urlString]);
 	[activeConnects addObject:connector];
 	[self updateControls];
-	[accountTable reloadData];
 }
 
 - (void)connectFailed:(RMConnector *)connector {
@@ -83,9 +82,6 @@
 }
 
 - (void)connectCompleted:(RMConnector *)connector {
-	[activeConnects removeObject:connector];
-	[self updateControls];
-	
 	// Cache the response dict in the user defaults
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
@@ -94,13 +90,16 @@
 	[accounts setValue:account forKey:[connector urlString]];
 	[defaults setValue:accounts forKey:@"accounts"];
 	[defaults synchronize];
-	[accountTable reloadData];
+
+	[activeConnects removeObject:connector];
+	[self updateControls];
 }
 
 - (void)updateControls {
 	BOOL isActive = [[self activeConnects] count] > 0;
 	[[[self navigationItem] rightBarButtonItem] setEnabled:!isActive];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:isActive];
+	[accountTable reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
