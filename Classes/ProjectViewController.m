@@ -48,8 +48,10 @@
     [super viewWillAppear:animated];
 	
 	NSString * content = [[project valueForKey:@"content"] stringByUnescapingHTML];
-	NSString * html    = [NSString stringWithFormat:@"<html><body style=\"padding-top:10px;\">%@</body></html>",content];
-	[descriptionText loadHTMLString:html baseURL:nil];
+	if (content != nil){
+		NSString * html    = [NSString stringWithFormat:@"<html><body style=\"padding-top:10px;\">%@</body></html>",content];
+		[descriptionText loadHTMLString:html baseURL:nil];
+	}
 	
 	int issuesCount = [[project valueForKey:@"issues"] count];
 	if (issuesCount > 0) {
@@ -92,10 +94,10 @@
 	if(item == homeItem){
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else if((item == issuesItem) && ([[issuesItem badgeValue] intValue] > 0))	{
-		IssueTableController * issuesViewController = [IssueTableController initWithArray:[project valueForKey:@"issues"] title:NSLocalizedString(@"Issues",@"Issues")];		
+		IssueTableController * issuesViewController = [IssueTableController initWithArray:[[project valueForKey:@"issues"] allValues] title:NSLocalizedString(@"Issues",@"Issues")];		
 		[self.navigationController pushViewController:issuesViewController animated:YES];			
 	} else if((item == activityItem) && ([[activityItem badgeValue] intValue] > 0))	{
-		IssueTableController * activityViewController = [IssueTableController initWithArray:[project valueForKey:@"activity"] title:NSLocalizedString(@"Activities",@"Activities")];
+		IssueTableController * activityViewController = [IssueTableController initWithArray:[[project valueForKey:@"activity"] allValues] title:NSLocalizedString(@"Activities",@"Activities")];
 		[self.navigationController pushViewController:activityViewController animated:YES];
 	}
 	[tabBar setSelectedItem:nil];

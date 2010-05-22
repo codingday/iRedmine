@@ -164,6 +164,7 @@
 	[request setDidStartSelector:@selector(loginBegan:)];	
 	[request setPostValue:[self username] forKey:@"username"];
 	[request setPostValue:[self password] forKey:@"password"];
+	[request setPostValue:@"1" forKey:@"autologin"];
 	
 	if (token) 
 		[request setPostValue:token forKey:@"authenticity_token"];
@@ -184,6 +185,7 @@
 }
 
 - (void) loginCompleted:(ASIFormDataRequest *)aRequest {
+	NSLog(@"logged on: %@; status code: %d",[aRequest url],[aRequest responseStatusCode]);
 	[self fetchMyPageWithCookies:[aRequest responseCookies]];
 }
 
@@ -204,46 +206,59 @@
 }
 
 - (void) fetchMyPageCompleted:(ASIHTTPRequest *)aRequest {
+	NSArray * cookies = [aRequest responseCookies];
+
 	// extract feed urls
-	TFHpple * xpathParser = [[[TFHpple alloc] initWithHTMLData:[aRequest responseData]] autorelease];
-	NSArray * feeds = [xpathParser search:@"//link[@type='application/atom+xml']"];
+	TFHpple * myPageParser = [[[TFHpple alloc] initWithHTMLData:[aRequest responseData]] autorelease];
+	NSArray * feeds = [myPageParser search:@"//link[@type='application/atom+xml']"];
 	NSMutableDictionary * feedDicts = [NSMutableDictionary dictionary];
 	for (TFHppleElement * feed in feeds) 
 	{
-		NSURL * url = [NSURL URLWithString:[feed objectForKey:@"href"] relativeToURL:[NSURL URLWithString:[self urlString]]];
-		ASIHTTPRequest * feedRequest = [self requestWithURL:url cookies:[aRequest responseCookies] startSelector:nil finishSelector:nil failSelector:nil];
-		[feedRequest start];
+		NSURL * feedURL = [NSURL URLWithString:[feed objectForKey:@"href"] relativeToURL:[NSURL URLWithString:[self urlString]]];
+		ASIHTTPRequest * feedRequest = [self requestWithURL:feedURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+		[feedRequest startSynchronous];
+		cookies = [feedRequest responseCookies];
 		
 		if ([feedRequest error]) {
 			[self didFailWithError:[feedRequest error]];
 			return;
 		}
 		
-		xpathParser = [[[TFHpple alloc] initWithHTMLData:[feedRequest responseData]] autorelease];
-		NSArray *issuesArray = [xpathParser search:@"//feed/entry"];
+		TFHpple * issuesParser = [[[TFHpple alloc] initWithHTMLData:[feedRequest responseData]] autorelease];
+		NSArray *issuesArray = [issuesParser search:@"//feed/entry"];
 		
 		NSMutableDictionary * issuesDict = [NSMutableDictionary dictionary];
 		for (int i = 1; i <= [issuesArray count]; i++) 
 		{
-			// issue metadata
-			NSString *title	  = [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/title", i]] content];
-			NSString *updated = [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/updated", i]] content];
-			NSString *href	  = [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", i]] objectForKey:@"href"];
-			NSString *author  = [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/name", i]] content];
-			NSString *email   = [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/email", i]] content];
+			NSString * href = [[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", i]] objectForKey:@"href"];
+			NSURL * issueURL = [NSURL URLWithString:href relativeToURL:[NSURL URLWithString:[self urlString]]];
+			ASIHTTPRequest * issueRequest = [self requestWithURL:issueURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+			[issueRequest startSynchronous];
+			cookies = [issueRequest responseCookies];
+
+			if ([issueRequest error]) {
+				[self didFailWithError:[issueRequest error]];
+				return;
+			}
 			
 			// creating data structure to response	
-			NSDictionary * issueDict = [NSDictionary dictionaryWithObjectsAndKeys:title,@"title",updated,@"updated",href,@"href",author,@"author",email,@"email",nil];	
+			NSMutableDictionary * issueDict = [NSMutableDictionary dictionary];
+			[issueDict setValue:href forKey:@"href"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/title", i]] content]		forKey:@"title"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/updated", i]] content]		forKey:@"updated"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/name", i]] content]	forKey:@"author"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/email", i]] content]	forKey:@"email"];
+			[issueDict setValue:[issueRequest responseData] forKey:@"content"];			
 			[issuesDict setValue:issueDict forKey:href];
 		}		
 		
 		// Caching into response dictionary
-		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[feed objectForKey:@"title"],@"title",[feed objectForKey:@"href"],@"href",issuesDict,@"content",nil];
+		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[feed objectForKey:@"title"],@"title",[feed objectForKey:@"href"],@"href",issuesDict,@"issues",nil];
 		[feedDicts setValue:dict forKey:[feed objectForKey:@"href"]];
 	}
 	[responseDictionary setValue:feedDicts forKey:@"myPage"];
 
-	[self fetchProjectsPageWithCookies:[aRequest responseCookies]];
+	[self fetchProjectsPageWithCookies:cookies];
 }
 
 #pragma mark Fetching Projects
@@ -286,22 +301,79 @@
 }
 
 - (void) fetchProjectsFeedCompleted:(ASIHTTPRequest *)aRequest {	
-	TFHpple * xpathParser = [[[TFHpple alloc] initWithHTMLData:[aRequest responseData]] autorelease];
-	NSArray * entries = [xpathParser search:@"//feed/entry"];
+	NSArray * cookies = [aRequest responseCookies];
+
+	TFHpple * feedParser = [[[TFHpple alloc] initWithHTMLData:[aRequest responseData]] autorelease];
+	NSArray * entries = [feedParser search:@"//feed/entry"];
 	NSMutableDictionary * feedDicts = [NSMutableDictionary dictionary];
 		
 	for (int i = 1; i <= [entries count]; i++) 
 	{
-		// project metadata
-		NSString *title		= [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/title", i]] content];
-		NSString *updated	= [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/updated", i]] content];
-		NSString *href		= [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", i]] objectForKey:@"href"];
-		NSString *content	= [[xpathParser at:[NSString stringWithFormat:@"//feed/entry[%d]/content", i]] content];
-		NSDictionary * issues	= [NSDictionary dictionary];
-		NSDictionary * activity = [NSDictionary dictionary];
+		NSString * href = [[feedParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", i]] objectForKey:@"href"];
+		NSURL * projectURL = [NSURL URLWithString:href relativeToURL:[NSURL URLWithString:[self urlString]]];
+		ASIHTTPRequest * projectRequest = [self requestWithURL:projectURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+		[projectRequest startSynchronous];
+		cookies = [projectRequest responseCookies];
+				
+		if ([projectRequest error]) {
+			[self didFailWithError:[projectRequest error]];
+			return;
+		}
 		
+		// Fetch activity
+		NSMutableDictionary * activityDict = [NSMutableDictionary dictionary];
+		TFHpple * projectParser = [[[TFHpple alloc] initWithHTMLData:[projectRequest responseData]] autorelease];
+		NSString * activityLink = [[projectParser at:@"//link[@type='application/atom+xml']"] objectForKey:@"href"];
+		NSURL * activityURL = [NSURL URLWithString:activityLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+		ASIHTTPRequest * activityRequest = [self requestWithURL:activityURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+		[activityRequest startSynchronous];
+		cookies = [activityRequest responseCookies];
+		
+		if ([activityRequest error]) {
+			[self didFailWithError:[activityRequest error]];
+			return;
+		}
+		
+		TFHpple * activityParser = [[[TFHpple alloc] initWithHTMLData:[activityRequest responseData]] autorelease];
+		NSArray * activityEntries = [activityParser search:@"//feed/entry"];
+		for (int j = 1; j <= [activityEntries count]; j++) 
+		{
+			NSString * issueLink = [[activityParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", j]] objectForKey:@"href"];
+			NSURL * issueURL = [NSURL URLWithString:issueLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+			ASIHTTPRequest * issueRequest = [self requestWithURL:issueURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+			[issueRequest startSynchronous];
+			cookies = [issueRequest responseCookies];
+			
+			if ([issueRequest error]) {
+				[self didFailWithError:[issueRequest error]];
+				return;
+			}
+			
+			// creating data structure to response	
+			NSMutableDictionary * issueDict = [NSMutableDictionary dictionary];
+			[issueDict setValue:issueLink forKey:@"href"];
+			[issueDict setValue:[[activityParser at:[NSString stringWithFormat:@"//feed/entry[%d]/title", j]] content]		forKey:@"title"];
+			[issueDict setValue:[[activityParser at:[NSString stringWithFormat:@"//feed/entry[%d]/updated", j]] content]		forKey:@"updated"];
+			[issueDict setValue:[[activityParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/name", j]] content]	forKey:@"author"];
+			[issueDict setValue:[[activityParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/email", j]] content]	forKey:@"email"];
+			[issueDict setValue:[issueRequest responseData] forKey:@"content"];			
+			[activityDict setValue:issueDict forKey:issueLink];
+		}
+		
+		// Fetch issues
+		NSMutableDictionary * issuesDict = [NSMutableDictionary dictionary];
+		NSString * issuesLink = [[projectParser at:@"//a[@class='issues']"] objectForKey:@"href"];
+		NSLog(@"%@",issuesLink);
+		// FIXME
+	
 		// creating data structure to response		
-		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:title,@"title",updated,@"updated",href,@"href",content,@"content",issues,@"issues",activity,@"activity",nil];
+		NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+		[dict setValue:href			forKey:@"href"];
+		[dict setValue:issuesDict	forKey:@"issues"];
+		[dict setValue:activityDict forKey:@"activity"];
+		[dict setValue:[[feedParser at:[NSString stringWithFormat:@"//feed/entry[%d]/title", i]] content] forKey:@"title"];
+		[dict setValue:[[feedParser at:[NSString stringWithFormat:@"//feed/entry[%d]/updated", i]] content] forKey:@"updated"];
+		[dict setValue:[[feedParser at:[NSString stringWithFormat:@"//feed/entry[%d]/content", i]] content] forKey:@"content"];
 		[feedDicts setValue:dict forKey:href];
 	}
 	

@@ -131,7 +131,10 @@
 		}
 	}
 	
-	[subtitleCell setCellDataWithTitle:title author:[NSString stringWithFormat:@"%@ <%@>",author,email]];
+	if(email == nil)		
+		[subtitleCell setCellDataWithTitle:title author:author];
+	else
+		[subtitleCell setCellDataWithTitle:title author:[NSString stringWithFormat:@"%@ <%@>",author,email]];
 	[subtitleCell setSubtitle:subtitle];
 	
 	return subtitleCell;

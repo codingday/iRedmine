@@ -63,8 +63,8 @@
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E2B1E90F83924700E49BD6 /* BadgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E2B1E80F83924700E49BD6 /* BadgeCell.m */; };
 		02EAC61310C583CC0076DBFB /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 02EAC61210C583CC0076DBFB /* time.png */; };
-		02F400B31192F97F00E0B194 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F400B21192F97F00E0B194 /* libxml2.2.dylib */; };
 		02F400CC119307F100E0B194 /* RMConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400CB119307F100E0B194 /* RMConnector.m */; };
+		02F7CEC911A5D21100BBDE0D /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F7CEC811A5D21100BBDE0D /* libxml2.2.7.3.dylib */; };
 		1D3623260D0F684500981E51 /* iRedmineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -153,9 +153,9 @@
 		02E2B1E80F83924700E49BD6 /* BadgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeCell.m; sourceTree = "<group>"; };
 		02E2B1EB0F8393A500E49BD6 /* BadgeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeCell.xib; sourceTree = "<group>"; };
 		02EAC61210C583CC0076DBFB /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time.png; sourceTree = "<group>"; };
-		02F400B21192F97F00E0B194 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		02F400CA119307F100E0B194 /* RMConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMConnector.h; sourceTree = "<group>"; };
 		02F400CB119307F100E0B194 /* RMConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMConnector.m; sourceTree = "<group>"; };
+		02F7CEC811A5D21100BBDE0D /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* iRedmineAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmineAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRedmineAppDelegate.m; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 				0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */,
 				0231295A10BEF6CF0097675F /* Security.framework in Frameworks */,
 				0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */,
-				02F400B31192F97F00E0B194 /* libxml2.2.dylib in Frameworks */,
+				02F7CEC911A5D21100BBDE0D /* libxml2.2.7.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,7 +395,7 @@
 				0231294010BEF6A50097675F /* CFNetwork.framework */,
 				0231295910BEF6CF0097675F /* Security.framework */,
 				0231297010BEF76F0097675F /* libz.1.2.3.dylib */,
-				02F400B21192F97F00E0B194 /* libxml2.2.dylib */,
+				02F7CEC811A5D21100BBDE0D /* libxml2.2.7.3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
