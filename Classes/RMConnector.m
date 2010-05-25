@@ -153,7 +153,7 @@
 
 - (void) loginWithCookies:(NSArray *)cookies Token:(NSString *)token {
 	NSURL * url = [NSURL URLWithString:@"login" relativeToURL:[NSURL URLWithString:[self urlString]]];
-	ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:url];
+	ASIFormDataRequest * request = [[ASIFormDataRequest requestWithURL:url] retain];
 	[request setTimeOutSeconds:300];
 	[request setRequestCookies:[cookies mutableCopy]];
 	[request setUseKeychainPersistance:YES];
@@ -360,12 +360,58 @@
 			[activityDict setValue:issueDict forKey:issueLink];
 		}
 		
-		// Fetch issues
+		// Fetch issues page
 		NSMutableDictionary * issuesDict = [NSMutableDictionary dictionary];
-		NSString * issuesLink = [[projectParser at:@"//a[@class='issues']"] objectForKey:@"href"];
-		NSLog(@"%@",issuesLink);
-		// FIXME
-	
+		NSString * issuesPageLink = [[projectParser at:@"//a[@class='issues']"] objectForKey:@"href"];		
+		NSURL * issuesPageURL = [NSURL URLWithString:issuesPageLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+		ASIHTTPRequest * issuesPageRequest = [self requestWithURL:issuesPageURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+		[issuesPageRequest startSynchronous];
+		cookies = [issuesPageRequest responseCookies];
+		
+		if ([issuesPageRequest error]) {
+			[self didFailWithError:[issuesPageRequest error]];
+			return;
+		}
+		
+		// Fetch issues
+		TFHpple * issuesPageParser = [[[TFHpple alloc] initWithHTMLData:[issuesPageRequest responseData]] autorelease];
+		NSString * issuesLink = [[issuesPageParser at:@"//link[@type='application/atom+xml']"] objectForKey:@"href"];
+		NSURL * issuesURL = [NSURL URLWithString:issuesLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+		ASIHTTPRequest * issuesRequest = [self requestWithURL:issuesURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+		[issuesRequest startSynchronous];
+		cookies = [issuesRequest responseCookies];
+		
+		if ([issuesRequest error]) {
+			[self didFailWithError:[issuesRequest error]];
+			return;
+		}
+		
+		TFHpple * issuesParser = [[[TFHpple alloc] initWithHTMLData:[issuesRequest responseData]] autorelease];
+		NSArray * issuesEntries = [issuesParser search:@"//feed/entry"];
+		for (int j = 1; j <= [issuesEntries count]; j++) 
+		{
+			NSString * issueLink = [[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", j]] objectForKey:@"href"];
+			NSURL * issueURL = [NSURL URLWithString:issueLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+			ASIHTTPRequest * issueRequest = [self requestWithURL:issueURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
+			[issueRequest startSynchronous];
+			cookies = [issueRequest responseCookies];
+			
+			if ([issueRequest error]) {
+				[self didFailWithError:[issueRequest error]];
+				return;
+			}
+			
+			// creating data structure to response	
+			NSMutableDictionary * issueDict = [NSMutableDictionary dictionary];
+			[issueDict setValue:issueLink forKey:@"href"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/title", j]] content]		forKey:@"title"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/updated", j]] content]		forKey:@"updated"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/name", j]] content]	forKey:@"author"];
+			[issueDict setValue:[[issuesParser at:[NSString stringWithFormat:@"//feed/entry[%d]/author/email", j]] content]	forKey:@"email"];
+			[issueDict setValue:[issueRequest responseData] forKey:@"content"];			
+			[issuesDict setValue:issueDict forKey:issueLink];
+		}
+		
 		// creating data structure to response		
 		NSMutableDictionary * dict = [NSMutableDictionary dictionary];
 		[dict setValue:href			forKey:@"href"];

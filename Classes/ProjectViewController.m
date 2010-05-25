@@ -103,6 +103,10 @@
 	[tabBar setSelectedItem:nil];
 }
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+	return !(navigationType == UIWebViewNavigationTypeLinkClicked);
+}
+
 - (void)dealloc {
 	[project release];
 	[descriptionText release];
