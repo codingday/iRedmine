@@ -59,18 +59,21 @@ static AddViewController *_sharedAddViewController = nil;
 	if(![lastChar isEqualToString:@"/"])
 		urlString = [urlString stringByAppendingString:@"/"];
 	
+	NSString * userName = [loginField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+	NSString * passWord = [passwordField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
 	NSMutableDictionary * newAccount = [NSMutableDictionary dictionary];
 	[newAccount setValue:urlString forKey:@"url"];
-	[newAccount setValue:[loginField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"username"];
-	[newAccount setValue:[passwordField.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"password"];
+	[newAccount setValue:userName forKey:@"username"];
+	[newAccount setValue:passWord forKey:@"password"];
 	[accounts setValue:newAccount forKey:urlString];
 	[defaults setObject:accounts forKey:@"accounts"];	
 	[defaults synchronize];
 	NSArray * viewControllers = [self.navigationController viewControllers];
 	RootViewController * rootController = [viewControllers objectAtIndex:0];
-	[rootController refreshProjects:self];
+	[rootController connectWithURLString:urlString username:userName password:passWord];
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 

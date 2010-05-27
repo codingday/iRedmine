@@ -53,36 +53,10 @@
 	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
 	[self setTitle:title];
 	
-	NSArray * revisionTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RevisionCellTypes"];
-	NSString * revisionPattern = [NSString stringWithFormat:@".*(%@).*",[revisionTypes componentsJoinedByString:@"|"]];
-
-	NSString * format = @"";
-	NSString * MIMEType;
-	if ([title matchedByPattern:revisionPattern options:REG_ICASE]) 
-		MIMEType = @"text/html";
-	else {
-		MIMEType = @"application/pdf";
-		format = @"?format=pdf";
+	if ([issue valueForKey:@"content"] != nil){
+		NSURL * url = [NSURL URLWithString:[issue valueForKey:@"href"]];
+		[webView loadData:[issue valueForKey:@"content"] MIMEType:@"text/html" textEncodingName:@"utf-8" baseURL:url];		
 	}
-
-	NSURL * url = [NSURL URLWithString:[issue valueForKey:@"href"]];
-	ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
-	[request setTimeOutSeconds:300];
-	[request setUseKeychainPersistance:YES];
-	[request setShouldPresentAuthenticationDialog:YES];
-	if ([[[request url] scheme] isEqualToString:@"https"]) 
-		[request setValidatesSecureCertificate:NO];
-	
-	[request start];	
-	NSError *error = [request error];
-	
-	if (error) {
-		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[[request url] host] message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[errorAlert show];
-	}
-	else
-		[webView loadData:[request responseData] MIMEType:MIMEType textEncodingName:@"utf-8" baseURL:[url baseURL]];
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
@@ -96,6 +70,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+	return !(navigationType == UIWebViewNavigationTypeLinkClicked);
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {

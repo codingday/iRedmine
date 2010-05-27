@@ -136,7 +136,7 @@
 				[badgeCell setCellDataWithTitle:[dict valueForKey:@"title"] subTitle:nil];
 				[badgeCell setAccessoryType:UITableViewCellAccessoryNone];
 
-				NSArray * issues = [dict valueForKey:@"content"];
+				NSDictionary * issues = [dict valueForKey:@"issues"];
 				if (issues && [issues count] > 0) {
 					[badgeCell setBadge:[issues count]];
 					[badgeCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -174,9 +174,9 @@
 			// My Page
 			if (myPage && [myPage count] > 0) {
 				NSDictionary * dict = [[myPage allValues] objectAtIndex:indexPath.row];
-				NSArray * issues = [[dict valueForKey:@"content"] allValues];
+				NSDictionary * issues = [dict valueForKey:@"issues"];
 				if (issues && [issues count] > 0) { 
-					IssueTableController * issuesViewController = [IssueTableController initWithArray:issues title:[dict valueForKey:@"title"]];
+					IssueTableController * issuesViewController = [IssueTableController initWithArray:[issues allValues] title:[dict valueForKey:@"title"]];
 					[self.navigationController pushViewController:issuesViewController animated:YES];
 				}
 				break;

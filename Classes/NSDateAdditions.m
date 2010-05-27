@@ -6,7 +6,7 @@
 //  Copyright 2009 Thomas Stägemann. All rights reserved.
 //
 
-#import "NSDataAdditions.h"
+#import "NSDateAdditions.h"
 
 
 @implementation NSDate (NSDateAdditions)

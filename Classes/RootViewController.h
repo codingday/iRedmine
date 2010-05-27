@@ -41,7 +41,8 @@
 @property(retain,readonly) NSMutableArray * activeConnects;
 
 - (IBAction)addAccount:(id)sender;
-- (IBAction)refreshProjects:(id)sender;
+- (IBAction)refreshAccounts:(id)sender;
+- (void)connectWithURLString:(NSString *)urlString username:(NSString *)username password:(NSString *)password;
 - (void)updateControls;
 
 @end
