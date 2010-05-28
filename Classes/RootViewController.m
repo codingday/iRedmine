@@ -43,7 +43,7 @@
 
 - (IBAction)addAccount:(id)sender {
 	if(self.addViewController == nil)
-		self.addViewController = [AddViewController sharedAddViewController];
+		self.addViewController = [AccountViewController sharedAccountViewController];
 	
 	[self.navigationController pushViewController:self.addViewController animated:YES];	
 }

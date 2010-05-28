@@ -10,7 +10,7 @@
 
 @class RootViewController;
 
-@interface AddViewController : UIViewController {
+@interface AccountViewController : UIViewController {
 	UITextField * loginField;
 	UITextField * urlField;
 	UITextField * passwordField;
@@ -25,7 +25,7 @@
 @property(nonatomic,retain) IBOutlet UITextField * passwordField;
 @property(nonatomic,copy) UIColor * oldTintColor;
 
-+ (AddViewController *)sharedAddViewController;
++ (AccountViewController *)sharedAccountViewController;
 - (IBAction)acceptAction:(id)sender;
 
 @end

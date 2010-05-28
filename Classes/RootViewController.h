@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddViewController.h"
+#import "AccountViewController.h"
 #import "BadgeCell.h"
 #import "ProjectTableController.h"
 
@@ -26,7 +26,7 @@
 @interface RootViewController : UITableViewController
 {
 	AccountCell * accountCell;
-	AddViewController * addViewController;
+	AccountViewController * addViewController;
 	ProjectTableController * projectTableController;
 	ProjectViewController * projectViewController;
 	UITableView * accountTable;
@@ -34,7 +34,7 @@
 }
 
 @property(nonatomic,retain) IBOutlet BadgeCell * accountCell;
-@property(nonatomic,retain) AddViewController * addViewController;
+@property(nonatomic,retain) AccountViewController * addViewController;
 @property(nonatomic,retain) ProjectTableController * projectTableController;
 @property(nonatomic,retain) ProjectViewController * projectViewController;
 @property(nonatomic,retain) IBOutlet UITableView * accountTable;

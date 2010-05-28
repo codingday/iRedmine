@@ -6,21 +6,22 @@
 //  Copyright 2009 Thomas Stägemann. All rights reserved.
 //
 
-#import "AddViewController.h"
+#import "AccountViewController.h"
 
-static AddViewController *_sharedAddViewController = nil;
+static AccountViewController *_sharedAddViewController = nil;
 
-@implementation AddViewController
+@implementation AccountViewController
 
 @synthesize loginField;
 @synthesize passwordField;
 @synthesize urlField;
 @synthesize oldTintColor;
 
-+ (AddViewController *)sharedAddViewController
++ (AccountViewController *)sharedAccountViewController
 {
 	if (!_sharedAddViewController) {
-		_sharedAddViewController = [[self alloc] initWithNibName:@"AddView" bundle:nil];
+		_sharedAddViewController = [[self alloc] initWithNibName:@"AccountView" bundle:nil];
+		[_sharedAddViewController view];
 	}
 	return _sharedAddViewController;	
 }

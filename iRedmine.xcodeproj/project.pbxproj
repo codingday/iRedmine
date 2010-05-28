@@ -23,7 +23,7 @@
 		0216AFD910C6B3C0003A2E61 /* FeatureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020C082B0FA74E67008954EF /* FeatureCell.xib */; };
 		0216AFDA10C6B3C0003A2E61 /* RevisionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020C082C0FA74E67008954EF /* RevisionCell.xib */; };
 		0216AFDB10C6B3C1003A2E61 /* SupportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020C082D0FA74E67008954EF /* SupportCell.xib */; };
-		0222E7EF0F8D3D5000445AAD /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0222E7EE0F8D3D5000445AAD /* AddViewController.m */; };
+		0222E7EF0F8D3D5000445AAD /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0222E7EE0F8D3D5000445AAD /* AccountViewController.m */; };
 		022ABE9810C020880023AD77 /* Changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 022ABE9710C020880023AD77 /* Changelog.txt */; };
 		0231286210BEE1310097675F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0231286110BEE1310097675F /* Localizable.strings */; };
 		0231293410BEF65E0097675F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0231293310BEF65E0097675F /* Reachability.m */; };
@@ -37,7 +37,7 @@
 		024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */; };
 		0252E05710CD3D03003881B2 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E05610CD3D03003881B2 /* WebView.xib */; };
 		0252E05E10CD3DD7003881B2 /* ProjectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E05D10CD3DD7003881B2 /* ProjectView.xib */; };
-		0252E06410CD3E36003881B2 /* AddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E06310CD3E36003881B2 /* AddView.xib */; };
+		0252E06410CD3E36003881B2 /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E06310CD3E36003881B2 /* AccountView.xib */; };
 		0252E07710CD4913003881B2 /* CSRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0252E07610CD4913003881B2 /* CSRegex.m */; };
 		025BBAC10FC6EB80002BD488 /* safari.png in Resources */ = {isa = PBXBuildFile; fileRef = 025BBAC00FC6EB80002BD488 /* safari.png */; };
 		026A372B11A34849003A6F9A /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A371D11A34849003A6F9A /* ASIAuthenticationDialog.m */; };
@@ -84,9 +84,9 @@
 		020C082B0FA74E67008954EF /* FeatureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureCell.xib; sourceTree = "<group>"; };
 		020C082C0FA74E67008954EF /* RevisionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RevisionCell.xib; sourceTree = "<group>"; };
 		020C082D0FA74E67008954EF /* SupportCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SupportCell.xib; sourceTree = "<group>"; };
-		0222E7ED0F8D3D5000445AAD /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
-		0222E7EE0F8D3D5000445AAD /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
-		0222E7FA0F8D3EC700445AAD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AddView.xib; sourceTree = "<group>"; };
+		0222E7ED0F8D3D5000445AAD /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		0222E7EE0F8D3D5000445AAD /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		0222E7FA0F8D3EC700445AAD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AccountView.xib; sourceTree = "<group>"; };
 		022ABE9710C020880023AD77 /* Changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Changelog.txt; sourceTree = "<group>"; };
 		0231285F10BEE12A0097675F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0231293210BEF65E0097675F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		0252E02110CD304C003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0252E05810CD3D0A003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/WebView.xib; sourceTree = "<group>"; };
 		0252E05F10CD3DDC003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/ProjectView.xib; sourceTree = "<group>"; };
-		0252E06610CD3E3B003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/AddView.xib; sourceTree = "<group>"; };
+		0252E06610CD3E3B003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/AccountView.xib; sourceTree = "<group>"; };
 		0252E07510CD4913003881B2 /* CSRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRegex.h; sourceTree = "<group>"; };
 		0252E07610CD4913003881B2 /* CSRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRegex.m; sourceTree = "<group>"; };
 		025BBAC00FC6EB80002BD488 /* safari.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = safari.png; sourceTree = "<group>"; };
@@ -230,8 +230,8 @@
 			children = (
 				029A1DF70FB30E6C00AA99A0 /* WebViewController.h */,
 				029A1DF80FB30E6C00AA99A0 /* WebViewController.m */,
-				0222E7ED0F8D3D5000445AAD /* AddViewController.h */,
-				0222E7EE0F8D3D5000445AAD /* AddViewController.m */,
+				0222E7ED0F8D3D5000445AAD /* AccountViewController.h */,
+				0222E7EE0F8D3D5000445AAD /* AccountViewController.m */,
 				023218E00F94DE2100A95381 /* ProjectViewController.h */,
 				023218E10F94DE2100A95381 /* ProjectViewController.m */,
 			);
@@ -258,7 +258,7 @@
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				2899E55F0DE3E45000AC0155 /* RootView.xib */,
 				0252E05D10CD3DD7003881B2 /* ProjectView.xib */,
-				0252E06310CD3E36003881B2 /* AddView.xib */,
+				0252E06310CD3E36003881B2 /* AccountView.xib */,
 				02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */,
 				023218600F94D45600A95381 /* IssueTableView.xib */,
 				0299032B119AEEEE00A47158 /* AccountCell.xib */,
@@ -455,7 +455,7 @@
 				0216AFD110C6B3C0003A2E61 /* MainWindow.xib in Resources */,
 				0216AFD210C6B3C0003A2E61 /* RootView.xib in Resources */,
 				0216AFD710C6B3C0003A2E61 /* BadgeCell.xib in Resources */,
-				0252E06410CD3E36003881B2 /* AddView.xib in Resources */,
+				0252E06410CD3E36003881B2 /* AccountView.xib in Resources */,
 				0216AFD810C6B3C0003A2E61 /* ErrorCell.xib in Resources */,
 				0216AFD610C6B3C0003A2E61 /* IssueTableView.xib in Resources */,
 				0252E05E10CD3DD7003881B2 /* ProjectView.xib in Resources */,
@@ -497,7 +497,7 @@
 				1D3623260D0F684500981E51 /* iRedmineAppDelegate.m in Sources */,
 				28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */,
 				02E2B1E90F83924700E49BD6 /* BadgeCell.m in Sources */,
-				0222E7EF0F8D3D5000445AAD /* AddViewController.m in Sources */,
+				0222E7EF0F8D3D5000445AAD /* AccountViewController.m in Sources */,
 				0241088B0F8E67BD008CAB10 /* SubtitleCell.m in Sources */,
 				02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */,
 				023218370F94D2F900A95381 /* IssueTableController.m in Sources */,
@@ -551,13 +551,13 @@
 			name = ProjectView.xib;
 			sourceTree = "<group>";
 		};
-		0252E06310CD3E36003881B2 /* AddView.xib */ = {
+		0252E06310CD3E36003881B2 /* AccountView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0222E7FA0F8D3EC700445AAD /* English */,
 				0252E06610CD3E3B003881B2 /* German */,
 			);
-			name = AddView.xib;
+			name = AccountView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -599,6 +599,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -607,6 +610,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 2.2;
 				PRODUCT_NAME = iRedmine;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
@@ -614,6 +618,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
