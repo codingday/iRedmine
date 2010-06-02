@@ -60,6 +60,7 @@
 		029A1DF90FB30E6C00AA99A0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029A1DF80FB30E6C00AA99A0 /* WebViewController.m */; };
 		029A33960FA9B056003E5600 /* support.png in Resources */ = {isa = PBXBuildFile; fileRef = 029A33950FA9B056003E5600 /* support.png */; };
 		02A8B04C0F98D6830077AB7F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* logo.png */; };
+		02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* RMLogin.m */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E2B1E90F83924700E49BD6 /* BadgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E2B1E80F83924700E49BD6 /* BadgeCell.m */; };
 		02EAC61310C583CC0076DBFB /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 02EAC61210C583CC0076DBFB /* time.png */; };
@@ -146,6 +147,8 @@
 		029A1E0C0FB31C3C00AA99A0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WebView.xib; sourceTree = "<group>"; };
 		029A33950FA9B056003E5600 /* support.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support.png; sourceTree = "<group>"; };
 		02A8B04B0F98D6830077AB7F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		02C7769D11B6B1C900F10BC3 /* RMLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLogin.h; sourceTree = "<group>"; };
+		02C7769E11B6B1C900F10BC3 /* RMLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLogin.m; sourceTree = "<group>"; };
 		02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectTableView.xib; sourceTree = "<group>"; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		02D86C580F8E75F400EB1658 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
@@ -287,6 +290,8 @@
 		02E2EDB10F9F572F003DDCB0 /* WWK Library */ = {
 			isa = PBXGroup;
 			children = (
+				02C7769D11B6B1C900F10BC3 /* RMLogin.h */,
+				02C7769E11B6B1C900F10BC3 /* RMLogin.m */,
 				02F400CA119307F100E0B194 /* RMConnector.h */,
 				02F400CB119307F100E0B194 /* RMConnector.m */,
 				02D86C570F8E75E500EB1658 /* NSDateAdditions.h */,
@@ -518,6 +523,7 @@
 				026A373911A34871003A6F9A /* XPathQuery.m in Sources */,
 				026A376111A34C11003A6F9A /* ASINetworkQueue.m in Sources */,
 				026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */,
+				02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

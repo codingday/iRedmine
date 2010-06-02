@@ -16,6 +16,9 @@
 @synthesize safariItem;
 @synthesize issue;
 
+#pragma mark -
+#pragma mark View lifecycle
+
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -45,19 +48,68 @@
 	return YES;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-
 	NSString * title = [[[issue valueForKey:@"title"] componentsSeparatedByString:@": "] objectAtIndex:0];
 	[self setTitle:title];
 	
-	if ([issue valueForKey:@"content"] != nil){
-		NSURL * url = [NSURL URLWithString:[issue valueForKey:@"href"]];
-		[webView loadData:[issue valueForKey:@"content"] MIMEType:@"text/html" textEncodingName:@"utf-8" baseURL:url];		
+	NSString * href = [issue valueForKey:@"href"];
+	if (href == nil) return;
+	NSURL * url = [NSURL URLWithString:href];
+	if (url == nil) return;
+
+	// Get host, login and username, login and fetch page
+	NSArray * accounts = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"accounts"] allValues];
+	for (NSDictionary * account in accounts) {
+		if ([href hasPrefix:[account valueForKey:@"url"]]) {
+			NSString * username = [account valueForKey:@"username"];
+			NSString * password = [account valueForKey:@"password"];
+			
+			id request;
+			if ([password length] > 0 && [username length] > 0) {
+				NSURL * hostURL = [NSURL URLWithString:[account valueForKey:@"url"]];
+				request = [[RMLogin loginWithURL:hostURL username:username password:password] retain];
+				[request setBackURL:url];
+			}
+			else {
+				request = [[ASIHTTPRequest requestWithURL:url] retain];
+				[request setTimeOutSeconds:100];
+				//[request setUseKeychainPersistance:YES];
+				[request setShouldPresentAuthenticationDialog:YES];
+				[request setValidatesSecureCertificate:![[url scheme] isEqualToString:@"https"]];		
+			}
+			[request setDelegate:self];
+			[request setDidFailSelector:@selector(requestDidFail:)];
+			[request setDidFinishSelector:@selector(requestDidFinish:)];
+			[request setDidStartSelector:@selector(requestDidStart:)];
+			[request startAsynchronous];
+			break;
+		}
 	}
+	
 }
+
+#pragma mark -
+#pragma mark Request methods
+
+- (void)requestDidStart:(id)aRequest {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+- (void)requestDidFail:(id)aRequest {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[issue valueForKey:@"href"] message:[[aRequest error] localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	[errorAlert show];	
+}
+
+- (void)requestDidFinish:(id)aRequest {
+	NSURL * url = [NSURL URLWithString:[issue valueForKey:@"href"]];
+	[webView loadHTMLString:[aRequest responseString] baseURL:url];		
+}
+
+#pragma mark -
+#pragma mark Tab bar methods
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
 	if(item == homeItem)
@@ -67,10 +119,8 @@
 	[tabBar setSelectedItem:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-    // Release anything that's not essential, such as cached data
-}
+#pragma mark -
+#pragma mark Web view methods
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 	return !(navigationType == UIWebViewNavigationTypeLinkClicked);
@@ -88,6 +138,14 @@
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:[issue valueForKey:@"href"] message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[errorAlert show];
+}
+
+#pragma mark -
+#pragma mark Memory management
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+    // Release anything that's not essential, such as cached data
 }
 
 - (void)dealloc {

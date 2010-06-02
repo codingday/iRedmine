@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import	"TFHpple.h"
-#import "ASIFormDataRequest.h"
-#import "ASINetworkQueue.h"
+#import "ASIHTTPRequest.h"
+#import "RMLogin.h"
 
 @interface RMConnector : NSObject {
 	
@@ -49,6 +49,8 @@
 + (id) connectorWithUrlString:(NSString *)urlString username:(NSString *)username password:(NSString *)password;
 + (id) connectorWithUrlString:(NSString *)urlString;
 - (id) initWithUrlString:(NSString *)urlString username:(NSString *)username password:(NSString *)password;
+
+- (ASIHTTPRequest *)requestWithURL:(NSURL *)url cookies:(NSArray *)cookies startSelector:(SEL)startSelector finishSelector:(SEL)finishSelector failSelector:(SEL)failSelector;
 
 - (void) start;
 - (void) cancel;
