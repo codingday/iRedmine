@@ -19,3 +19,6 @@
 "Username: %@"				= "Username: %@";
 "Anonymous"					= "Anonymous";
 "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted";
+
+// Error descriptions
+"RMProjectsFeedNotFound" = "Couldn't found projects feed. Please check login and password.";

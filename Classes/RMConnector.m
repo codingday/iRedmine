@@ -247,6 +247,12 @@
 	// extract feed url
 	TFHpple * xpathParser = [[[TFHpple alloc] initWithHTMLData:[aRequest responseData]] autorelease];
 	NSString *href = [[xpathParser at:@"//a[@class='atom' or @class='feed']"] objectForKey:@"href"];
+	if (href == nil) {
+		NSDictionary * userInfo = [NSDictionary dictionaryWithObject:NSLocalizedString(@"RMProjectsFeedNotFound","Couldn't found projects feed. Please check login and password.") forKey:NSLocalizedDescriptionKey];
+		NSError * err = [NSError errorWithDomain:@"RMProjectsFeedNotFound" code:1 userInfo:userInfo];
+		return [self didFailWithError:err];
+	}
+	
 	[responseDictionary setValue:[NSMutableDictionary dictionaryWithObject:href forKey:@"href"] forKey:@"projects"];
 	
 	[self fetchProjectsFeedWithCookies:[aRequest responseCookies]];
