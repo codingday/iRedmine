@@ -609,7 +609,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Stägemann (87FR8M6JK4)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -618,7 +618,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 2.2;
 				PRODUCT_NAME = iRedmine;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBFC02C2-919E-4361-9209-9DE5C4C1B836";
 			};
 			name = Debug;
 		};
@@ -628,12 +628,14 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Weisshuhn & Weishuhn Kommunikationsmanagement GmbH";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
 				HEADER_SEARCH_PATHS = vendor/joehewitt/three20/src;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = iRedmine;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB410D2A-D8B2-42D3-A7E3-71AD77645131";
 			};
 			name = Release;
 		};
