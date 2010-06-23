@@ -17,8 +17,10 @@
 - Optimized icon selection for issue cells
 - Fixed bug in detail view
 
-* Wed June 8th 2010 Thomas Stägemann <ts@weisshuhn.de> 2.0
+* Wed June 8th 2010 Thomas Stägemann <ts@weisshuhn.de> 1.1
 - Works with any Redmine to version 0.9.4, probably even higher
 - It's now possible to enter path installations like: http://demo.redmine.org/redmine
 - Added capability to launch iRedmine via an URL with account information 
+
+* Wed June 23th 2010 Thomas Stägemann <ts@weisshuhn.de> 2.0
 - Unique identifier to support push notification in the future
