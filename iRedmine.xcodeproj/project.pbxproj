@@ -719,7 +719,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = iRedmine;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBFC02C2-919E-4361-9209-9DE5C4C1B836";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8BEEB2A6-E51D-4EF9-A84C-DF820BAE7062";
 				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
@@ -734,7 +734,6 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
-				HEADER_SEARCH_PATHS = vendor/joehewitt/three20/src;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = iRedmine;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB410D2A-D8B2-42D3-A7E3-71AD77645131";

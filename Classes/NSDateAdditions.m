@@ -12,10 +12,10 @@
 @implementation NSDate (NSDateAdditions)
 
 + (NSDate *)dateFromRedmineString:(NSString *)string{
-	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
+	NSString * normalizedString = [string stringByReplacingOccurrencesOfString:@":" withString:@""];
 	NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZ"];
-	return [dateFormatter dateFromString:string];
+	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HHmmssz"];
+	return [dateFormatter dateFromString:normalizedString];
 }
 
 @end

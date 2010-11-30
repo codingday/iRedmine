@@ -68,7 +68,6 @@
 	}
 	
 	NSDate * date = [NSDate dateFromRedmineString:[project valueForKey:@"updated"]];
-	[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
 	NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 	[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];	
