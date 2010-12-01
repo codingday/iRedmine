@@ -11,8 +11,8 @@
 
 @interface iRedmineAppDelegate : NSObject <UIApplicationDelegate> 
 {
-    UIWindow *window;
-    UINavigationController *navigationController;
+    UIWindow *_window;
+    UINavigationController *_navigationController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

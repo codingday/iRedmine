@@ -62,6 +62,8 @@
 		02A8B04C0F98D6830077AB7F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* logo.png */; };
 		02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* RMLogin.m */; };
 		02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */; };
+		02CD7A7A12A55F1C00841B5A /* AdNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CD7A7712A55F1C00841B5A /* AdNavigationController.m */; };
+		02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CD7AAD12A56C2100841B5A /* iAd.framework */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E2B1E90F83924700E49BD6 /* BadgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E2B1E80F83924700E49BD6 /* BadgeCell.m */; };
 		02EAC61310C583CC0076DBFB /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 02EAC61210C583CC0076DBFB /* time.png */; };
@@ -165,6 +167,9 @@
 		02C7769D11B6B1C900F10BC3 /* RMLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLogin.h; sourceTree = "<group>"; };
 		02C7769E11B6B1C900F10BC3 /* RMLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLogin.m; sourceTree = "<group>"; };
 		02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
+		02CD7A7612A55F1C00841B5A /* AdNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdNavigationController.h; sourceTree = "<group>"; };
+		02CD7A7712A55F1C00841B5A /* AdNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdNavigationController.m; sourceTree = "<group>"; };
+		02CD7AAD12A56C2100841B5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		02CEF8760F9E5B7900FCB183 /* ProjectTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectTableView.xib; sourceTree = "<group>"; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		02D86C580F8E75F400EB1658 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
@@ -217,6 +222,7 @@
 				0231295A10BEF6CF0097675F /* Security.framework in Frameworks */,
 				0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */,
 				02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */,
+				02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +318,8 @@
 		02E2EDB10F9F572F003DDCB0 /* WWK Library */ = {
 			isa = PBXGroup;
 			children = (
+				02CD7A7612A55F1C00841B5A /* AdNavigationController.h */,
+				02CD7A7712A55F1C00841B5A /* AdNavigationController.m */,
 				02C7769D11B6B1C900F10BC3 /* RMLogin.h */,
 				02C7769E11B6B1C900F10BC3 /* RMLogin.m */,
 				02F400CA119307F100E0B194 /* RMConnector.h */,
@@ -421,6 +429,7 @@
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
 				0231294010BEF6A50097675F /* CFNetwork.framework */,
 				0231295910BEF6CF0097675F /* Security.framework */,
+				02CD7AAD12A56C2100841B5A /* iAd.framework */,
 				0231297010BEF76F0097675F /* libz.1.2.3.dylib */,
 				02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */,
 			);
@@ -625,6 +634,7 @@
 				026A376111A34C11003A6F9A /* ASINetworkQueue.m in Sources */,
 				026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */,
 				02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */,
+				02CD7A7A12A55F1C00841B5A /* AdNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

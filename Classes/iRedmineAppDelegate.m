@@ -10,13 +10,16 @@
 
 @implementation iRedmineAppDelegate
 
-@synthesize window;
-@synthesize navigationController;
+@synthesize window=_window;
+@synthesize navigationController=_navigationController;
+
+#pragma mark -
+#pragma mark UIApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	// Configure and show the window
-	[window addSubview:[navigationController view]];
-	[window makeKeyAndVisible];
+	[_window addSubview:[_navigationController view]];
+	[_window makeKeyAndVisible];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -36,16 +39,22 @@
 			else if ([[keyValue objectAtIndex:0] isEqualToString:@"password"])
 				[[addViewController passwordField] setText:[keyValue lastObject]];
 		}
-		[navigationController pushViewController:addViewController animated:YES];			
+		[_navigationController pushViewController:addViewController animated:YES];			
 		return YES;
 	}
 	else return NO;
 }
 
+#pragma mark -
+#pragma mark Memory management
+
 - (void)dealloc {
-	[navigationController release];
-	[window release];
-	[super dealloc];
+	[_navigationController setDelegate:nil];
+	[_navigationController release]; _navigationController = nil;
+	
+	[_window release]; _window = nil;
+	
+    [super dealloc];
 }
 
 @end
