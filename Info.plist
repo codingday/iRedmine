@@ -22,7 +22,7 @@
 	<key>CFBundleIconFile</key>
 	<string>logo.png</string>
 	<key>CFBundleIdentifier</key>
-	<string>de.weisshuhn.${PRODUCT_NAME:identifier}</string>
+	<string>ZF5E7523C5.de.weisshuhn.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -32,7 +32,9 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>1.2</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
