@@ -22,5 +22,7 @@
 - It's now possible to enter path installations like: http://demo.redmine.org/redmine
 - Added capability to launch iRedmine via an URL with account information 
 
-* Wed June 23th 2010 Thomas St√§gemann <ts@weisshuhn.de> 2.0
-- Unique identifier to support push notification in the future
+* Thu Dec 2nd 2010 Thomas St√gemann <ts@weisshuhn.de> 1.2
+- Retina Display HD graphics for iPhone 4 
+- iOS 4 optimization 
+- iAds added
