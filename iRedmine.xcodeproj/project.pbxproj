@@ -66,7 +66,7 @@
 		0299032C119AEEEE00A47158 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0299032B119AEEEE00A47158 /* AccountCell.xib */; };
 		02990334119AEF2300A47158 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02990333119AEF2300A47158 /* AccountCell.m */; };
 		029A1DF90FB30E6C00AA99A0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029A1DF80FB30E6C00AA99A0 /* WebViewController.m */; };
-		02A8B04C0F98D6830077AB7F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* logo.png */; };
+		02A8B04C0F98D6830077AB7F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* Icon.png */; };
 		02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* RMLogin.m */; };
 		02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */; };
 		02CD7A7A12A55F1C00841B5A /* AdNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CD7A7712A55F1C00841B5A /* AdNavigationController.m */; };
@@ -86,7 +86,7 @@
 		F8FAA3B512A40C390001996C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3A712A40C390001996C /* Default@2x.png */; };
 		F8FAA3B912A40C390001996C /* house@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3AB12A40C390001996C /* house@2x.png */; };
 		F8FAA3BA12A40C390001996C /* issues@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3AC12A40C390001996C /* issues@2x.png */; };
-		F8FAA3BB12A40C390001996C /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3AD12A40C390001996C /* logo@2x.png */; };
+		F8FAA3BB12A40C390001996C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3AD12A40C390001996C /* Icon@2x.png */; };
 		F8FAA3BD12A40C390001996C /* safari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3AF12A40C390001996C /* safari@2x.png */; };
 		F8FAA42D12A412280001996C /* ssl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA42C12A412280001996C /* ssl@2x.png */; };
 /* End PBXBuildFile section */
@@ -170,7 +170,7 @@
 		029A1DF70FB30E6C00AA99A0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		029A1DF80FB30E6C00AA99A0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		029A1E0C0FB31C3C00AA99A0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WebView.xib; sourceTree = "<group>"; };
-		02A8B04B0F98D6830077AB7F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		02A8B04B0F98D6830077AB7F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		02C7769D11B6B1C900F10BC3 /* RMLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLogin.h; sourceTree = "<group>"; };
 		02C7769E11B6B1C900F10BC3 /* RMLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLogin.m; sourceTree = "<group>"; };
 		02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
@@ -204,7 +204,7 @@
 		F8FAA3A712A40C390001996C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		F8FAA3AB12A40C390001996C /* house@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "house@2x.png"; sourceTree = "<group>"; };
 		F8FAA3AC12A40C390001996C /* issues@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "issues@2x.png"; sourceTree = "<group>"; };
-		F8FAA3AD12A40C390001996C /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		F8FAA3AD12A40C390001996C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		F8FAA3AF12A40C390001996C /* safari@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "safari@2x.png"; sourceTree = "<group>"; };
 		F8FAA42C12A412280001996C /* ssl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ssl@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -301,7 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				02434FCB1030847600C62C58 /* Default.png */,
-				02A8B04B0F98D6830077AB7F /* logo.png */,
+				02A8B04B0F98D6830077AB7F /* Icon.png */,
 				F8FAA43112A413D70001996C /* Tab Bar */,
 				F8FAA43012A4139D0001996C /* Cells */,
 				028CFF0812AD3C01003FEC85 /* header.png */,
@@ -448,7 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				F8FAA3A712A40C390001996C /* Default@2x.png */,
-				F8FAA3AD12A40C390001996C /* logo@2x.png */,
+				F8FAA3AD12A40C390001996C /* Icon@2x.png */,
 				F8FAA42E12A412F10001996C /* Tab Bar */,
 				F8FAA42F12A413050001996C /* Cells */,
 				028CFEF712AD3AD2003FEC85 /* header@2x.png */,
@@ -567,7 +567,7 @@
 				0216AFD810C6B3C0003A2E61 /* ErrorCell.xib in Resources */,
 				0216AFD610C6B3C0003A2E61 /* IssueTableView.xib in Resources */,
 				0252E05E10CD3DD7003881B2 /* ProjectView.xib in Resources */,
-				02A8B04C0F98D6830077AB7F /* logo.png in Resources */,
+				02A8B04C0F98D6830077AB7F /* Icon.png in Resources */,
 				020720E10F9E0AC1000277FD /* clock.png in Resources */,
 				020720E70F9E0BE3000277FD /* house.png in Resources */,
 				020720E90F9E0C01000277FD /* issues.png in Resources */,
@@ -587,7 +587,7 @@
 				F8FAA3B512A40C390001996C /* Default@2x.png in Resources */,
 				F8FAA3B912A40C390001996C /* house@2x.png in Resources */,
 				F8FAA3BA12A40C390001996C /* issues@2x.png in Resources */,
-				F8FAA3BB12A40C390001996C /* logo@2x.png in Resources */,
+				F8FAA3BB12A40C390001996C /* Icon@2x.png in Resources */,
 				F8FAA3BD12A40C390001996C /* safari@2x.png in Resources */,
 				F8FAA42D12A412280001996C /* ssl@2x.png in Resources */,
 				02DE7EA612A7EA8B008A3061 /* back.png in Resources */,
