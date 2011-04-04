@@ -154,7 +154,7 @@
 			NSDictionary * project = [[projects allValues] objectAtIndex:indexPath.row];
 			
 			NSDate * date = [NSDate dateFromRedmineString:[project valueForKey:@"updated"]];
-			NSString * subtitleWithLabel = [NSString stringWithFormat:NSLocalizedString(@"Last Update: %@",@"Last Update: %@"),[dateFormatter stringFromDate:date]];
+			NSString * subtitleWithLabel = [NSString stringWithFormat:NSLocalizedString(@"Last Update: %@",@""),[dateFormatter stringFromDate:date]];
 			NSString * title = [[[project valueForKey:@"title"] componentsSeparatedByString:@" - "] objectAtIndex:0];
 			[badgeCell setCellDataWithTitle:title subTitle:subtitleWithLabel];
 			break;

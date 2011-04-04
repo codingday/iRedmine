@@ -66,13 +66,13 @@
 }
 */
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad 
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+	
+	UIBarButtonItem * addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addIssue:)] autorelease];
+	[[self navigationItem] setRightBarButtonItem:addButton];
 }
-*/
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -196,5 +196,11 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Interface Builder actions
+
+- (IBAction)addIssue:(id)sender {
+	[[AdNavigator navigator] openURLAction:[[TTURLAction actionWithURLPath:@"iredmine://issue"] applyAnimated:YES]];
+}
 
 @end

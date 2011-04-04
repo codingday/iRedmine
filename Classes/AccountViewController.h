@@ -7,25 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AdNavigator.h"
+#import "RootViewController.h"
 
-@class RootViewController;
-
-@interface AccountViewController : UIViewController {
-	UITextField * loginField;
-	UITextField * urlField;
-	UITextField * passwordField;
-	
-	UIBarStyle oldBarStyle;
-	UIStatusBarStyle oldStatusBarStyle;
-	UIColor * oldTintColor;
+@interface AccountViewController : TTViewController {
+	UITextField * _loginField;
+	UITextField * _urlField;
+	UITextField * _passwordField;
+	NSDictionary * _query;
 }
 
 @property(nonatomic,retain) IBOutlet UITextField * loginField;
 @property(nonatomic,retain) IBOutlet UITextField * urlField;
 @property(nonatomic,retain) IBOutlet UITextField * passwordField;
-@property(nonatomic,copy) UIColor * oldTintColor;
 
-+ (AccountViewController *)sharedAccountViewController;
-- (IBAction)acceptAction:(id)sender;
+- (IBAction)add:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

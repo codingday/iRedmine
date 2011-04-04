@@ -25,7 +25,7 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
     [[self view] addSubview:_contentView];
 		
 	CGRect sbFrame = [[UIApplication sharedApplication] statusBarFrame];
-    _adView = [[[ADBannerView alloc] initWithFrame: CGRectMake(0, sbFrame.size.height-50, 320, 50)] autorelease];
+    _adView = [[[ADBannerView alloc] initWithFrame: CGRectMake(0, sbFrame.size.height-50, 320, 50)] retain];
 	[_adView setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
 	[_adView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50,ADBannerContentSizeIdentifier480x32,nil]];
 	[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];

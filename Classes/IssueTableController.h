@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AdNavigator.h"
 #import "SubtitleCell.h"
 #import "WebViewController.h"
 #import "NSStringAdditions.h"
@@ -28,5 +29,6 @@
 
 + (id)initWithArray:(NSArray *)array title:(NSString*)title;
 - (void)setIssues:(NSArray*)array;
+- (IBAction)addIssue:(id)sender;
 
 @end

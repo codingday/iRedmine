@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AdNavigator.h"
+#import "iRedmineStyleSheet.h"
 #import "RootViewController.h"
+#import "AccountViewController.h"
 
-@interface iRedmineAppDelegate : NSObject <UIApplicationDelegate> 
-{
-    UIWindow *_window;
-    UINavigationController *_navigationController;
+@interface iRedmineAppDelegate : NSObject <UIApplicationDelegate> {
 }
-
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
 @end
 

@@ -10,42 +10,32 @@
 
 @implementation RootViewController
 
-@synthesize accountCell;
-@synthesize addViewController;
-@synthesize projectTableController;
-@synthesize projectViewController;
-@synthesize accountTable;
-@synthesize activeConnects;
+@synthesize accountCell=_accountCell;
+@synthesize projectTableController=_projectTableController;
+@synthesize projectViewController=_projectViewController;
+@synthesize accountTable=_accountTable;
+@synthesize activeConnects=_activeConnects;
+
+- (id) initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
+	if (self = [super initWithNibName:@"RootView" bundle:nibBundleOrNil]) {
+		[self setTitle:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
+		_activeConnects = [[NSMutableArray array] retain];	
+	}
+	return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	activeConnects = [[NSMutableArray array] retain];	
-	
-	// First Launch
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	BOOL launchedBefore = [defaults boolForKey:@"launchedBefore"];
-	if(!launchedBefore) {
-		NSArray * demoURLStrings = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoURLs"];
-		NSMutableDictionary * accounts = [NSMutableDictionary dictionary];
-
-		for (NSString * demoURLString in demoURLStrings) {
-			NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:demoURLString, @"url",@"", @"username", @"", @"password", nil];
-			[accounts setObject:demoAccount forKey:demoURLString];
-		}
 		
-		[defaults setObject:accounts forKey:@"accounts"];	
-		[defaults setBool:YES forKey:@"launchedBefore"];
-		[defaults synchronize];		
-		[self refreshAccounts:self];
-	}	
+	UIBarButtonItem * addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAccount:)] autorelease];
+	[[self navigationItem] setLeftBarButtonItem:addButton];
+	
+	UIBarButtonItem * refreshButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshAccounts:)] autorelease];
+	[[self navigationItem] setRightBarButtonItem:refreshButton];	
 }
 
 - (IBAction)addAccount:(id)sender {
-	if(self.addViewController == nil)
-		self.addViewController = [AccountViewController sharedAccountViewController];
-	
-	[self.navigationController pushViewController:self.addViewController animated:YES];	
+	[[AdNavigator navigator] openURLAction:[[TTURLAction actionWithURLPath:@"iredmine://account"] applyAnimated:YES]];
 }
 
 - (IBAction)refreshAccounts:(id)sender {	
@@ -67,12 +57,12 @@
 
 - (void)connectBegan:(RMConnector *)connector {
 	NSLog(@"refreshing: %@",[connector urlString]);
-	[activeConnects addObject:connector];
+	[_activeConnects addObject:connector];
 	[self updateControls];
 }
 
 - (void)connectFailed:(RMConnector *)connector {
-	[activeConnects removeObject:connector];
+	[_activeConnects removeObject:connector];
 	[self updateControls];
 
 	if ([[connector error] code] != ASIRequestCancelledErrorType) {
@@ -91,7 +81,7 @@
 	[defaults setValue:accounts forKey:@"accounts"];
 	[defaults synchronize];
 
-	[activeConnects removeObject:connector];
+	[_activeConnects removeObject:connector];
 	[self updateControls];
 }
 
@@ -99,19 +89,19 @@
 	BOOL isActive = [[self activeConnects] count] > 0;
 	[[[self navigationItem] rightBarButtonItem] setEnabled:!isActive];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:isActive];
-	[accountTable reloadData];
+	[_accountTable reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-	[accountTable reloadData];
+	[_accountTable deselectRowAtIndexPath:[_accountTable indexPathForSelectedRow] animated:YES];
 }
 
-/*
- - (void)viewWillAppear:(BOOL)animated {
- [super viewWillAppear:animated];
- }
- */
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+	[[[self navigationController] navigationBar] setTintColor:TTSTYLEVAR(navigationBarTintColor)];
+}
 /*
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
@@ -153,37 +143,37 @@
     static NSString *CellIdentifier = @"AccountCell";
  	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary * accountDict = [[[defaults dictionaryForKey:@"accounts"] allValues] objectAtIndex:indexPath.row];
-
-    accountCell = (AccountCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if(accountCell == nil)
+	
+    _accountCell = (AccountCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if(_accountCell == nil)
         [[NSBundle mainBundle] loadNibNamed:@"AccountCell" owner:self options:nil];
-	[accountCell setAccessoryType:UITableViewCellAccessoryNone];
+	[_accountCell setAccessoryType:UITableViewCellAccessoryNone];
 		
 	NSString * username = [accountDict valueForKey:@"username"];
-	if([username length] == 0) username = NSLocalizedString(@"Anonymous",@"Anonymous");
+	if([username length] == 0) username = NSLocalizedString(@"Anonymous",@"");
 		
-	NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@"Username: %@"),username];
+	NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@""),username];
 	NSString * urlString = [accountDict valueForKey:@"url"];
 	NSURL * url = [NSURL URLWithString:urlString];
-	[accountCell setCellDataWithTitle:[url host] subTitle:subtitle];
-	[accountCell setURL:url];
+	[_accountCell setCellDataWithTitle:[url host] subTitle:subtitle];
+	[_accountCell setURL:url];
 	
 	NSArray * projects = [accountDict valueForKeyPath:@"data.projects.content"];
 	if ((projects != nil) && ([projects count] > 0)) {
-		[accountCell setBadge:[projects count]];
-		[accountCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+		[_accountCell setBadge:[projects count]];
+		[_accountCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	}
 	
-	for (RMConnector * conn in activeConnects) {
+	for (RMConnector * conn in _activeConnects) {
 		if ([[conn urlString] isEqualToString:urlString]) {
 			UIActivityIndicatorView * indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 			[indicator startAnimating];
-			[accountCell setAccessoryView:indicator];
+			[_accountCell setAccessoryView:indicator];
 			break;
 		}
 	}
 	
-	return accountCell;
+	return _accountCell;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -254,12 +244,11 @@
 
 
 - (void)dealloc {
-	[accountCell release];
-	[addViewController release];
-	[projectTableController release];
-	[projectViewController release];
-	[accountTable release];
-	[activeConnects release];
+	TT_RELEASE_SAFELY(_accountCell);
+	TT_RELEASE_SAFELY(_projectTableController);
+	TT_RELEASE_SAFELY(_projectViewController);
+	TT_RELEASE_SAFELY(_accountTable);
+	TT_RELEASE_SAFELY(_activeConnects);
     [super dealloc];
 }
 

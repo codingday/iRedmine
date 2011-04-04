@@ -8,7 +8,7 @@
 
 #import <iAd/iAd.h>
 
-@interface AdNavigationController : UINavigationController <ADBannerViewDelegate> {
+@interface AdNavigationController : TTNavigationController <ADBannerViewDelegate> {
 	ADBannerView * _adView;
 	UIView * _contentView;
 	BOOL _bannerIsVisible;

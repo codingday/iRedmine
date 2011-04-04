@@ -25,16 +25,14 @@
 
 @interface RootViewController : UITableViewController
 {
-	AccountCell * accountCell;
-	AccountViewController * addViewController;
-	ProjectTableController * projectTableController;
-	ProjectViewController * projectViewController;
-	UITableView * accountTable;
-	NSMutableArray * activeConnects;
+	AccountCell * _accountCell;
+	ProjectTableController * _projectTableController;
+	ProjectViewController * _projectViewController;
+	UITableView * _accountTable;
+	NSMutableArray * _activeConnects;
 }
 
-@property(nonatomic,retain) IBOutlet BadgeCell * accountCell;
-@property(nonatomic,retain) AccountViewController * addViewController;
+@property(nonatomic,retain) IBOutlet AccountCell * accountCell;
 @property(nonatomic,retain) ProjectTableController * projectTableController;
 @property(nonatomic,retain) ProjectViewController * projectViewController;
 @property(nonatomic,retain) IBOutlet UITableView * accountTable;

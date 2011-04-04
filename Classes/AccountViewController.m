@@ -8,50 +8,48 @@
 
 #import "AccountViewController.h"
 
-static AccountViewController *_sharedAddViewController = nil;
-
 @implementation AccountViewController
 
-@synthesize loginField;
-@synthesize passwordField;
-@synthesize urlField;
-@synthesize oldTintColor;
+@synthesize loginField=_loginField;
+@synthesize passwordField=_passwordField;
+@synthesize urlField=_urlField;
 
-+ (AccountViewController *)sharedAccountViewController
-{
-	if (!_sharedAddViewController) {
-		_sharedAddViewController = [[self alloc] initWithNibName:@"AccountView" bundle:nil];
-		[_sharedAddViewController view];
+- (id) initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
+	if (self = [super initWithNibName:@"AccountView" bundle:nibBundleOrNil]) {
+		[self setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+		[self setNavigationBarTintColor:[UIColor blackColor]];
+		[self setTitle:NSLocalizedString(@"New account",@"")];
 	}
-	return _sharedAddViewController;	
+	return self;
 }
-	 
+
+- (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query {
+	if (self = [super initWithNavigatorURL:URL query:query]) {
+		_query = [query retain];
+	}
+	return self;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == urlField) {
+	if (textField == _urlField) {
 		[textField resignFirstResponder];
-		[loginField becomeFirstResponder];
-	} else if (textField == loginField) {
+		[_loginField becomeFirstResponder];
+	} else if (textField == _loginField) {
 	    [textField resignFirstResponder];
-		[passwordField becomeFirstResponder];
-	} else if (textField == passwordField) {
+		[_passwordField becomeFirstResponder];
+	} else if (textField == _passwordField) {
 	    [textField resignFirstResponder];
-		[self acceptAction:textField];
+		[self add:textField];
 	}
 	return YES;
 }	 
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{ 
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(acceptAction:)] autorelease];
-}
-
-- (IBAction)acceptAction:(id)sender
-{	
-	NSURL * url = [NSURL URLWithString:[urlField.text stringByReplacingOccurrencesOfString:@" " withString:@""]];
-	if (url == nil) 
-	{
-		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error adding account",@"Error adding account") message:NSLocalizedString(@"Please enter a valid URL",@"Please enter a valid URL") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+- (IBAction)add:(id)sender {	
+	NSURL * url = [NSURL URLWithString:[[_urlField text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+	if ([[_urlField text] isEmptyOrWhitespace] || !url) {
+		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error adding account",@"") message:NSLocalizedString(@"Please enter a valid host",@"") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[errorAlert show];
-		[urlField becomeFirstResponder];
+		[_urlField becomeFirstResponder];
 		return;
 	}
 	
@@ -60,33 +58,24 @@ static AccountViewController *_sharedAddViewController = nil;
 	if(![lastChar isEqualToString:@"/"])
 		urlString = [urlString stringByAppendingString:@"/"];
 	
-	NSString * userName = [loginField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-	NSString * passWord = [passwordField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
 	NSMutableDictionary * newAccount = [NSMutableDictionary dictionary];
 	[newAccount setValue:urlString forKey:@"url"];
-	[newAccount setValue:userName forKey:@"username"];
-	[newAccount setValue:passWord forKey:@"password"];
+	[newAccount setValue:[_loginField text] forKey:@"username"];
+	[newAccount setValue:[_passwordField text] forKey:@"password"];
 	[accounts setValue:newAccount forKey:urlString];
 	[defaults setObject:accounts forKey:@"accounts"];	
 	[defaults synchronize];
-	NSArray * viewControllers = [self.navigationController viewControllers];
-	RootViewController * rootController = [viewControllers objectAtIndex:0];
-	[rootController connectWithURLString:urlString username:userName password:passWord];
-	[self.navigationController popToRootViewControllerAnimated:YES];
+	RootViewController * rootController = (RootViewController*)[[AdNavigator navigator] viewControllerForURL:@"iredmine://accounts"];
+	[rootController connectWithURLString:urlString username:[_loginField text] password:[_passwordField text]];
+	[self cancel:sender];
 }
 
-/*
-// The designated initializer. Override to perform setup that is required before the view is loaded.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
+- (IBAction)cancel:(id)sender {	
+	if ([[[self navigationController] topViewController] isEqual:self])
+		[self dismissModalViewControllerAnimated:YES];
 }
-*/
 
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -97,40 +86,31 @@ static AccountViewController *_sharedAddViewController = nil;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.view.backgroundColor = [UIColor viewFlipsideBackgroundColor];      
-	[self setTitle:NSLocalizedString(@"New account",@"New account")];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[[UIApplication sharedApplication] setStatusBarStyle:oldStatusBarStyle animated:YES];
-	self.navigationController.navigationBar.barStyle = oldBarStyle;	
-	self.navigationController.navigationBar.tintColor = [oldTintColor autorelease];	
-	[super viewWillDisappear:animated];
+	[[self view] setBackgroundColor:[UIColor viewFlipsideBackgroundColor]];      
+	
+	if ([[[self navigationController] topViewController] isEqual:self]) {
+		UIBarButtonItem * cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)] autorelease];
+		[[self navigationItem] setLeftBarButtonItem:cancelButton];
+	}
+	
+	UIBarButtonItem * doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(add:)] autorelease];
+	[[self navigationItem] setRightBarButtonItem:doneButton];
+	
+	[_urlField		setText:[_query objectForKey:@"url"]];
+	[_loginField	setText:[_query objectForKey:@"login"]];
+	[_passwordField setText:[_query objectForKey:@"password"]];	
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	oldStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
-	oldBarStyle = self.navigationController.navigationBar.barStyle;
-	self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	oldTintColor = [self.navigationController.navigationBar.tintColor retain];	
-	self.navigationController.navigationBar.tintColor = [UIColor blackColor];		
-	[urlField becomeFirstResponder];
+	[_urlField becomeFirstResponder];
 }
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
-    switch (interfaceOrientation) {
-		case UIInterfaceOrientationPortrait:
-		case UIInterfaceOrientationPortraitUpsideDown:
-			return YES;
-		default:
-			return NO;
-	}
+	return YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -140,10 +120,10 @@ static AccountViewController *_sharedAddViewController = nil;
 
 
 - (void)dealloc {
-	[loginField release];
-	[passwordField release];
-	[urlField release];
-	[oldTintColor release];
+	TT_RELEASE_SAFELY(_loginField);
+	TT_RELEASE_SAFELY(_passwordField);
+	TT_RELEASE_SAFELY(_urlField);
+	TT_RELEASE_SAFELY(_query);
     [super dealloc];
 }
 
