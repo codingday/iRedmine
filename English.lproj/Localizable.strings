@@ -22,6 +22,8 @@
 "Accounts"					= "Accounts";
 "Show in web view"			= "Show in web view";
 "New issue"				    = "New issue";
+"Subject"					= "Subject";
+"Description"				= "Description";
 "Account already exists"	= "Account already exists";
 "Do you really want to override this account with the specified URL?" = "Do you really want to override this account with the specified URL?";
 "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted";

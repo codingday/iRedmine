@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0203D7C010358BCE005E98F4 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0203D7BF10358BCE005E98F4 /* Entitlements.plist */; };
-		0204E6A2134F31C100DF3CCA /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0204E6A1134F31C100DF3CCA /* RESTRequest.m */; };
 		0222E7EF0F8D3D5000445AAD /* AccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */; };
 		0231286210BEE1310097675F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0231286110BEE1310097675F /* Localizable.strings */; };
 		0231293410BEF65E0097675F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0231293310BEF65E0097675F /* Reachability.m */; };
@@ -49,6 +48,7 @@
 		02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936B17134B689B00DF334F /* IssueAddViewController.m */; };
 		02936BAA134B777E00DF334F /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02936BA7134B777200DF334F /* libextThree20XML.a */; };
 		02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02937CB710738AE30069E480 /* SystemConfiguration.framework */; };
+		0294D2231355D51800440E1F /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0294D2221355D51800440E1F /* RESTRequest.m */; };
 		0296EA7B135465B70007360A /* MyPageTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296EA7A135465B70007360A /* MyPageTableController.m */; };
 		02A154461349C03F007A061B /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02A154451349C03F007A061B /* Three20.bundle */; };
 		02A154D61349C139007A061B /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A1549C1349C04F007A061B /* libThree20.a */; };
@@ -251,8 +251,6 @@
 
 /* Begin PBXFileReference section */
 		0203D7BF10358BCE005E98F4 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
-		0204E6A0134F31C100DF3CCA /* RESTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTRequest.h; sourceTree = "<group>"; };
-		0204E6A1134F31C100DF3CCA /* RESTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequest.m; sourceTree = "<group>"; };
 		0222E7ED0F8D3D5000445AAD /* AccountAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAddViewController.h; sourceTree = "<group>"; };
 		0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAddViewController.m; sourceTree = "<group>"; };
 		0222E7FA0F8D3EC700445AAD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AccountView.xib; sourceTree = "<group>"; };
@@ -318,6 +316,8 @@
 		02936B17134B689B00DF334F /* IssueAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueAddViewController.m; sourceTree = "<group>"; };
 		02936B9C134B777200DF334F /* extThree20XML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extThree20XML.xcodeproj; path = External/three20/src/extThree20XML/extThree20XML.xcodeproj; sourceTree = "<group>"; };
 		02937CB710738AE30069E480 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		0294D2211355D51800440E1F /* RESTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTRequest.h; sourceTree = "<group>"; };
+		0294D2221355D51800440E1F /* RESTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequest.m; sourceTree = "<group>"; };
 		0296EA79135465B70007360A /* MyPageTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageTableController.h; sourceTree = "<group>"; };
 		0296EA7A135465B70007360A /* MyPageTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageTableController.m; sourceTree = "<group>"; };
 		02A154451349C03F007A061B /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = External/three20/src/Three20.bundle; sourceTree = "<group>"; };
@@ -568,8 +568,8 @@
 				02D86C580F8E75F400EB1658 /* NSDateAdditions.m */,
 				024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */,
 				024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */,
-				0204E6A0134F31C100DF3CCA /* RESTRequest.h */,
-				0204E6A1134F31C100DF3CCA /* RESTRequest.m */,
+				0294D2211355D51800440E1F /* RESTRequest.h */,
+				0294D2221355D51800440E1F /* RESTRequest.m */,
 			);
 			name = "WWK Library";
 			sourceTree = "<group>";
@@ -992,8 +992,8 @@
 				02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */,
 				02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */,
 				02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */,
-				0204E6A2134F31C100DF3CCA /* RESTRequest.m in Sources */,
 				0296EA7B135465B70007360A /* MyPageTableController.m in Sources */,
+				0294D2231355D51800440E1F /* RESTRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

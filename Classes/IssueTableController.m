@@ -31,7 +31,7 @@
 #pragma mark Interface Builder actions
 
 - (IBAction)addIssue:(id)sender {
-	[self openURL:@"iredmine://issue/add" withQuery:[self query]];
+	[self openURL:[@"iredmine://issue/add" stringByAddingQueryDictionary:[self query]]];
 }
 
 #pragma mark -

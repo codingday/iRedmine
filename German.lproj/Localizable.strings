@@ -21,6 +21,8 @@
 "Anonymous"					= "Anonymus";
 "Accounts"					= "Konten";
 "New issue"				    = "Neues Ticket";
+"Subject"					= "Thema";
+"Description"				= "Beschreibung";
 "Show in web view"			= "In Webansicht zeigen";
 "Account already exists"	= "Konto existiert bereits";
 "Do you really want to override this account with the specified URL?" = "Möchten Sie das Konto mit der angegebenen URL wirklich überschreiben?";

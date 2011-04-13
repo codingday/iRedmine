@@ -19,8 +19,6 @@
 
 - (id) initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
 	if (self = [super initWithNibName:@"AccountView" bundle:nibBundleOrNil]) {
-		[self setStatusBarStyle:UIStatusBarStyleBlackOpaque];
-		[self setNavigationBarTintColor:[UIColor blackColor]];
 		[self setTitle:NSLocalizedString(@"New account",@"")];
 	}
 	return self;

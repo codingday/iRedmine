@@ -26,7 +26,7 @@
 		[_connector setDidFinishSelector:@selector(didFinishConnect:)];
 		[_connector setDidFailSelector:@selector(didFailConnect:)];
 		[_connector setDelegate:self];
-		[_connector start];		
+		[_connector start];
 	}
 	return self;
 }

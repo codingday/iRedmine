@@ -50,11 +50,7 @@
 @implementation UIViewController (UIViewControllerAdditions)
 
 - (void)openURL:(NSString *)URL {
-	[self openURL:URL withQuery:nil];
-}
-
-- (void)openURL:(NSString *)URL withQuery:(NSDictionary *)query {
-	[[AdNavigator navigator] openURLAction:[[[TTURLAction actionWithURLPath:URL] applyQuery:query] applyAnimated:YES]];
+	[[AdNavigator navigator] openURLAction:[[TTURLAction actionWithURLPath:URL] applyAnimated:YES]];
 }
 
 @end

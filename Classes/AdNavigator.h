@@ -18,7 +18,6 @@
 @interface UIViewController (UIViewControllerAdditions)
 
 - (void)openURL:(NSString *)URL;
-- (void)openURL:(NSString *)URL withQuery:(NSDictionary *)query;
 
 @end
 

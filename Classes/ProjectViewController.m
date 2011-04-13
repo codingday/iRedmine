@@ -71,7 +71,7 @@
 						 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:[projectDict valueForKey:@"href"]],
 						 nil];
 	if (![login isEmptyOrWhitespace] && ![password isEmptyOrWhitespace])
-		[[ds items] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New issue",@"") URL:addURL]];
+		[[[ds items] lastObject] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New issue",@"") URL:addURL]];
 	[self setDataSource:ds];
 }
 
