@@ -55,15 +55,20 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 	{
 		[UIView setAnimationDuration:duration];
 	
-		CGRect sbFrame = [[UIApplication sharedApplication] statusBarFrame];
+		CGSize sbSize = [[UIApplication sharedApplication] statusBarFrame].size;
 
+		[_contentView setFrame:[[self view] bounds]];
 		if (_bannerIsVisible) {
-			[_contentView setFrame:CGRectMake(0,_adView.frame.size.height, self.view.bounds.size.width, self.view.bounds.size.height - _adView.frame.size.height)];
-			[_adView setFrame:CGRectMake(0,sbFrame.size.height, self.view.bounds.size.width, _adView.frame.size.height)];
+			if ([self isToolbarHidden])
+				[_contentView setHeight:[[self view] height] - [_adView height]];
+			else
+				[_contentView setHeight:[[self view] height] - [_adView height] + [[self toolbar] height]];
+			
+			[_contentView setTop:[_adView height]];
+			[_adView setTop:(sbSize.height > sbSize.width)? sbSize.width : sbSize.height];
 		}
 		else {
-			[_contentView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
-			[_adView setFrame:CGRectMake(0,sbFrame.size.height-_adView.frame.size.height, self.view.bounds.size.width, _adView.frame.size.height)];
+			[_adView setTop:(sbSize.height > sbSize.width)? sbSize.width : sbSize.height-[_adView height]];
 		}
 
 	}
@@ -74,22 +79,16 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 #pragma mark Notification
 
 - (void)statusBarWillChangeFrame:(NSNotification *)notification {
-	CGRect frame = [[[notification userInfo] valueForKey:UIApplicationStatusBarFrameUserInfoKey] CGRectValue];
+	CGSize sbSize = [[[notification userInfo] valueForKey:UIApplicationStatusBarFrameUserInfoKey] CGRectValue].size;
 	
 	[UIView beginAnimations:@"changeStatusBar" context:NULL];
 	{
 		[UIView setAnimationDuration:0.2];
-		
-		CGRect adFrame = [_adView frame];
-		
-		if (_bannerIsVisible) {
-			adFrame.origin.y = (frame.size.height > frame.size.width)? frame.size.width : frame.size.height;
-		}
-		else {
-			adFrame.origin.y = ((frame.size.height > frame.size.width)? frame.size.width : frame.size.height) - adFrame.size.height;
-		}
-
-		[_adView setFrame:adFrame];
+				
+		if (_bannerIsVisible)
+			[_adView setTop:(sbSize.height > sbSize.width)? sbSize.width : sbSize.height];
+		else
+			[_adView setTop:(sbSize.height > sbSize.width)? sbSize.width : sbSize.height-[_adView height]];
 	}
 	[UIView commitAnimations];
 	

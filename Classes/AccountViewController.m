@@ -1,131 +1,102 @@
 //
-//  AddViewController.m
+//  AccountViewController.m
 //  iRedmine
 //
-//  Created by Thomas Stägemann on 08.04.09.
+//  Created by Thomas Stägemann on 21.04.09.
 //  Copyright 2009 Thomas Stägemann. All rights reserved.
 //
 
 #import "AccountViewController.h"
 
+
 @implementation AccountViewController
 
-@synthesize loginField=_loginField;
-@synthesize passwordField=_passwordField;
-@synthesize urlField=_urlField;
+@synthesize connector=_connector;
 
-- (id) initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
-	if (self = [super initWithNibName:@"AccountView" bundle:nibBundleOrNil]) {
-		[self setStatusBarStyle:UIStatusBarStyleBlackOpaque];
-		[self setNavigationBarTintColor:[UIColor blackColor]];
-		[self setTitle:NSLocalizedString(@"New account",@"")];
-	}
-	return self;
-}
+#pragma mark -
+#pragma mark View lifecycle
 
-- (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query {
+- (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
 	if (self = [super initWithNavigatorURL:URL query:query]) {
-		_query = [query retain];
+		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
+		[self setTitle:[url host]];
+
+		NSString * login = [query valueForKey:@"login"];
+		NSString * password = [query valueForKey:@"password"];
+		NSString * URLString = ([[url absoluteString] hasSuffix:@"/"])? [url absoluteString] : [[url absoluteString] stringByAppendingString:@"/"];
+		_connector = [[RMConnector connectorWithUrlString:URLString username:login password:password] retain];
+		[_connector setDidFinishSelector:@selector(didFinishConnect:)];
+		[_connector setDidFailSelector:@selector(didFailConnect:)];
+		[_connector setDelegate:self];
+		[_connector start];
 	}
 	return self;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == _urlField) {
-		[textField resignFirstResponder];
-		[_loginField becomeFirstResponder];
-	} else if (textField == _loginField) {
-	    [textField resignFirstResponder];
-		[_passwordField becomeFirstResponder];
-	} else if (textField == _passwordField) {
-	    [textField resignFirstResponder];
-		[self add:textField];
-	}
-	return YES;
-}	 
+#pragma mark -
+#pragma mark Connector
 
-- (IBAction)add:(id)sender {	
-	NSURL * url = [NSURL URLWithString:[[_urlField text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-	if ([[_urlField text] isEmptyOrWhitespace] || !url) {
-		UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error adding account",@"") message:NSLocalizedString(@"Please enter a valid host",@"") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[errorAlert show];
-		[_urlField becomeFirstResponder];
-		return;
-	}
-	
-	NSString * urlString = [url absoluteString];
-	NSString * lastChar  = [urlString substringFromIndex:[urlString length]];
-	if(![lastChar isEqualToString:@"/"])
-		urlString = [urlString stringByAppendingString:@"/"];
-	
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
-	NSMutableDictionary * newAccount = [NSMutableDictionary dictionary];
-	[newAccount setValue:urlString forKey:@"url"];
-	[newAccount setValue:[_loginField text] forKey:@"username"];
-	[newAccount setValue:[_passwordField text] forKey:@"password"];
-	[accounts setValue:newAccount forKey:urlString];
-	[defaults setObject:accounts forKey:@"accounts"];	
-	[defaults synchronize];
-	RootViewController * rootController = (RootViewController*)[[AdNavigator navigator] viewControllerForURL:@"iredmine://accounts"];
-	[rootController connectWithURLString:urlString username:[_loginField text] password:[_passwordField text]];
-	[self cancel:sender];
+- (void)didFailConnect:(RMConnector*)connector {
+	[self setLoadingView:nil];
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
+												 subtitle:[[connector error] localizedDescription]
+													image:nil]];
 }
 
-- (IBAction)cancel:(id)sender {	
-	if ([[[self navigationController] topViewController] isEqual:self])
-		[self dismissModalViewControllerAnimated:YES];
-}
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	[[self view] setBackgroundColor:[UIColor viewFlipsideBackgroundColor]];      
+- (void)didFinishConnect:(RMConnector*)connector {	
+	TTSectionedDataSource * ds = [[[TTSectionedDataSource alloc] init] autorelease];
+	[ds setSections:[NSMutableArray array]];
+	[ds setItems:[NSMutableArray array]];
 	
-	if ([[[self navigationController] topViewController] isEqual:self]) {
-		UIBarButtonItem * cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)] autorelease];
-		[[self navigationItem] setLeftBarButtonItem:cancelButton];
+	NSString * login = [[self query] valueForKey:@"login"];
+	NSString * password = [[self query] valueForKey:@"password"];
+	NSDictionary * myPageDict = [[connector responseDictionary] valueForKey:@"myPage"];
+	if (![login isEmptyOrWhitespace] && ![password isEmptyOrWhitespace] && myPageDict && [myPageDict count]) {
+		NSMutableArray * myPage = [NSMutableArray array];
+		for (NSDictionary * issuesDict in [myPageDict allValues]) {
+			NSMutableDictionary * newQuery = [[self query] mutableCopy];
+			[newQuery setObject:[issuesDict valueForKey:@"href"] forKey:@"mypage"];
+			NSString * issuesURL = [@"iredmine://mypage" stringByAddingQueryDictionary:newQuery];
+			NSDictionary * issues = [issuesDict valueForKey:@"issues"];
+			NSString * itemText = [NSLocalizedString([issuesDict valueForKey:@"title"],@"") stringByAppendingFormat:@" (%d)",[issues count]];
+			[myPage addObject:[TTTableTextItem itemWithText:itemText URL:issuesURL]];
+		}		
+		[[ds sections] addObject:NSLocalizedString(@"My Page",@"")]; 
+		[[ds items] addObject:myPage];
 	}
 	
-	UIBarButtonItem * doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(add:)] autorelease];
-	[[self navigationItem] setRightBarButtonItem:doneButton];
 	
-	[_urlField		setText:[_query objectForKey:@"url"]];
-	[_loginField	setText:[_query objectForKey:@"login"]];
-	[_passwordField setText:[_query objectForKey:@"password"]];	
+	NSDictionary * projectsDict = [[connector responseDictionary] valueForKeyPath:@"projects.content"];
+	
+	if (projectsDict && [projectsDict count]) {
+		NSMutableArray * projects = [NSMutableArray array];
+		
+		for (NSDictionary * projectDict in [projectsDict allValues]) {
+			NSString * text = [[[projectDict valueForKey:@"title"] componentsSeparatedByString:@" - "] objectAtIndex:0];
+			NSString * subtitle = [[projectDict valueForKey:@"content"] stringByRemovingHTMLTags];
+			NSString * projectURL = [projectDict valueForKey:@"href"];
+			NSString * URLFormat = @"iredmine://project?url=%@&login=%@&password=%@&project=%@";
+			NSString * URLString = [NSString stringWithFormat:URLFormat,[connector urlString],login,password,projectURL];
+			[projects addObject:[TTTableSubtitleItem itemWithText:text subtitle:subtitle?subtitle:@" " URL:URLString]];
+		}
+		NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES];
+		[projects sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+		[[ds items] addObject:projects]; 
+		[[ds sections] addObject:NSLocalizedString(@"Projects",@"")]; 
+	}
+	
+	[self setDataSource:ds];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	[_urlField becomeFirstResponder];
+#pragma mark -
+#pragma mark Memory management
+
+- (void) dealloc {
+	[_connector cancel];
+	[_connector setDelegate:nil];
+	TT_RELEASE_SAFELY(_connector);
+	[super dealloc];
 }
-
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-	return YES;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-    // Release anything that's not essential, such as cached data
-}
-
-
-- (void)dealloc {
-	TT_RELEASE_SAFELY(_loginField);
-	TT_RELEASE_SAFELY(_passwordField);
-	TT_RELEASE_SAFELY(_urlField);
-	TT_RELEASE_SAFELY(_query);
-    [super dealloc];
-}
-
 
 @end
+

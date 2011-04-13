@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "AdNavigator.h"
 #import "iRedmineStyleSheet.h"
-#import "RootViewController.h"
+#import "AccountsViewController.h"
 #import "AccountViewController.h"
+#import "AccountAddViewController.h"
+#import "AccountEditViewController.h"
+#import "ProjectViewController.h"
+#import "IssueAddViewController.h"
+#import "IssueTableController.h"
+#import "ActivityTableController.h"
+#import "MyPageTableController.h"
 
 @interface iRedmineAppDelegate : NSObject <UIApplicationDelegate> {
 }

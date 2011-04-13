@@ -1,0 +1,28 @@
+* Tue Aug 25th 2009 Thomas St√§gemann <ts@weisshuhn.de> 0.1
+- Erste Version
+
+* Fri Dec 4th 2009 Thomas St√§gemann <ts@weisshuhn.de> 0.1.1
+- Querformat hinzugefügt 
+- Verwendung unterschiedlicher Symbole für einige Tracker 
+- SSL-Unterstützung hinzugefügt 
+- Unterstützung verschiedener Ports 
+- Optimiertes Tastaturverhalten bei Hinzufügen 
+- Tickets werden alle in der Startansicht geholt 
+- XML-Parsing-Fehler behoben 
+- Fehler mit negativen Zeitzonen behoben 
+- Einige weitere Fehler behoben 
+
+* Mon Dec 9th 2009 Thomas St√§gemann <ts@weisshuhn.de> 1.0
+- Deutsche Übersetzung hinzugefügt 
+- Optimierte Icon-Auswahl für die Ticketzellen 
+- Fehler in der Detailansicht behoben 
+
+* Wed June 8th 2010 Thomas St√§gemann <ts@weisshuhn.de> 1.1
+- Funktioniert mit jedem Redmine bis Version 0.9.4, wahrscheinlich sogar noch höher 
+- Es ist nun möglich Pfadinstallationen einzugeben wie: http://demo.redmine.org/redmine 
+- Fähigkeit hinzugefügt iRedmine über eine URL mit Kontoinformationen zu starten 
+
+* Thu Dec 2nd 2010 Thomas St√gemann <ts@weisshuhn.de> 1.2
+- Hochauflösende Retina Display Grafiken für iPhone 4 
+- iOS 4 Optimierung 
+- iAds hinzugefügt

@@ -30,18 +30,25 @@
 		
 		[defaults setObject:accounts forKey:@"accounts"];	
 		[defaults setBool:YES forKey:@"launchedBefore"];
+		[defaults synchronize];
 	}
 	
 	// Each Launch
-	/* Not yet, only if all the view controllers work with the navigator
 	[[AdNavigator navigator] setPersistenceMode:TTNavigatorPersistenceModeAll];
-	*/
 	[[AdNavigator navigator] setSupportsShakeToReload:YES];
 	
 	TTURLMap* map = [[AdNavigator navigator] URLMap];
 	[map from:@"*" toViewController:[TTWebController class]];
-	[map from:@"iredmine://accounts" toSharedViewController:[RootViewController class]];
-	[map from:@"iredmine://account" toModalViewController:[AccountViewController class]];
+	[map from:@"iredmine://accounts" toSharedViewController:[AccountsViewController class]];
+	[map from:@"iredmine://account" toViewController:[AccountViewController class]];
+	[map from:@"iredmine://account/add" toModalViewController:[AccountAddViewController class]];
+	[map from:@"iredmine://account/edit" toModalViewController:[AccountEditViewController class]];
+	[map from:@"iredmine://project" toViewController:[ProjectViewController class]];
+	//[map from:@"iredmine://project/add" toViewController:[ProjectAddViewController class]];
+	[map from:@"iredmine://mypage" toViewController:[MyPageTableController class]];
+	[map from:@"iredmine://activities" toViewController:[ActivityTableController class]];
+	[map from:@"iredmine://issues" toViewController:[IssueTableController class]];
+	[map from:@"iredmine://issue/add" toModalViewController:[IssueAddViewController class]];
 	
 	if (![[AdNavigator navigator] restoreViewControllers])
 		[[AdNavigator navigator] openURLAction:[[TTURLAction actionWithURLPath:@"iredmine://accounts"] applyAnimated:YES]];
@@ -62,7 +69,6 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-	[[NSUserDefaults standardUserDefaults] synchronize];
     /*
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
@@ -85,7 +91,6 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	[[NSUserDefaults standardUserDefaults] synchronize];
     /*
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.

@@ -8,7 +8,6 @@
 
 #import "AdNavigator.h"
 
-
 @implementation AdNavigator
 
 + (id)navigator{
@@ -33,5 +32,30 @@
 	return [AdNavigatorWindow class];
 }
 
+@end
+
+@implementation AdNavigatorWindow
+
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+	if (event.type == UIEventSubtypeMotionShake	&& [[AdNavigator navigator] supportsShakeToReload]) {
+		// If you're going to use a custom navigator implementation, you need to ensure that you
+		// implement the reload method. If you're inheriting from TTNavigator, then you're fine.
+		TTDASSERT([[AdNavigator navigator] respondsToSelector:@selector(reload)]);
+		[(AdNavigator*)[AdNavigator navigator] reload];
+	}
+}
 
 @end
+
+@implementation UIViewController (UIViewControllerAdditions)
+
+- (void)openURL:(NSString *)URL {
+	[self openURL:URL withQuery:nil];
+}
+
+- (void)openURL:(NSString *)URL withQuery:(NSDictionary *)query {
+	[[AdNavigator navigator] openURLAction:[[[TTURLAction actionWithURLPath:URL] applyQuery:query] applyAnimated:YES]];
+}
+
+@end
+

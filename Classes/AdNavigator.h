@@ -8,10 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "AdNavigationController.h"
-#import "AdNavigatorWindow.h"
 
-@interface AdNavigator : TTNavigator {
+@interface AdNavigator : TTNavigator
+@end
 
-}
+@interface AdNavigatorWindow : UIWindow
+@end
+
+@interface UIViewController (UIViewControllerAdditions)
+
+- (void)openURL:(NSString *)URL;
+- (void)openURL:(NSString *)URL withQuery:(NSDictionary *)query;
 
 @end
+
