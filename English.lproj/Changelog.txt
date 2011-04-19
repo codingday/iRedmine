@@ -1,7 +1,7 @@
-* Tue Aug 25th 2009 Thomas St√§gemann <ts@weisshuhn.de> 0.1
+* Tue Aug 25th 2009 Thomas Stägemann <ts@weisshuhn.de> 0.1
 - Initial Release
 
-* Fri Dec 4th 2009 Thomas St√§gemann <ts@weisshuhn.de> 0.1.1
+* Fri Dec 4th 2009 Thomas Stägemann <ts@weisshuhn.de> 0.1.1
 - Added landscape orientation
 - Added usage of different icons for some trackers
 - Added SSL support
@@ -12,17 +12,23 @@
 - Fixed bug with negative time zones
 - Fixed several bugs
 
-* Mon Dec 9th 2009 Thomas St√§gemann <ts@weisshuhn.de> 1.0
+* Mon Dec 9th 2009 Thomas Stägemann <ts@weisshuhn.de> 1.0
 - Added german localization
 - Optimized icon selection for issue cells
 - Fixed bug in detail view
 
-* Wed June 8th 2010 Thomas St√§gemann <ts@weisshuhn.de> 1.1
+* Wed June 8th 2010 Thomas Stägemann <ts@weisshuhn.de> 1.1
 - Works with any Redmine to version 0.9.4, probably even higher
 - It's now possible to enter path installations like: http://demo.redmine.org/redmine
 - Added capability to launch iRedmine via an URL with account information 
 
-* Thu Dec 2nd 2010 Thomas St√gemann <ts@weisshuhn.de> 1.2
+* Thu Dec 2nd 2010 Thomas Stägemann <ts@weisshuhn.de> 1.2
 - Retina Display HD graphics for iPhone 4 
 - iOS 4 optimization 
 - iAds added
+
+* Tue Apr 19th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.0
+- Added creation of issues
+- In App Purchases added (create issues, hide the advertising)
+- User interface changes
+- Minor bug fixes

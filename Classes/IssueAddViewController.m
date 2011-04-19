@@ -21,13 +21,13 @@
 		[self setTitle:NSLocalizedString(@"New issue",@"")];
 		[self setToolbarItems:[NSArray arrayWithObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cam:)]]];
 		[self setAutoresizesForKeyboard:YES];
-
+		
 		NSString * URLString = [[query valueForKey:@"url"] stringByAppendingPathComponent:@"issues.xml"];
 		_request = [[TTURLRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 		[_request setResponse:[[[TTURLXMLResponse alloc] init] autorelease]];
 		[_request setHttpMethod:@"POST"];
-		[_request setContentType:@"text/xml"];
+		[_request setContentType:@"application/xml"];
 	}
 	return self;
 }
@@ -35,7 +35,6 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	[[self view] setBackgroundColor:[UIColor viewFlipsideBackgroundColor]];      
 
 	if ([[[self navigationController] topViewController] isEqual:self]) {
 		UIBarButtonItem * cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)] autorelease];
@@ -98,12 +97,12 @@
     xmlTextWriterStartElement(writer, BAD_CAST "description");
     xmlTextWriterWriteString(writer, BAD_CAST [[_descriptionEditor text] cStringUsingEncoding:NSUTF8StringEncoding]);
     xmlTextWriterEndElement(writer); // closing <description>
-	/*
+	
     // <project_id>...</project_id>
     xmlTextWriterStartElement(writer, BAD_CAST "project_id");
-    xmlTextWriterWriteString(writer, BAD_CAST "1");
+    xmlTextWriterWriteString(writer, BAD_CAST [[[[self query] valueForKey:@"project"] lastPathComponent] cStringUsingEncoding:NSUTF8StringEncoding]);
     xmlTextWriterEndElement(writer); // closing <project_id>
-	*/	
+		
     // etc.
     xmlTextWriterEndElement(writer);
     xmlTextWriterEndDocument(writer);

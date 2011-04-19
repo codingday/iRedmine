@@ -20,13 +20,19 @@
 "Username: %@"				= "Mitgliedsname: %@";
 "Anonymous"					= "Anonymus";
 "Accounts"					= "Konten";
+"Show in web view"			= "In Webansicht zeigen";
 "New issue"				    = "Neues Ticket";
 "Subject"					= "Thema";
 "Description"				= "Beschreibung";
-"Show in web view"			= "In Webansicht zeigen";
 "Account already exists"	= "Konto existiert bereits";
 "Do you really want to override this account with the specified URL?" = "Möchten Sie das Konto mit der angegebenen URL wirklich überschreiben?";
 "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Ungültiges XML zurückgegeben\n\nMögliche Gründe:\n1. Passwort oder Benutzername falsch\n2. Zu viele Anfragen\n3. Mobile skin beschädigt";
+
+/* Store View Controller */
+"Store"						= "Store";
+"Installed"					= "Installiert";
+"Purchase %@ (%@)"			= "%@ kaufen (%@)";
+"Restore purchases"			= "Käufe wiederherstellen";
 
 // Error descriptions
 "RMProjectsFeedNotFound" = "Projekt-Feed konnte nicht gefunden werden. Überprüfen Sie bitte Mitgliedsname und Passwort.";

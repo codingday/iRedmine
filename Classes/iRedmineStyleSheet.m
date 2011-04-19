@@ -23,4 +23,8 @@
 	return RGBCOLOR(51, 51, 51);
 }
 
+- (UIColor*)linkTextColor {
+	return RGBCOLOR(51, 51, 51);
+}
+
 @end

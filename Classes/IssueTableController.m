@@ -16,22 +16,8 @@
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query {
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		[self setTitle:NSLocalizedString(@"Issues", @"")];
-		
-		NSString * login = [query valueForKey:@"login"];
-		NSString * password = [query valueForKey:@"password"];
-		if (![login isEmptyOrWhitespace] && ![password isEmptyOrWhitespace]) {
-			UIBarButtonItem * addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addIssue:)] autorelease];
-			[[self navigationItem] setRightBarButtonItem:addButton];
-		}
 	}
 	return self;
-}
-
-#pragma mark -
-#pragma mark Interface Builder actions
-
-- (IBAction)addIssue:(id)sender {
-	[self openURL:[@"iredmine://issue/add" stringByAddingQueryDictionary:[self query]]];
 }
 
 #pragma mark -

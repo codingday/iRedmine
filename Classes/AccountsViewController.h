@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
 #import "AccountsDataSource.h"
-#import "AdNavigator.h"
 
 @interface AccountsViewController : BaseTableViewController {
+	UIBarButtonItem * _storeButton;
+	UIBarButtonItem * _addButton;
 }
 
 @end

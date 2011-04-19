@@ -51,7 +51,7 @@
 	NSString * login = [[self query] valueForKey:@"login"];
 	NSString * password = [[self query] valueForKey:@"password"];
 	NSDictionary * myPageDict = [[connector responseDictionary] valueForKey:@"myPage"];
-	if (![login isEmptyOrWhitespace] && ![password isEmptyOrWhitespace] && myPageDict && [myPageDict count]) {
+	if (login && ![login isEmptyOrWhitespace] && password && ![password isEmptyOrWhitespace] && myPageDict && [myPageDict count]) {
 		NSMutableArray * myPage = [NSMutableArray array];
 		for (NSDictionary * issuesDict in [myPageDict allValues]) {
 			NSMutableDictionary * newQuery = [[self query] mutableCopy];
@@ -74,9 +74,11 @@
 		for (NSDictionary * projectDict in [projectsDict allValues]) {
 			NSString * text = [[[projectDict valueForKey:@"title"] componentsSeparatedByString:@" - "] objectAtIndex:0];
 			NSString * subtitle = [[projectDict valueForKey:@"content"] stringByRemovingHTMLTags];
-			NSString * projectURL = [projectDict valueForKey:@"href"];
-			NSString * URLFormat = @"iredmine://project?url=%@&login=%@&password=%@&project=%@";
-			NSString * URLString = [NSString stringWithFormat:URLFormat,[connector urlString],login,password,projectURL];
+
+			NSDictionary * projectQuery = [[self query] mutableCopy];
+			[projectQuery setValue:[projectDict valueForKey:@"href"] forKey:@"project"];
+		
+			NSString * URLString = [@"iredmine://project" stringByAddingQueryDictionary:projectQuery];
 			[projects addObject:[TTTableSubtitleItem itemWithText:text subtitle:subtitle?subtitle:@" " URL:URLString]];
 		}
 		NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES];

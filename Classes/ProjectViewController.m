@@ -31,6 +31,12 @@
 	return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[self reloadData:self];
+	[_connector start];
+}
+
 #pragma mark -
 #pragma mark Connector
 
@@ -42,16 +48,28 @@
 }
 
 - (void)didFinishConnect:(RMConnector*)connector {
-	NSString * URLFormat = @"iredmine://%@?url=%@&login=%@&password=%@&project=%@";
-	NSString * URLString = [[self query] valueForKey:@"url"];
+	[self reloadData:self];
+}
+
+#pragma mark -
+#pragma mark Interface Builder actions
+
+- (IBAction)reloadData:(id)sender {
+	if (![[_connector responseDictionary] count]) 
+		return;
+		
 	NSString * projectURL = [[self query] valueForKey:@"project"];
 	NSString * login	= [[self query] valueForKey:@"login"];
 	NSString * password = [[self query] valueForKey:@"password"];	
-	NSString * activitiesURL = [NSString stringWithFormat:URLFormat,@"activities",URLString,login,password,projectURL];
-	NSString * issuesURL = [NSString stringWithFormat:URLFormat,@"issues",URLString,login,password,projectURL];
-	NSString * addURL = [NSString stringWithFormat:URLFormat,@"issue/add",URLString,login,password,projectURL];
+	NSString * activitiesURL = [@"iredmine://activities" stringByAddingQueryDictionary:[self query]];
+	NSString * issuesURL = [@"iredmine://issues" stringByAddingQueryDictionary:[self query]];
+
+	NSString * addURL = [@"iredmine://issue/add" stringByAddingQueryDictionary:[self query]];
+	NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
+	if (!purchases || ![purchases containsObject:kInAppPurchaseIdentifierPro])
+		addURL = @"iredmine://store";
 	
-	NSDictionary * projectsDict = [[connector responseDictionary] valueForKeyPath:@"projects.content"];
+	NSDictionary * projectsDict = [[_connector responseDictionary] valueForKeyPath:@"projects.content"];
 	NSDictionary * projectDict = [projectsDict valueForKey:projectURL];
 	NSDictionary * activityDict = [projectDict valueForKey:@"activity"];
 	NSDictionary * issuesDict = [projectDict valueForKey:@"issues"];
@@ -70,8 +88,10 @@
 						 @"",
 						 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:[projectDict valueForKey:@"href"]],
 						 nil];
-	if (![login isEmptyOrWhitespace] && ![password isEmptyOrWhitespace])
+		
+	if (login && ![login isEmptyOrWhitespace] && password && ![password isEmptyOrWhitespace])
 		[[[ds items] lastObject] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New issue",@"") URL:addURL]];
+	
 	[self setDataSource:ds];
 }
 

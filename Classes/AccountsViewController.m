@@ -22,6 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];			
+
+	_addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)] retain];
+	_storeButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Store",@"") style:UIBarButtonItemStyleBordered target:self action:@selector(openStore:)] retain];
+	if ([SKPaymentQueue canMakePayments])
+		[[self navigationItem] setRightBarButtonItem:_storeButton animated:YES];
 	[[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
 	[[self tableView] setAllowsSelectionDuringEditing:YES];
 }
@@ -38,9 +43,12 @@
 	[super setEditing:editing animated:animated];
 	
 	if (editing) {
-		UIBarButtonItem * addButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)] autorelease];
-		[[self navigationItem] setRightBarButtonItem:addButton animated:YES];
+		[[self navigationItem] setRightBarButtonItem:_addButton animated:YES];
 		[self setDataSource:[[[AccountsEditingDataSource alloc] init] autorelease]];
+	}
+	else if ([SKPaymentQueue canMakePayments]){
+		[[self navigationItem] setRightBarButtonItem:_storeButton animated:YES];
+		[self setDataSource:[[[AccountsDataSource alloc] init] autorelease]];
 	}
 	else {
 		[[self navigationItem] setRightBarButtonItem:nil animated:YES];
@@ -52,9 +60,27 @@
 	return [[[AccountsTableViewDelegate alloc] initWithController:self] autorelease];
 }
 
+#pragma mark -
+#pragma mark Selectors
+
 - (void)add:(id)sender {
-	[self openURL:@"iredmine://account/add"];
+	TTOpenURL(@"iredmine://account/add");
 }
+
+- (void)openStore:(id)sender {
+	TTOpenURL(@"iredmine://store");
+}
+
+#pragma mark -
+#pragma mark Memory management
+
+- (void) dealloc {
+	TT_RELEASE_SAFELY(_addButton);
+	TT_RELEASE_SAFELY(_storeButton);
+
+	[super dealloc];
+}
+
 
 @end
 

@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
 #import "RMConnector.h"
+#import "Constants.h"
 
 @interface ProjectViewController : BaseTableViewController {
 	RMConnector * _connector;
 }
 
 @property(nonatomic, retain, readonly) RMConnector * connector;
+
+- (IBAction)reloadData:(id)sender;
 
 @end

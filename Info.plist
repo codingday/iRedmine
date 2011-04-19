@@ -27,8 +27,6 @@
 		<string>Icon@2x.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>de.weisshuhn.${PRODUCT_NAME:identifier}</string>
-	<key>CFBundleIdentifier - 2</key>
 	<string>ZF5E7523C5.de.weisshuhn.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>

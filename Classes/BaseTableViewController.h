@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
+#import "Constants.h"
 
-
-@interface BaseTableViewController : TTTableViewController {
+@interface BaseTableViewController : TTTableViewController <ADBannerViewDelegate> {
 	NSDictionary * _query;
+	ADBannerView * _adView;
+	BOOL _bannerIsVisible;
 }
 
 @property (nonatomic, retain, readonly) NSDictionary * query;
+
+- (void)updateViewFramesWithOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration;
 
 @end

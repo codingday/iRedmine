@@ -28,5 +28,11 @@
 "Do you really want to override this account with the specified URL?" = "Do you really want to override this account with the specified URL?";
 "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted";
 
+/* Store View Controller */
+"Store"						= "Store";
+"Installed"					= "Installed";
+"Purchase %@ (%@)"			= "Purchase %@ (%@)";
+"Restore purchases"			= "Restore purchases";
+
 // Error descriptions
 "RMProjectsFeedNotFound" = "Couldn't found projects feed. Please check login and password.";

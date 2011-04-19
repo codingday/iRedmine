@@ -8,6 +8,7 @@
 
 #import "iRedmineAppDelegate.h"
 
+
 @implementation iRedmineAppDelegate
 
 #pragma mark -
@@ -34,15 +35,16 @@
 	}
 	
 	// Each Launch
-	[[AdNavigator navigator] setPersistenceMode:TTNavigatorPersistenceModeAll];
-	[[AdNavigator navigator] setSupportsShakeToReload:YES];
+	[[TTNavigator navigator] setPersistenceMode:TTNavigatorPersistenceModeAll];
+	[[TTNavigator navigator] setSupportsShakeToReload:YES];
 	
-	TTURLMap* map = [[AdNavigator navigator] URLMap];
+	TTURLMap* map = [[TTNavigator navigator] URLMap];
 	[map from:@"*" toViewController:[TTWebController class]];
+	[map from:@"iredmine://store" toModalViewController:[StoreViewController class]];
 	[map from:@"iredmine://accounts" toSharedViewController:[AccountsViewController class]];
-	[map from:@"iredmine://account" toViewController:[AccountViewController class]];
-	[map from:@"iredmine://account/add" toModalViewController:[AccountAddViewController class]];
-	[map from:@"iredmine://account/edit" toModalViewController:[AccountEditViewController class]];
+	[map from:@"iredmine://account"		 parent:@"iredmine://accounts" toViewController:[AccountViewController class]		   selector:nil transition:0];
+	[map from:@"iredmine://account/add"  parent:@"iredmine://accounts" toModalViewController:[AccountAddViewController class]  selector:nil transition:0];
+	[map from:@"iredmine://account/edit" parent:@"iredmine://accounts" toModalViewController:[AccountEditViewController class] selector:nil transition:0];
 	[map from:@"iredmine://project" toViewController:[ProjectViewController class]];
 	//[map from:@"iredmine://project/add" toViewController:[ProjectAddViewController class]];
 	[map from:@"iredmine://mypage" toViewController:[MyPageTableController class]];
@@ -50,13 +52,12 @@
 	[map from:@"iredmine://issues" toViewController:[IssueTableController class]];
 	[map from:@"iredmine://issue/add" toModalViewController:[IssueAddViewController class]];
 	
-	if (![[AdNavigator navigator] restoreViewControllers])
-		[[AdNavigator navigator] openURLAction:[[TTURLAction actionWithURLPath:@"iredmine://accounts"] applyAnimated:YES]];
+	if (![[TTNavigator navigator] restoreViewControllers])
+		TTOpenURL(@"iredmine://accounts");
 }
 
 - (BOOL)application:(UIApplication*)application handleOpenURL:(NSURL*)URL {
-	[[AdNavigator navigator] openURLAction:[[TTURLAction actionWithURLPath:[URL absoluteString]] applyAnimated:YES]];
-
+	TTOpenURL([URL absoluteString]);
 	return YES;
 }
 

@@ -32,7 +32,6 @@
 		026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A377311A34FA7003A6F9A /* ASIInputStream.m */; };
 		027898091349E50C00F678AB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027898081349E50C00F678AB /* StoreKit.framework */; };
 		0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278982B1349E91700F678AB /* iRedmineStyleSheet.m */; };
-		027898421349F58D00F678AB /* AdNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 027898411349F58D00F678AB /* AdNavigator.m */; };
 		0278ED5C0F9E40CA000E8EED /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278ED5B0F9E40CA000E8EED /* AccountViewController.m */; };
 		028CFEFA12AD3AFF003FEC85 /* feature@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFEF912AD3AFF003FEC85 /* feature@2x.png */; };
 		028CFEFC12AD3B0B003FEC85 /* revision@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFEFB12AD3B0B003FEC85 /* revision@2x.png */; };
@@ -62,9 +61,9 @@
 		02A8B04C0F98D6830077AB7F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* Icon.png */; };
 		02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* RMLogin.m */; };
 		02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */; };
-		02CD7A7A12A55F1C00841B5A /* AdNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CD7A7712A55F1C00841B5A /* AdNavigationController.m */; };
 		02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CD7AAD12A56C2100841B5A /* iAd.framework */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
+		02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02EB331F1358AC8E00B18895 /* StoreViewController.m */; };
 		02F400CC119307F100E0B194 /* RMConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400CB119307F100E0B194 /* RMConnector.m */; };
 		02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D4F0134DBC6B00154008 /* AccountsDataSource.m */; };
 		02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D79B134E0A0D00154008 /* AccountEditViewController.m */; };
@@ -294,8 +293,6 @@
 		027898081349E50C00F678AB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0278982A1349E91700F678AB /* iRedmineStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmineStyleSheet.h; sourceTree = "<group>"; };
 		0278982B1349E91700F678AB /* iRedmineStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRedmineStyleSheet.m; sourceTree = "<group>"; };
-		027898401349F58D00F678AB /* AdNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdNavigator.h; sourceTree = "<group>"; };
-		027898411349F58D00F678AB /* AdNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdNavigator.m; sourceTree = "<group>"; };
 		0278ED5A0F9E40CA000E8EED /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		0278ED5B0F9E40CA000E8EED /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		028CFEF912AD3AFF003FEC85 /* feature@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feature@2x.png"; sourceTree = "<group>"; };
@@ -333,11 +330,12 @@
 		02C7769D11B6B1C900F10BC3 /* RMLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLogin.h; sourceTree = "<group>"; };
 		02C7769E11B6B1C900F10BC3 /* RMLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLogin.m; sourceTree = "<group>"; };
 		02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
-		02CD7A7612A55F1C00841B5A /* AdNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdNavigationController.h; sourceTree = "<group>"; };
-		02CD7A7712A55F1C00841B5A /* AdNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdNavigationController.m; sourceTree = "<group>"; };
 		02CD7AAD12A56C2100841B5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		02D86C580F8E75F400EB1658 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
+		02EB331E1358AC8E00B18895 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
+		02EB331F1358AC8E00B18895 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
+		02EF8786135DDAD800803764 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		02F400CA119307F100E0B194 /* RMConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMConnector.h; sourceTree = "<group>"; };
 		02F400CB119307F100E0B194 /* RMConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMConnector.m; sourceTree = "<group>"; };
 		02F6D4EF134DBC6B00154008 /* AccountsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsDataSource.h; sourceTree = "<group>"; };
@@ -389,17 +387,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0204E658134F25D200DF3CCA /* Navigator */ = {
-			isa = PBXGroup;
-			children = (
-				027898401349F58D00F678AB /* AdNavigator.h */,
-				027898411349F58D00F678AB /* AdNavigator.m */,
-				02CD7A7612A55F1C00841B5A /* AdNavigationController.h */,
-				02CD7A7712A55F1C00841B5A /* AdNavigationController.m */,
-			);
-			name = Navigator;
-			sourceTree = "<group>";
-		};
 		0204E65A134F260700DF3CCA /* Account Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +540,8 @@
 				02936B17134B689B00DF334F /* IssueAddViewController.m */,
 				023218E00F94DE2100A95381 /* ProjectViewController.h */,
 				023218E10F94DE2100A95381 /* ProjectViewController.m */,
+				02EB331E1358AC8E00B18895 /* StoreViewController.h */,
+				02EB331F1358AC8E00B18895 /* StoreViewController.m */,
 			);
 			name = "Table View Controllers";
 			sourceTree = "<group>";
@@ -609,11 +598,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				02EF8786135DDAD800803764 /* Constants.h */,
 				0278982A1349E91700F678AB /* iRedmineStyleSheet.h */,
 				0278982B1349E91700F678AB /* iRedmineStyleSheet.m */,
 				1D3623240D0F684500981E51 /* iRedmineAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */,
-				0204E658134F25D200DF3CCA /* Navigator */,
 				0204E65D134F267E00DF3CCA /* Base Controllers */,
 				02E2EDB10F9F572F003DDCB0 /* WWK Library */,
 				0204E65A134F260700DF3CCA /* Account Views */,
@@ -983,9 +972,7 @@
 				026A376111A34C11003A6F9A /* ASINetworkQueue.m in Sources */,
 				026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */,
 				02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */,
-				02CD7A7A12A55F1C00841B5A /* AdNavigationController.m in Sources */,
 				0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */,
-				027898421349F58D00F678AB /* AdNavigator.m in Sources */,
 				02936956134B23AC00DF334F /* ActivityTableController.m in Sources */,
 				02936A79134B5A5200DF334F /* BaseViewController.m in Sources */,
 				02936AF4134B66C500DF334F /* BaseTableViewController.m in Sources */,
@@ -994,6 +981,7 @@
 				02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */,
 				0296EA7B135465B70007360A /* MyPageTableController.m in Sources */,
 				0294D2231355D51800440E1F /* RESTRequest.m in Sources */,
+				02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1101,10 +1089,16 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
-				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = (
+					"External/three20/Build/Products/three20/**",
+					"${SDKROOT}/usr/include/libxml2/**",
+				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = iRedmine;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "76AF09CC-1D0B-49BA-BDD2-8986FBAE9C4D";
 				SDKROOT = iphoneos;
@@ -1134,7 +1128,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iRedmine;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1A274BB0-E19E-429A-811C-FB850EF82423";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "64095727-95C4-455E-BC2C-60044C7CCE27";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1150,9 +1144,16 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"External/three20/Build/Products/three20/**",
+					"${SDKROOT}/usr/include/libxml2/**",
+				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = iRedmine;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "76AF09CC-1D0B-49BA-BDD2-8986FBAE9C4D";
 				SDKROOT = iphoneos;

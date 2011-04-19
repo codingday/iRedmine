@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AdNavigator.h"
 
 @interface BaseViewController : TTViewController {
 	NSDictionary * _query;

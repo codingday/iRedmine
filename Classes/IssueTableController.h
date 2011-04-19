@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ActivityTableController.h"
-#import "AdNavigator.h"
 
 @interface IssueTableController : ActivityTableController {
 }
-
-- (IBAction)addIssue:(id)sender;
 
 @end
