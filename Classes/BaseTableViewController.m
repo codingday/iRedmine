@@ -40,8 +40,13 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 	if (!purchases || ![purchases containsObject:kInAppPurchaseIdentifierAdsFree]) {
 		_adView = [[[ADBannerView alloc] initWithFrame: CGRectZero] retain];
 		[_adView setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
+#ifdef __IPHONE_4_2
+		[_adView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait,ADBannerContentSizeIdentifierLandscape,nil]];
+		[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
+#else
 		[_adView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50,ADBannerContentSizeIdentifier480x32,nil]];
 		[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
+#endif	
 		[_adView setDelegate:self];
 		[[self view] addSubview:_adView];
 		[self updateViewFramesWithOrientation:[self interfaceOrientation] duration:0];
@@ -66,9 +71,17 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 	if (!_adView) return;
 	
 	if (UIInterfaceOrientationIsLandscape(orientation))
+#ifdef __IPHONE_4_2
+		[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierLandscape];
+#else
 		[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier480x32];
+#endif	
 	else
+#ifdef __IPHONE_4_2
+		[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
+#else
 		[_adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
+#endif	
 	
 	[UIView beginAnimations:@"showBanner" context:NULL];
 	[UIView setAnimationDuration:duration];
@@ -109,8 +122,9 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 #pragma mark AdViewBannerDelegate
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+	NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
 	if (!_bannerIsVisible) {
-		_bannerIsVisible = YES;
+		_bannerIsVisible = !(purchases && [purchases containsObject:kInAppPurchaseIdentifierAdsFree]);
 		[self updateViewFramesWithOrientation:[self interfaceOrientation] duration:kBannerSlideInAnimationDuration];
 	}
 }
