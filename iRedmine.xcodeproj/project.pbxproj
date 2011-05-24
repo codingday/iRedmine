@@ -47,7 +47,6 @@
 		02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936B17134B689B00DF334F /* IssueAddViewController.m */; };
 		02936BAA134B777E00DF334F /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02936BA7134B777200DF334F /* libextThree20XML.a */; };
 		02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02937CB710738AE30069E480 /* SystemConfiguration.framework */; };
-		0294D2231355D51800440E1F /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0294D2221355D51800440E1F /* RESTRequest.m */; };
 		0296EA7B135465B70007360A /* MyPageTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296EA7A135465B70007360A /* MyPageTableController.m */; };
 		02A154461349C03F007A061B /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02A154451349C03F007A061B /* Three20.bundle */; };
 		02A154D61349C139007A061B /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A1549C1349C04F007A061B /* libThree20.a */; };
@@ -63,6 +62,7 @@
 		02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */; };
 		02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CD7AAD12A56C2100841B5A /* iAd.framework */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
+		02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E18E49138BB84200639A5D /* RESTRequest.m */; };
 		02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02EB331F1358AC8E00B18895 /* StoreViewController.m */; };
 		02F400CC119307F100E0B194 /* RMConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400CB119307F100E0B194 /* RMConnector.m */; };
 		02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D4F0134DBC6B00154008 /* AccountsDataSource.m */; };
@@ -313,8 +313,6 @@
 		02936B17134B689B00DF334F /* IssueAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueAddViewController.m; sourceTree = "<group>"; };
 		02936B9C134B777200DF334F /* extThree20XML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extThree20XML.xcodeproj; path = External/three20/src/extThree20XML/extThree20XML.xcodeproj; sourceTree = "<group>"; };
 		02937CB710738AE30069E480 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
-		0294D2211355D51800440E1F /* RESTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTRequest.h; sourceTree = "<group>"; };
-		0294D2221355D51800440E1F /* RESTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequest.m; sourceTree = "<group>"; };
 		0296EA79135465B70007360A /* MyPageTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageTableController.h; sourceTree = "<group>"; };
 		0296EA7A135465B70007360A /* MyPageTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageTableController.m; sourceTree = "<group>"; };
 		02A154451349C03F007A061B /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = External/three20/src/Three20.bundle; sourceTree = "<group>"; };
@@ -333,6 +331,8 @@
 		02CD7AAD12A56C2100841B5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		02D86C580F8E75F400EB1658 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
+		02E18E48138BB84200639A5D /* RESTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTRequest.h; sourceTree = "<group>"; };
+		02E18E49138BB84200639A5D /* RESTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequest.m; sourceTree = "<group>"; };
 		02EB331E1358AC8E00B18895 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
 		02EB331F1358AC8E00B18895 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
 		02EF8786135DDAD800803764 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -557,8 +557,8 @@
 				02D86C580F8E75F400EB1658 /* NSDateAdditions.m */,
 				024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */,
 				024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */,
-				0294D2211355D51800440E1F /* RESTRequest.h */,
-				0294D2221355D51800440E1F /* RESTRequest.m */,
+				02E18E48138BB84200639A5D /* RESTRequest.h */,
+				02E18E49138BB84200639A5D /* RESTRequest.m */,
 			);
 			name = "WWK Library";
 			sourceTree = "<group>";
@@ -980,8 +980,8 @@
 				02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */,
 				02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */,
 				0296EA7B135465B70007360A /* MyPageTableController.m in Sources */,
-				0294D2231355D51800440E1F /* RESTRequest.m in Sources */,
 				02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */,
+				02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

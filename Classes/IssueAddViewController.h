@@ -8,16 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseTableViewController.h"
+#import "NSStringAdditions.h"
+#import "RESTRequest.h"
 #import <libxml/encoding.h>
 #import <libxml/xmlwriter.h>
 
 @interface IssueAddViewController : BaseTableViewController <TTURLRequestDelegate> {
-	TTURLRequest * _request;
+	RESTRequest * _request;
 	UITextField * _subjectField;
 	TTTextEditor * _descriptionEditor;
 }
 
-@property (nonatomic, retain, readonly) TTURLRequest * request;
+@property (nonatomic, retain, readonly) RESTRequest * request;
 
 - (IBAction)send:(id)sender;
 - (IBAction)cancel:(id)sender;

@@ -22,12 +22,10 @@
 		[self setToolbarItems:[NSArray arrayWithObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cam:)]]];
 		[self setAutoresizesForKeyboard:YES];
 		
-		NSString * URLString = [[query valueForKey:@"url"] stringByAppendingPathComponent:@"issues.xml"];
-		_request = [[TTURLRequest requestWithURL:URLString delegate:self] retain];
+		NSString * URLString = [[query valueForKey:@"url"] stringByAppendingURLPathComponent:@"issues.xml"];
+		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
-		[_request setResponse:[[[TTURLXMLResponse alloc] init] autorelease]];
 		[_request setHttpMethod:@"POST"];
-		[_request setContentType:@"application/xml"];
 	}
 	return self;
 }
@@ -75,49 +73,23 @@
 #pragma mark -
 #pragma mark Interface Builder actions
 
-- (IBAction)send:(id)sender {		
-	xmlTextWriterPtr writer;
-    xmlBufferPtr buffer;
-	
-    buffer = xmlBufferCreate();
-    writer = xmlNewTextWriterMemory(buffer, 0);
-	
-    // <?xml version="1.0" encoding="UTF-8"?>
-    xmlTextWriterStartDocument(writer, "1.0", "UTF-8", NULL);
-	
-	// <issue>...</issue>
-    xmlTextWriterStartElement(writer, BAD_CAST "issue");
-	
-    // <subject>...</subject>
-    xmlTextWriterStartElement(writer, BAD_CAST "subject");
-    xmlTextWriterWriteString(writer, BAD_CAST [[_subjectField text] cStringUsingEncoding:NSUTF8StringEncoding]);
-    xmlTextWriterEndElement(writer); // closing <subject>
-	
-    // <description>...</description>
-    xmlTextWriterStartElement(writer, BAD_CAST "description");
-    xmlTextWriterWriteString(writer, BAD_CAST [[_descriptionEditor text] cStringUsingEncoding:NSUTF8StringEncoding]);
-    xmlTextWriterEndElement(writer); // closing <description>
-	
-    // <project_id>...</project_id>
-    xmlTextWriterStartElement(writer, BAD_CAST "project_id");
-    xmlTextWriterWriteString(writer, BAD_CAST [[[[self query] valueForKey:@"project"] lastPathComponent] cStringUsingEncoding:NSUTF8StringEncoding]);
-    xmlTextWriterEndElement(writer); // closing <project_id>
-		
-    // etc.
-    xmlTextWriterEndElement(writer);
-    xmlTextWriterEndDocument(writer);
-    xmlFreeTextWriter(writer);
-	
-    // turn libxml2 buffer into NSData* object
-    NSData * xmlData = [NSData dataWithBytes:(buffer->content) length:(buffer->use)];
-    xmlBufferFree(buffer);
+- (IBAction)send:(id)sender {	
+	NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:
+						   [_subjectField text],
+						   @"subject",
+						   [_descriptionEditor text],
+						   @"description",
+						   [[[self query] valueForKey:@"project"] lastPathComponent],
+						   @"project_id",
+						   nil];
 	
 	// Send request
-	[_request setHttpBody:xmlData];
+	[_request setDictionary:[NSDictionary dictionaryWithObject:dict forKey:@"issue"]];
 	[_request send];
 }
 
 - (IBAction)cancel:(id)sender {	
+	[_request cancel];
 	[self dismissModalViewControllerAnimated:YES];
 }
 
@@ -125,6 +97,8 @@
 #pragma mark Request delegate
 
 - (void)requestDidStartLoad:(TTURLRequest*)request{
+	[[[self navigationItem] rightBarButtonItem] setEnabled:NO];
+	
 	TTActivityLabel * activityLabel = [[[TTActivityLabel alloc] initWithStyle:TTActivityLabelStyleBlackBox] autorelease];
 	[activityLabel setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
 	[activityLabel setText:TTLocalizedString(@"Sending...", @"")];
@@ -142,6 +116,8 @@
 	if ([subject isEqualToString:[_subjectField text]] && [description isEqualToString:[_descriptionEditor text]])
 		return [self cancel:self];
 	
+	[[[self navigationItem] rightBarButtonItem] setEnabled:YES];
+	
 	[[[[UIAlertView alloc] initWithTitle:TTLocalizedString(@"Error", @"") 
 								 message:TTLocalizedString(@"Sorry, there was an error.", @"") 
 								delegate:nil 
@@ -149,11 +125,9 @@
 					   otherButtonTitles:nil] autorelease] show];		
 }
 
-- (void)request:(TTURLRequest*)request didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge*)challenge {
-	NSLog(@"did receive auth challenge: %@",challenge);
-}
-
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
+	[[[self navigationItem] rightBarButtonItem] setEnabled:YES];
+	
 	[self setLoadingView:nil];
 	[[[[UIAlertView alloc] initWithTitle:TTLocalizedString(@"Error", @"") 
 								 message:[error localizedDescription] 

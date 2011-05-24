@@ -37,9 +37,16 @@
 	UIBarButtonItem * doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)] autorelease];
 	[[self navigationItem] setRightBarButtonItem:doneButton];
 	
-	[_urlField		setText:[[self query] objectForKey:@"url"]];
-	[_loginField	setText:[[self query] objectForKey:@"login"]];
-	[_passwordField setText:[[self query] objectForKey:@"password"]];	
+	NSURL * url = [NSURL URLWithString:[[self query] objectForKey:@"url"] ];
+	[_urlField setText:[url absoluteString]];
+
+	NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
+	if (credentials) {
+		NSURLCredential * credential = (NSURLCredential*)[[credentials allValues] objectAtIndex:0];
+		[_loginField	setText:[credential user]];
+		[_passwordField setText:[credential password]];	
+	}		
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -93,8 +100,8 @@
 								  otherButtonTitles:nil] autorelease] show];
 	}
 	
-	NSDictionary * accounts = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"accounts"];
-	if ([accounts objectForKey:[url absoluteString]]) {
+	NSArray * accounts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"accounts"];
+	if ([accounts containsObject:[url absoluteString]]) {
 		return [[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Account already exists",@"") 
 											message:NSLocalizedString(@"Do you really want to override this account with the specified URL?",@"") 
 										   delegate:self 
@@ -116,20 +123,31 @@
 
 - (void)save:(id)sender {
 	NSURL * url = [NSURL URLWithString:[_urlField text]];
+	if (!url) return;
 	
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary * accounts = [[defaults dictionaryForKey:@"accounts"] mutableCopy];
+	NSMutableArray * accounts = [[defaults arrayForKey:@"accounts"] mutableCopy];
 
-	NSString * originalURL = [[self query] objectForKey:@"url"];
-	if (originalURL) [accounts removeObjectForKey:originalURL];
+	NSURLCredentialStorage * storage = [NSURLCredentialStorage sharedCredentialStorage];
+	NSURL * originalURL = [NSURL URLWithString:[[self query] objectForKey:@"url"]];
+	if (originalURL) {
+		NSURLProtectionSpace *originalSpace = [[[NSURLProtectionSpace alloc] initWithHost:[originalURL host]
+																					 port:[[originalURL port] integerValue]
+																				 protocol:[originalURL scheme]
+																					realm:nil
+																	 authenticationMethod:nil] autorelease];
+		NSDictionary * dict = [storage credentialsForProtectionSpace:originalSpace];
+		for (NSURLCredential * oldCredential in [dict allValues])
+			[storage removeCredential:oldCredential forProtectionSpace:originalSpace];
+		[accounts removeObject:[originalURL absoluteString]];
+	}
+
+	NSURLCredential * credential = [NSURLCredential credentialWithUser:[_loginField text] password:[_passwordField text] persistence:NSURLCredentialPersistencePermanent];
+	NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+	[storage setDefaultCredential:credential forProtectionSpace:protectionSpace];
 	
-	NSMutableDictionary * newAccount = [NSMutableDictionary dictionary];
-	[newAccount setValue:[url absoluteString] forKey:@"url"];
-	[newAccount setValue:[_loginField text] forKey:@"username"];
-	[newAccount setValue:[_passwordField text] forKey:@"password"];
-	[accounts setValue:newAccount forKey:[url absoluteString]];
-	
-	[defaults setObject:accounts forKey:@"accounts"];	
+	[accounts addObject:[url absoluteString]];
+	[defaults setObject:accounts forKey:@"accounts"];
 	[defaults synchronize];
 	
 	[self cancel:sender];

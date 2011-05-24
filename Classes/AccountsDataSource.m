@@ -42,9 +42,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		NSArray * savedAccounts = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"accounts"] allValues];
-		NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"url" ascending:YES];
-		_accounts = [[savedAccounts sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]] retain];
+		_accounts = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"accounts"] retain];
 		_delegates = nil;
 	}
 	return self;
@@ -55,12 +53,10 @@
 	
 	[_delegates perform:@selector(modelDidStartLoad:) withObject:self];
 	
-	NSArray * savedAccounts = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"accounts"] allValues];
-	NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"url" ascending:YES];
-	NSArray * sortedAccounts = [savedAccounts sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	NSArray * savedAccounts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"accounts"];
 
-	NSPredicate * predicate = [NSPredicate predicateWithFormat:@"url CONTAINS[cd] %@",text];
-	_accounts = [[sortedAccounts filteredArrayUsingPredicate:predicate] retain];
+	NSPredicate * predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",text];
+	_accounts = [[savedAccounts filteredArrayUsingPredicate:predicate] retain];
 	
 	[_delegates perform:@selector(modelDidFinishLoad:) withObject:self];
 	[_delegates perform:@selector(modelDidChange:) withObject:self];
@@ -68,9 +64,8 @@
 
 - (void)removeAccountWithIndex:(NSUInteger)index {
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary * savedAccounts =  [[defaults dictionaryForKey:@"accounts"] mutableCopy];
-	NSString * URLString = [[_accounts objectAtIndex:index] valueForKey:@"url"];
-	[savedAccounts removeObjectForKey:URLString];
+	NSMutableArray * savedAccounts =  [[defaults arrayForKey:@"accounts"] mutableCopy];
+	[savedAccounts removeObjectAtIndex:index];
 	[defaults setValue:savedAccounts forKey:@"accounts"];
 	[defaults synchronize];
 }
@@ -136,7 +131,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		_urlFormat = [@"iredmine://account?url=%@&login=%@&password=%@" retain];
+		_urlFormat = [@"iredmine://account?url=%@" retain];
 		_accountsModel = [[[AccountsModel alloc] init] retain];
 		[self setModel:_accountsModel];
 	}
@@ -160,15 +155,16 @@
 	[self setSections:[NSMutableArray arrayWithObject:NSLocalizedString(@"Accounts",@"")]];
 	
 	NSMutableArray * accounts = [NSMutableArray array];
-	for (NSDictionary * account in [_accountsModel accounts]) {
-		NSString * password = [account valueForKey:@"password"];
-		NSString * username = [account valueForKey:@"username"];
-		NSURL * url = [NSURL URLWithString:[account valueForKey:@"url"]];		
-		NSString * URLString = [NSString stringWithFormat:_urlFormat,[url absoluteString],username,password];
-		
-		if([username length] == 0) username = NSLocalizedString(@"Anonymous",@"");
+	for (NSString * account in [_accountsModel accounts]) {
+		NSURL * url = [NSURL URLWithString:account];
+		NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+		NSString * username = NSLocalizedString(@"Anonymous",@"");
+		NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
+		if (credentials)
+			username = [(NSURLCredential*)[[credentials allValues] objectAtIndex:0] user];
 		NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@""),username];
-		[accounts addObject:[TTTableSubtitleItem itemWithText:[url absoluteString] subtitle:subtitle URL:URLString]];
+		NSString * URLString = [NSString stringWithFormat:_urlFormat,account];
+		[accounts addObject:[TTTableSubtitleItem itemWithText:account subtitle:subtitle URL:URLString]];
 	}
 	[_items addObject:accounts];
 }
@@ -183,7 +179,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		_urlFormat = [@"iredmine://account/edit?url=%@&login=%@&password=%@" retain];
+		_urlFormat = [@"iredmine://account/edit?url=%@" retain];
 	}
 	return self;
 }

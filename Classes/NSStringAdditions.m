@@ -11,6 +11,13 @@
 
 @implementation NSString (NSStringAdditions)
 
+- (NSString *)stringByAppendingURLPathComponent:(NSString*)component {
+	NSURL * originalURL = [NSURL URLWithString:self];
+	NSString * path = [[originalURL path] stringByAppendingPathComponent:component];
+	NSURL * URL = [[[NSURL alloc] initWithScheme:[originalURL scheme] host:[originalURL host] path:path] autorelease];
+	return [URL absoluteString];
+}
+
 - (NSString *)stringByEscapingHTML{
     NSArray *escapeChars = [NSArray arrayWithObjects:
 							// Special Characters							

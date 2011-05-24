@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <libxml/encoding.h>
+#import <libxml/xmlwriter.h>
 
-
-@interface RESTRequest : NSObject {
-
+@interface RESTRequest : TTURLRequest {
+	NSDictionary * _dictionary;
 }
+
+@property(nonatomic, retain) NSDictionary * dictionary;
 
 @end

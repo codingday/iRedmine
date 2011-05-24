@@ -136,4 +136,22 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 	}
 }
 
+#pragma mark -
+#pragma mark Request delegate
+
+- (void)request:(TTURLRequest*)request didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge*)challenge {
+	if ([challenge previousFailureCount] > 5) 
+		return [[challenge sender] cancelAuthenticationChallenge:challenge];
+	
+	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];	
+	NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
+	if (credentials) {
+		NSURLCredential * credential = (NSURLCredential*)[[credentials allValues] objectAtIndex:0];
+		return [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+	}
+	
+	[[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
 @end

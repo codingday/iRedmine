@@ -21,15 +21,7 @@
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	BOOL launchedBefore = [defaults boolForKey:@"launchedBefore"];
 	if(!launchedBefore) {
-		NSArray * demoURLStrings = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoURLs"];
-		NSMutableDictionary * accounts = [NSMutableDictionary dictionary];
-		
-		for (NSString * demoURLString in demoURLStrings) {
-			NSDictionary * demoAccount = [NSDictionary dictionaryWithObjectsAndKeys:demoURLString, @"url",@"", @"username", @"", @"password", nil];
-			[accounts setObject:demoAccount forKey:demoURLString];
-		}
-		
-		[defaults setObject:accounts forKey:@"accounts"];	
+		[defaults setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"DemoURLs"] forKey:@"accounts"];	
 		[defaults setBool:YES forKey:@"launchedBefore"];
 		[defaults synchronize];
 	}

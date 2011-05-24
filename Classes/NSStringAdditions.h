@@ -11,6 +11,7 @@
 
 @interface NSString (NSStringAdditions)
 
+- (NSString *)stringByAppendingURLPathComponent:(NSString*)component;
 - (NSString *)stringByEscapingHTML;
 - (NSString *)stringByUnescapingHTML;
 
