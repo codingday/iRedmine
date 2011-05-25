@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
-#import "RMConnector.h"
+#import "RESTRequest.h"
+#import "NSStringAdditions.h"
+#import "NSURLProtectionSpaceAdditions.h"
 
 @interface AccountViewController : BaseTableViewController {
-	RMConnector * _connector;
+	RESTRequest * _request;
 }
 
-@property(nonatomic, retain, readonly) RMConnector * connector;
+@property(nonatomic, retain, readonly) RESTRequest * request;
 
 @end

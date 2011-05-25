@@ -20,16 +20,4 @@
 	return self;
 }
 
-#pragma mark -
-#pragma mark Connector
-
-- (void)didFinishConnect:(RMConnector*)connector {
-	NSString * projectURL = [[self query] valueForKey:@"project"];
-	
-	NSDictionary * projectsDict = [[connector responseDictionary] valueForKeyPath:@"projects.content"];
-	NSDictionary * projectDict = [projectsDict valueForKey:projectURL];
-	NSDictionary * issuesDict = [projectDict valueForKey:@"issues"];
-	[self performSelector:@selector(update:) withObject:issuesDict];
-}
-
 @end

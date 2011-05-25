@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "NSURLProtectionSpaceAdditions.h"
 
 @interface AccountAddViewController : BaseViewController <UITextFieldDelegate, UIAlertViewDelegate> {
 	UITextField * _loginField;

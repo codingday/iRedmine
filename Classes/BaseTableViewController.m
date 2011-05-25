@@ -144,7 +144,7 @@ static const NSTimeInterval kBannerSlideInAnimationDuration = 0.5;
 		return [[challenge sender] cancelAuthenticationChallenge:challenge];
 	
 	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];	
-	NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
 	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
 	if (credentials) {
 		NSURLCredential * credential = (NSURLCredential*)[[credentials allValues] objectAtIndex:0];

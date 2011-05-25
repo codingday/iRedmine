@@ -157,7 +157,7 @@
 	NSMutableArray * accounts = [NSMutableArray array];
 	for (NSString * account in [_accountsModel accounts]) {
 		NSURL * url = [NSURL URLWithString:account];
-		NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+		NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
 		NSString * username = NSLocalizedString(@"Anonymous",@"");
 		NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
 		if (credentials)

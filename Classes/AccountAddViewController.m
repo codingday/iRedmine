@@ -40,7 +40,7 @@
 	NSURL * url = [NSURL URLWithString:[[self query] objectForKey:@"url"] ];
 	[_urlField setText:[url absoluteString]];
 
-	NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
 	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
 	if (credentials) {
 		NSURLCredential * credential = (NSURLCredential*)[[credentials allValues] objectAtIndex:0];
@@ -131,11 +131,7 @@
 	NSURLCredentialStorage * storage = [NSURLCredentialStorage sharedCredentialStorage];
 	NSURL * originalURL = [NSURL URLWithString:[[self query] objectForKey:@"url"]];
 	if (originalURL) {
-		NSURLProtectionSpace *originalSpace = [[[NSURLProtectionSpace alloc] initWithHost:[originalURL host]
-																					 port:[[originalURL port] integerValue]
-																				 protocol:[originalURL scheme]
-																					realm:nil
-																	 authenticationMethod:nil] autorelease];
+		NSURLProtectionSpace *originalSpace = [NSURLProtectionSpace protectionSpaceWithURL:originalURL];
 		NSDictionary * dict = [storage credentialsForProtectionSpace:originalSpace];
 		for (NSURLCredential * oldCredential in [dict allValues])
 			[storage removeCredential:oldCredential forProtectionSpace:originalSpace];
@@ -143,7 +139,7 @@
 	}
 
 	NSURLCredential * credential = [NSURLCredential credentialWithUser:[_loginField text] password:[_passwordField text] persistence:NSURLCredentialPersistencePermanent];
-	NSURLProtectionSpace *protectionSpace = [[[NSURLProtectionSpace alloc] initWithHost:[url host] port:[[url port] integerValue] protocol:[url scheme] realm:nil authenticationMethod:nil] autorelease];
+	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
 	[storage setDefaultCredential:credential forProtectionSpace:protectionSpace];
 	
 	[accounts addObject:[url absoluteString]];

@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
-#import "RMConnector.h"
+#import "RESTRequest.h"
+#import "NSStringAdditions.h"
 #import "CSRegex.h"
 #import "NSDateAdditions.h"
 
 @interface ActivityTableController : BaseTableViewController {
-	RMConnector * _connector;
+	RESTRequest * _request;
 }
 
-@property(nonatomic, retain, readonly) RMConnector * connector;
+@property(nonatomic, retain, readonly) RESTRequest * request;
 
 @end

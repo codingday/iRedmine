@@ -16,7 +16,6 @@
 #import "IssueAddViewController.h"
 #import "IssueTableController.h"
 #import "ActivityTableController.h"
-#import "MyPageTableController.h"
 #import "StoreViewController.h"
 
 @interface iRedmineAppDelegate : NSObject <UIApplicationDelegate> {

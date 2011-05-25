@@ -10,7 +10,7 @@
 
 @implementation ActivityTableController
 
-@synthesize connector=_connector;
+@synthesize request=_request;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -20,40 +20,39 @@
 		[self setTitle:NSLocalizedString(@"Activities", @"")];
 		
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		NSString * login = [query valueForKey:@"login"];
-		NSString * password = [query valueForKey:@"password"];
-		_connector = [[RMConnector connectorWithUrlString:[url absoluteString] username:login password:password] retain];
-		[_connector setDidFinishSelector:@selector(didFinishConnect:)];
-		[_connector setDidFailSelector:@selector(didFailConnect:)];
-		[_connector setDelegate:self];
-		[_connector start];
+		NSString * path = [query valueForKey:@"path"];
+		NSString * URLString = [[url absoluteString] stringByAppendingURLPathComponent:path];
+		
+		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
+		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
+		[_request setHttpMethod:@"GET"];
+		[_request send];
 	}
 	return self;
 }
 
 #pragma mark -
-#pragma mark Connector
+#pragma mark Request delegate
 
-- (void)didFailConnect:(RMConnector*)connector {
+- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
-												 subtitle:[[connector error] localizedDescription]
+												 subtitle:[error localizedDescription]
 													image:nil]];
 }
 
-- (void)didFinishConnect:(RMConnector*)connector {
-	NSString * projectURL = [[self query] valueForKey:@"project"];
+- (void)requestDidFinishLoad:(TTURLRequest*)request {	
+	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
+	NSArray * issues = [dict valueForKey:@"___Array___" ];
+	NSLog(@"response: %@",dict);
 	
-	NSDictionary * projectsDict = [[connector responseDictionary] valueForKeyPath:@"projects.content"];
-	NSDictionary * projectDict = [projectsDict valueForKey:projectURL];
-	NSDictionary * activityDict = [projectDict valueForKey:@"activity"];
-	[self performSelector:@selector(update:) withObject:activityDict];
-}
-
-#pragma mark -
-#pragma mark Helpers
-
-- (void)update:(NSDictionary*)dict {
+	if (!issues || ![issues count]) {
+		[self setEmptyView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"No issues found", @"") 
+													 subtitle:nil
+														image:nil]];
+		return [self setLoadingView:nil];
+	}
+	
 	NSArray * featureTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FeatureCellTypes"];
 	NSString * featurePattern = [NSString stringWithFormat:@".*(%@).*",[featureTypes componentsJoinedByString:@"|"]];
 	
@@ -65,27 +64,31 @@
 	
 	TTListDataSource * ds = [TTListDataSource dataSourceWithItems:[NSMutableArray array]];
 	
-	for (NSDictionary * activity in [dict allValues]) {
-		NSArray * titleComponents = [[activity valueForKey:@"title"] componentsSeparatedByString:@": "];
-		NSString * itemTitle = [titleComponents objectAtIndex:0];
-		NSString * itemText	= [titleComponents lastObject];
+	for (NSDictionary * issue in issues) {
+		NSString * description = [issue valueForKeyPath:@"description.___Entity_Value___"];
+		NSString * author = [issue valueForKeyPath:@"author.___Entity_Value___.name"];
+		NSString * subject = [issue valueForKeyPath:@"subject.___Entity_Value___"];
+		NSString * tracker = [issue valueForKeyPath:@"tracker.___Entity_Value___.name"];
+		NSDate * timestamp = [NSDate dateFromRedmineString:[issue valueForKeyPath:@"updated_on.___Entity_Value___"]];
+		
 		NSString * imageURL = @"bundle://support.png";
-		if ([itemTitle matchedByPattern:featurePattern options:REG_ICASE])
+		if ([tracker matchedByPattern:featurePattern options:REG_ICASE])
 			imageURL = @"bundle://feature.png";
-		else if ([itemTitle matchedByPattern:revisionPattern options:REG_ICASE])
+		else if ([tracker matchedByPattern:revisionPattern options:REG_ICASE])
 			imageURL = @"bundle://revision.png";
-		else if ([itemTitle matchedByPattern:errorPattern options:REG_ICASE])
+		else if ([tracker matchedByPattern:errorPattern options:REG_ICASE])
 			imageURL = @"bundle://error.png";
-		NSDate * timestamp = [NSDate dateFromRedmineString:[activity valueForKey:@"updated"]];
-		[[ds items] addObject:[TTTableMessageItem itemWithTitle:itemTitle 
-														caption:[activity valueForKey:@"author"] 
-														   text:itemText
+		[[ds items] addObject:[TTTableMessageItem itemWithTitle:subject 
+														caption:author 
+														   text:description
 													  timestamp:timestamp
 													   imageURL:imageURL 
-															URL:[activity valueForKey:@"href"]]];
+															URL:@"iredmine://issues"]];
 	}
+	
 	NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
 	[[ds items] sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	
 	[self setDataSource:ds];
 }
 
@@ -93,9 +96,8 @@
 #pragma mark Memory management
 
 - (void) dealloc {
-	[_connector cancel];
-	[_connector setDelegate:nil];
-	TT_RELEASE_SAFELY(_connector);
+	[_request cancel];
+	TT_RELEASE_SAFELY(_request);
 	[super dealloc];
 }
 

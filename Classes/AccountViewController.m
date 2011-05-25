@@ -11,7 +11,7 @@
 
 @implementation AccountViewController
 
-@synthesize connector=_connector;
+@synthesize request=_request;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -21,71 +21,78 @@
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
 		[self setTitle:[url host]];
 
-		NSString * login = [query valueForKey:@"login"];
-		NSString * password = [query valueForKey:@"password"];
-		NSString * URLString = ([[url absoluteString] hasSuffix:@"/"])? [url absoluteString] : [[url absoluteString] stringByAppendingString:@"/"];
-		_connector = [[RMConnector connectorWithUrlString:URLString username:login password:password] retain];
-		[_connector setDidFinishSelector:@selector(didFinishConnect:)];
-		[_connector setDidFailSelector:@selector(didFailConnect:)];
-		[_connector setDelegate:self];
-		[_connector start];
+		NSString * URLString = [[url absoluteString] stringByAppendingURLPathComponent:@"projects.xml?limit=1000"];
+		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
+		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
+		[_request setHttpMethod:@"GET"];
+		[_request send];
 	}
 	return self;
 }
 
 #pragma mark -
-#pragma mark Connector
+#pragma mark Request delegate
 
-- (void)didFailConnect:(RMConnector*)connector {
+- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
-												 subtitle:[[connector error] localizedDescription]
+												 subtitle:[error localizedDescription]
 													image:nil]];
 }
 
-- (void)didFinishConnect:(RMConnector*)connector {	
+- (void)requestDidFinishLoad:(TTURLRequest*)request {	
+	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
+	NSArray * projects = [dict valueForKey:@"___Array___" ];
+	
+	if (!projects || ![projects count]) {
+		[self setEmptyView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"No projects found", @"") 
+															subtitle:nil
+															   image:nil]];
+		return [self setLoadingView:nil];
+	}
+	
+	
 	TTSectionedDataSource * ds = [[[TTSectionedDataSource alloc] init] autorelease];
 	[ds setSections:[NSMutableArray array]];
 	[ds setItems:[NSMutableArray array]];
 	
-	NSString * login = [[self query] valueForKey:@"login"];
-	NSString * password = [[self query] valueForKey:@"password"];
-	NSDictionary * myPageDict = [[connector responseDictionary] valueForKey:@"myPage"];
-	if (login && ![login isEmptyOrWhitespace] && password && ![password isEmptyOrWhitespace] && myPageDict && [myPageDict count]) {
+	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];
+	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
+	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
+	if (credentials) {
 		NSMutableArray * myPage = [NSMutableArray array];
-		for (NSDictionary * issuesDict in [myPageDict allValues]) {
-			NSMutableDictionary * newQuery = [[self query] mutableCopy];
-			[newQuery setObject:[issuesDict valueForKey:@"href"] forKey:@"mypage"];
-			NSString * issuesURL = [@"iredmine://mypage" stringByAddingQueryDictionary:newQuery];
-			NSDictionary * issues = [issuesDict valueForKey:@"issues"];
-			NSString * itemText = [NSLocalizedString([issuesDict valueForKey:@"title"],@"") stringByAppendingFormat:@" (%d)",[issues count]];
-			[myPage addObject:[TTTableTextItem itemWithText:itemText URL:issuesURL]];
-		}		
+		NSMutableDictionary * newQuery = [[self query] mutableCopy];
+		
+		[newQuery setObject:@"issues.xml?assigned_to=me" forKey:@"path"];
+		NSString * assignedURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
+		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Issues assigned to me",@"") URL:assignedURL]];
+			
+		[newQuery setObject:@"issues.xml?author=me" forKey:@"path"];
+		NSString * authorURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
+		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Reported issues",@"") URL:authorURL]];
+
 		[[ds sections] addObject:NSLocalizedString(@"My Page",@"")]; 
 		[[ds items] addObject:myPage];
 	}
 	
-	
-	NSDictionary * projectsDict = [[connector responseDictionary] valueForKeyPath:@"projects.content"];
-	
-	if (projectsDict && [projectsDict count]) {
-		NSMutableArray * projects = [NSMutableArray array];
+	NSMutableArray * rows = [NSMutableArray array];	
+	for (NSDictionary * project in projects) {
+		NSString * text = [project valueForKeyPath:@"name.___Entity_Value___"];
+		NSString * subtitle = [project valueForKeyPath:@"description.___Entity_Value___"];
+		NSString * identifier = [project valueForKeyPath:@"identifier.___Entity_Value___"];
 		
-		for (NSDictionary * projectDict in [projectsDict allValues]) {
-			NSString * text = [[[projectDict valueForKey:@"title"] componentsSeparatedByString:@" - "] objectAtIndex:0];
-			NSString * subtitle = [[projectDict valueForKey:@"content"] stringByRemovingHTMLTags];
-
-			NSDictionary * projectQuery = [[self query] mutableCopy];
-			[projectQuery setValue:[projectDict valueForKey:@"href"] forKey:@"project"];
+		NSMutableDictionary * newQuery = [[self query] mutableCopy];
+		[newQuery setObject:identifier forKey:@"project"];
 		
-			NSString * URLString = [@"iredmine://project" stringByAddingQueryDictionary:projectQuery];
-			[projects addObject:[TTTableSubtitleItem itemWithText:text subtitle:subtitle?subtitle:@" " URL:URLString]];
-		}
-		NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES];
-		[projects sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-		[[ds items] addObject:projects]; 
-		[[ds sections] addObject:NSLocalizedString(@"Projects",@"")]; 
+		NSString * URLString = [@"iredmine://project" stringByAddingQueryDictionary:newQuery];
+		[rows addObject:[TTTableSubtitleItem itemWithText:text subtitle:subtitle?subtitle:@" " URL:URLString]];
 	}
+	
+	NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES];
+	[rows sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	
+	[[ds items] addObject:rows]; 
+	[[ds sections] addObject:NSLocalizedString(@"Projects",@"")]; 
 	
 	[self setDataSource:ds];
 }
@@ -94,9 +101,8 @@
 #pragma mark Memory management
 
 - (void) dealloc {
-	[_connector cancel];
-	[_connector setDelegate:nil];
-	TT_RELEASE_SAFELY(_connector);
+	[_request cancel];
+	TT_RELEASE_SAFELY(_request);
 	[super dealloc];
 }
 

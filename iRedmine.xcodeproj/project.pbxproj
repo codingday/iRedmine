@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0203D7C010358BCE005E98F4 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0203D7BF10358BCE005E98F4 /* Entitlements.plist */; };
+		022130A3138D0E7900558495 /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221309D138D0E6200558495 /* libextThree20XML.a */; };
+		022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */; };
 		0222E7EF0F8D3D5000445AAD /* AccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */; };
 		0231286210BEE1310097675F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0231286110BEE1310097675F /* Localizable.strings */; };
 		0231293410BEF65E0097675F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0231293310BEF65E0097675F /* Reachability.m */; };
@@ -45,9 +47,7 @@
 		02936A79134B5A5200DF334F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936A78134B5A5200DF334F /* BaseViewController.m */; };
 		02936AF4134B66C500DF334F /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936AF3134B66C500DF334F /* BaseTableViewController.m */; };
 		02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936B17134B689B00DF334F /* IssueAddViewController.m */; };
-		02936BAA134B777E00DF334F /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02936BA7134B777200DF334F /* libextThree20XML.a */; };
 		02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02937CB710738AE30069E480 /* SystemConfiguration.framework */; };
-		0296EA7B135465B70007360A /* MyPageTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296EA7A135465B70007360A /* MyPageTableController.m */; };
 		02A154461349C03F007A061B /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02A154451349C03F007A061B /* Three20.bundle */; };
 		02A154D61349C139007A061B /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A1549C1349C04F007A061B /* libThree20.a */; };
 		02A154D71349C139007A061B /* libThree20Core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A154A51349C058007A061B /* libThree20Core.a */; };
@@ -78,25 +78,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		02936BA6134B777200DF334F /* PBXContainerItemProxy */ = {
+		0221309C138D0E6200558495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 02936B9C134B777200DF334F /* extThree20XML.xcodeproj */;
+			containerPortal = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BEF31F3A0F352DF5000DE5D2;
+			remoteGlobalIDString = BEF31F3A0F352DF5000DE5D2 /* libextThree20XML.a */;
 			remoteInfo = extThree20XML;
 		};
-		02936BA8134B777200DF334F /* PBXContainerItemProxy */ = {
+		0221309E138D0E6200558495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 02936B9C134B777200DF334F /* extThree20XML.xcodeproj */;
+			containerPortal = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = EB9E6C6210B6A8F800DE563C;
-			remoteInfo = UnitTests;
+			remoteGlobalIDString = EB9E6C6210B6A8F800DE563C /* extJSONUnitTests.octest */;
+			remoteInfo = extThree20XMLUnitTests;
 		};
-		02936BB9134B778900DF334F /* PBXContainerItemProxy */ = {
+		022130A6138D0E8900558495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 02936B9C134B777200DF334F /* extThree20XML.xcodeproj */;
+			containerPortal = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = BEF31F390F352DF5000DE5D2;
+			remoteGlobalIDString = BEF31F390F352DF5000DE5D2 /* extThree20XML */;
 			remoteInfo = extThree20XML;
 		};
 		02A1549B1349C04F007A061B /* PBXContainerItemProxy */ = {
@@ -250,6 +250,9 @@
 
 /* Begin PBXFileReference section */
 		0203D7BF10358BCE005E98F4 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		02213092138D0E6200558495 /* extThree20XML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extThree20XML.xcodeproj; path = External/three20/src/extThree20XML/extThree20XML.xcodeproj; sourceTree = "<group>"; };
+		022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLProtectionSpaceAdditions.h; sourceTree = "<group>"; };
+		022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLProtectionSpaceAdditions.m; sourceTree = "<group>"; };
 		0222E7ED0F8D3D5000445AAD /* AccountAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountAddViewController.h; sourceTree = "<group>"; };
 		0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAddViewController.m; sourceTree = "<group>"; };
 		0222E7FA0F8D3EC700445AAD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AccountView.xib; sourceTree = "<group>"; };
@@ -311,10 +314,7 @@
 		02936AF3134B66C500DF334F /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		02936B16134B689B00DF334F /* IssueAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueAddViewController.h; sourceTree = "<group>"; };
 		02936B17134B689B00DF334F /* IssueAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueAddViewController.m; sourceTree = "<group>"; };
-		02936B9C134B777200DF334F /* extThree20XML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extThree20XML.xcodeproj; path = External/three20/src/extThree20XML/extThree20XML.xcodeproj; sourceTree = "<group>"; };
 		02937CB710738AE30069E480 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
-		0296EA79135465B70007360A /* MyPageTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageTableController.h; sourceTree = "<group>"; };
-		0296EA7A135465B70007360A /* MyPageTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageTableController.m; sourceTree = "<group>"; };
 		02A154451349C03F007A061B /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = External/three20/src/Three20.bundle; sourceTree = "<group>"; };
 		02A154701349C04F007A061B /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = External/three20/src/Three20/Three20.xcodeproj; sourceTree = "<group>"; };
 		02A1549F1349C058007A061B /* Three20Core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20Core.xcodeproj; path = External/three20/src/Three20Core/Three20Core.xcodeproj; sourceTree = "<group>"; };
@@ -380,7 +380,7 @@
 				02A154DC1349C13F007A061B /* libThree20UINavigator.a in Frameworks */,
 				02A154F61349C16D007A061B /* QuartzCore.framework in Frameworks */,
 				027898091349E50C00F678AB /* StoreKit.framework in Frameworks */,
-				02936BAA134B777E00DF334F /* libextThree20XML.a in Frameworks */,
+				022130A3138D0E7900558495 /* libextThree20XML.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +415,15 @@
 			name = "Base Controllers";
 			sourceTree = "<group>";
 		};
+		02213093138D0E6200558495 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0221309D138D0E6200558495 /* libextThree20XML.a */,
+				0221309F138D0E6200558495 /* extJSONUnitTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0231292010BEF5E90097675F /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -435,15 +444,6 @@
 				F8FAA3C712A40CCC0001996C /* Retina Display */,
 			);
 			name = Images;
-			sourceTree = "<group>";
-		};
-		02936B9D134B777200DF334F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				02936BA7134B777200DF334F /* libextThree20XML.a */,
-				02936BA9134B777200DF334F /* extJSONUnitTests.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		02A154711349C04F007A061B /* Products */ = {
@@ -530,8 +530,6 @@
 		02E2ED750F9F50F5003DDCB0 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0296EA79135465B70007360A /* MyPageTableController.h */,
-				0296EA7A135465B70007360A /* MyPageTableController.m */,
 				023218350F94D2F900A95381 /* IssueTableController.h */,
 				023218360F94D2F900A95381 /* IssueTableController.m */,
 				02936954134B23AC00DF334F /* ActivityTableController.h */,
@@ -557,6 +555,8 @@
 				02D86C580F8E75F400EB1658 /* NSDateAdditions.m */,
 				024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */,
 				024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */,
+				022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */,
+				022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */,
 				02E18E48138BB84200639A5D /* RESTRequest.h */,
 				02E18E49138BB84200639A5D /* RESTRequest.m */,
 			);
@@ -676,7 +676,7 @@
 				02A154BA1349C071007A061B /* Three20UI.xcodeproj */,
 				02A154C31349C079007A061B /* Three20UICommon.xcodeproj */,
 				02A154CC1349C082007A061B /* Three20UINavigator.xcodeproj */,
-				02936B9C134B777200DF334F /* extThree20XML.xcodeproj */,
+				02213092138D0E6200558495 /* extThree20XML.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -734,7 +734,7 @@
 				02A154E81349C155007A061B /* PBXTargetDependency */,
 				02A154EA1349C155007A061B /* PBXTargetDependency */,
 				02A154EC1349C155007A061B /* PBXTargetDependency */,
-				02936BBA134B778900DF334F /* PBXTargetDependency */,
+				022130A7138D0E8900558495 /* PBXTargetDependency */,
 			);
 			name = iRedmine;
 			productName = iRedmine;
@@ -764,8 +764,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 02936B9D134B777200DF334F /* Products */;
-					ProjectRef = 02936B9C134B777200DF334F /* extThree20XML.xcodeproj */;
+					ProductGroup = 02213093138D0E6200558495 /* Products */;
+					ProjectRef = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 				},
 				{
 					ProductGroup = 02A154711349C04F007A061B /* Products */;
@@ -804,18 +804,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		02936BA7134B777200DF334F /* libextThree20XML.a */ = {
+		0221309D138D0E6200558495 /* libextThree20XML.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libextThree20XML.a;
-			remoteRef = 02936BA6134B777200DF334F /* PBXContainerItemProxy */;
+			remoteRef = 0221309C138D0E6200558495 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		02936BA9134B777200DF334F /* extJSONUnitTests.octest */ = {
+		0221309F138D0E6200558495 /* extJSONUnitTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = extJSONUnitTests.octest;
-			remoteRef = 02936BA8134B777200DF334F /* PBXContainerItemProxy */;
+			remoteRef = 0221309E138D0E6200558495 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		02A1549C1349C04F007A061B /* libThree20.a */ = {
@@ -979,19 +979,19 @@
 				02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */,
 				02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */,
 				02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */,
-				0296EA7B135465B70007360A /* MyPageTableController.m in Sources */,
 				02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */,
 				02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */,
+				022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		02936BBA134B778900DF334F /* PBXTargetDependency */ = {
+		022130A7138D0E8900558495 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = extThree20XML;
-			targetProxy = 02936BB9134B778900DF334F /* PBXContainerItemProxy */;
+			targetProxy = 022130A6138D0E8900558495 /* PBXContainerItemProxy */;
 		};
 		02A154E01349C155007A061B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

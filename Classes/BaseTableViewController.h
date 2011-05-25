@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <iAd/iAd.h>
 #import "Constants.h"
+#import "NSURLProtectionSpaceAdditions.h"
 
 @interface BaseTableViewController : TTTableViewController <ADBannerViewDelegate> {
 	NSDictionary * _query;
