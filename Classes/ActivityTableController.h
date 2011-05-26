@@ -7,16 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseTableViewController.h"
-#import "RESTRequest.h"
-#import "NSStringAdditions.h"
-#import "CSRegex.h"
-#import "NSDateAdditions.h"
+#import "IssueTableController.h"
 
-@interface ActivityTableController : BaseTableViewController {
-	RESTRequest * _request;
+@interface ActivityTableController : IssueTableController {
 }
-
-@property(nonatomic, retain, readonly) RESTRequest * request;
 
 @end

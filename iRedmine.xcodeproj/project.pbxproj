@@ -16,7 +16,7 @@
 		0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231294010BEF6A50097675F /* CFNetwork.framework */; };
 		0231295A10BEF6CF0097675F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231295910BEF6CF0097675F /* Security.framework */; };
 		0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231297010BEF76F0097675F /* libz.1.2.3.dylib */; };
-		023218370F94D2F900A95381 /* IssueTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023218360F94D2F900A95381 /* IssueTableController.m */; };
+		023218370F94D2F900A95381 /* ActivityTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023218360F94D2F900A95381 /* ActivityTableController.m */; };
 		023218E20F94DE2100A95381 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023218E10F94DE2100A95381 /* ProjectViewController.m */; };
 		023DE6D21353233700C8285F /* Changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 023DE6D11353233700C8285F /* Changelog.txt */; };
 		02434FCC1030847600C62C58 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02434FCB1030847600C62C58 /* Default.png */; };
@@ -43,7 +43,7 @@
 		028CFF0D12AD3CA4003FEC85 /* revision.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFF0C12AD3CA4003FEC85 /* revision.png */; };
 		028CFF1112AD3CB4003FEC85 /* support.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFF1012AD3CB4003FEC85 /* support.png */; };
 		028CFF1312AD3CBA003FEC85 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFF1212AD3CBA003FEC85 /* error.png */; };
-		02936956134B23AC00DF334F /* ActivityTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936955134B23AC00DF334F /* ActivityTableController.m */; };
+		02936956134B23AC00DF334F /* IssueTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936955134B23AC00DF334F /* IssueTableController.m */; };
 		02936A79134B5A5200DF334F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936A78134B5A5200DF334F /* BaseViewController.m */; };
 		02936AF4134B66C500DF334F /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936AF3134B66C500DF334F /* BaseTableViewController.m */; };
 		02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02936B17134B689B00DF334F /* IssueAddViewController.m */; };
@@ -82,21 +82,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BEF31F3A0F352DF5000DE5D2 /* libextThree20XML.a */;
+			remoteGlobalIDString = BEF31F3A0F352DF5000DE5D2;
 			remoteInfo = extThree20XML;
 		};
 		0221309E138D0E6200558495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = EB9E6C6210B6A8F800DE563C /* extJSONUnitTests.octest */;
+			remoteGlobalIDString = EB9E6C6210B6A8F800DE563C;
 			remoteInfo = extThree20XMLUnitTests;
 		};
 		022130A6138D0E8900558495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02213092138D0E6200558495 /* extThree20XML.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = BEF31F390F352DF5000DE5D2 /* extThree20XML */;
+			remoteGlobalIDString = BEF31F390F352DF5000DE5D2;
 			remoteInfo = extThree20XML;
 		};
 		02A1549B1349C04F007A061B /* PBXContainerItemProxy */ = {
@@ -263,8 +263,8 @@
 		0231294010BEF6A50097675F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0231295910BEF6CF0097675F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0231297010BEF76F0097675F /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		023218350F94D2F900A95381 /* IssueTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueTableController.h; sourceTree = "<group>"; };
-		023218360F94D2F900A95381 /* IssueTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueTableController.m; sourceTree = "<group>"; };
+		023218350F94D2F900A95381 /* ActivityTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableController.h; sourceTree = "<group>"; };
+		023218360F94D2F900A95381 /* ActivityTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableController.m; sourceTree = "<group>"; };
 		023218E00F94DE2100A95381 /* ProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
 		023218E10F94DE2100A95381 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
 		023DE6D31353234600C8285F /* German */ = {isa = PBXFileReference; lastKnownFileType = text; name = German; path = German.lproj/Changelog.txt; sourceTree = "<group>"; };
@@ -306,8 +306,8 @@
 		028CFF0C12AD3CA4003FEC85 /* revision.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = revision.png; sourceTree = "<group>"; };
 		028CFF1012AD3CB4003FEC85 /* support.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support.png; sourceTree = "<group>"; };
 		028CFF1212AD3CBA003FEC85 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
-		02936954134B23AC00DF334F /* ActivityTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableController.h; sourceTree = "<group>"; };
-		02936955134B23AC00DF334F /* ActivityTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableController.m; sourceTree = "<group>"; };
+		02936954134B23AC00DF334F /* IssueTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueTableController.h; sourceTree = "<group>"; };
+		02936955134B23AC00DF334F /* IssueTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueTableController.m; sourceTree = "<group>"; };
 		02936A77134B5A5200DF334F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		02936A78134B5A5200DF334F /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		02936AF2134B66C500DF334F /* BaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
@@ -530,10 +530,10 @@
 		02E2ED750F9F50F5003DDCB0 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				023218350F94D2F900A95381 /* IssueTableController.h */,
-				023218360F94D2F900A95381 /* IssueTableController.m */,
-				02936954134B23AC00DF334F /* ActivityTableController.h */,
-				02936955134B23AC00DF334F /* ActivityTableController.m */,
+				023218350F94D2F900A95381 /* ActivityTableController.h */,
+				023218360F94D2F900A95381 /* ActivityTableController.m */,
+				02936954134B23AC00DF334F /* IssueTableController.h */,
+				02936955134B23AC00DF334F /* IssueTableController.m */,
 				02936B16134B689B00DF334F /* IssueAddViewController.h */,
 				02936B17134B689B00DF334F /* IssueAddViewController.m */,
 				023218E00F94DE2100A95381 /* ProjectViewController.h */,
@@ -955,7 +955,7 @@
 				28C286E10D94DF7D0034E888 /* AccountsViewController.m in Sources */,
 				0222E7EF0F8D3D5000445AAD /* AccountAddViewController.m in Sources */,
 				02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */,
-				023218370F94D2F900A95381 /* IssueTableController.m in Sources */,
+				023218370F94D2F900A95381 /* ActivityTableController.m in Sources */,
 				023218E20F94DE2100A95381 /* ProjectViewController.m in Sources */,
 				0278ED5C0F9E40CA000E8EED /* AccountViewController.m in Sources */,
 				0231293410BEF65E0097675F /* Reachability.m in Sources */,
@@ -973,7 +973,7 @@
 				026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */,
 				02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */,
 				0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */,
-				02936956134B23AC00DF334F /* ActivityTableController.m in Sources */,
+				02936956134B23AC00DF334F /* IssueTableController.m in Sources */,
 				02936A79134B5A5200DF334F /* BaseViewController.m in Sources */,
 				02936AF4134B66C500DF334F /* BaseTableViewController.m in Sources */,
 				02936B18134B689B00DF334F /* IssueAddViewController.m in Sources */,
