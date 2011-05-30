@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSURLProtectionSpaceAdditions.h"
+#import "Account.h"
 
 @interface AccountsTableViewDelegate : TTTableViewDelegate {
 	

@@ -38,7 +38,6 @@
 	[map from:@"iredmine://account/add"  parent:@"iredmine://accounts" toModalViewController:[AccountAddViewController class]  selector:nil transition:0];
 	[map from:@"iredmine://account/edit" parent:@"iredmine://accounts" toModalViewController:[AccountEditViewController class] selector:nil transition:0];
 	[map from:@"iredmine://project" toViewController:[ProjectViewController class]];
-	[map from:@"iredmine://activities" toViewController:[ActivityTableController class]];
 	[map from:@"iredmine://issues" toViewController:[IssueTableController class]];
 	[map from:@"iredmine://issue/add" toModalViewController:[IssueAddViewController class]];
 	

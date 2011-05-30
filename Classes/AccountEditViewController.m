@@ -18,4 +18,10 @@
 	return self;
 }
 
+- (void)save:(id)sender {
+	Account * account = [Account accountWithURL:[[self query] objectForKey:@"url"]];
+	[account remove];	
+	[super save:sender];
+}
+
 @end

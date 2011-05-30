@@ -20,9 +20,10 @@
 		[self setTitle:NSLocalizedString(@"Issues", @"")];
 		
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		NSString * path = [query valueForKey:@"path"];
-		NSString * URLString = [[url absoluteString] stringByAppendingURLPathComponent:path];
-		NSLog(@"url: %@",URLString);
+		NSMutableString * URLString = [[[url absoluteString] stringByAppendingURLPathComponent:@"issues.xml"] mutableCopy];
+
+		NSString * params = [query valueForKey:@"params"];
+		if (params)	[URLString appendFormat:@"?%@",params];
 		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
@@ -70,8 +71,8 @@
 		NSString * subject = [issue valueForKeyPath:@"subject.___Entity_Value___"];
 		NSString * identifier = [issue valueForKeyPath:@"id.___Entity_Value___"];
 		NSString * tracker = [issue valueForKeyPath:@"tracker.name"];
-		NSDate * timestamp = [NSDate dateFromRedmineString:[issue valueForKeyPath:@"updated_on.___Entity_Value___"]];
-		NSString * URLString = [[[[self query] valueForKey:@"url"] stringByAppendingURLPathComponent:@"issues"] stringByAppendingURLPathComponent:identifier];
+		NSDate * timestamp = [NSDate dateFromXMLString:[issue valueForKeyPath:@"updated_on.___Entity_Value___"]];
+		NSString * URLString = [[[self query] valueForKey:@"url"] stringByAppendingURLPathComponent:[NSString stringWithFormat:@"issues/%@",identifier]];
 		
 		NSString * imageURL = @"bundle://support.png";
 		if ([tracker matchedByPattern:featurePattern options:REG_ICASE])

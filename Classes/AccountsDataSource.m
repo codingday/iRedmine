@@ -64,10 +64,10 @@
 
 - (void)removeAccountWithIndex:(NSUInteger)index {
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableArray * savedAccounts =  [[defaults arrayForKey:@"accounts"] mutableCopy];
-	[savedAccounts removeObjectAtIndex:index];
-	[defaults setValue:savedAccounts forKey:@"accounts"];
-	[defaults synchronize];
+	NSMutableArray * savedAccounts = [[defaults arrayForKey:@"accounts"] mutableCopy];
+	NSString * URLString = [savedAccounts objectAtIndex:index];
+	Account * account = [Account accountWithURL:URLString];
+	[account remove];
 }
 
 #pragma mark -
@@ -155,17 +155,16 @@
 	[self setSections:[NSMutableArray arrayWithObject:NSLocalizedString(@"Accounts",@"")]];
 	
 	NSMutableArray * accounts = [NSMutableArray array];
-	for (NSString * account in [_accountsModel accounts]) {
-		NSURL * url = [NSURL URLWithString:account];
-		NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
-		NSString * username = NSLocalizedString(@"Anonymous",@"");
-		NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
-		if (credentials)
-			username = [(NSURLCredential*)[[credentials allValues] objectAtIndex:0] user];
-		NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@""),username];
-		NSString * URLString = [NSString stringWithFormat:_urlFormat,account];
-		[accounts addObject:[TTTableSubtitleItem itemWithText:account subtitle:subtitle URL:URLString]];
+	for (NSString * accountURL in [_accountsModel accounts]) {
+		Account * account = [Account accountWithURL:accountURL];
+		NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@""),[account username]?[account username]:NSLocalizedString(@"Anonymous",@"")];
+		NSString * URLString = [NSString stringWithFormat:_urlFormat,accountURL];
+		[accounts addObject:[TTTableSubtitleItem itemWithText:accountURL subtitle:subtitle URL:URLString]];
 	}
+	
+	NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES];
+	[accounts sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	
 	[_items addObject:accounts];
 }
 

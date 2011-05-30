@@ -40,13 +40,9 @@
 	NSURL * url = [NSURL URLWithString:[[self query] objectForKey:@"url"] ];
 	[_urlField setText:[url absoluteString]];
 
-	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
-	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
-	if (credentials) {
-		NSURLCredential * credential = (NSURLCredential*)[[credentials allValues] objectAtIndex:0];
-		[_loginField	setText:[credential user]];
-		[_passwordField setText:[credential password]];	
-	}		
+	Account * account = [Account accountWithURL:[url absoluteString]];
+	[_loginField	setText:[account username]];
+	[_passwordField setText:[account password]];	
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -91,6 +87,7 @@
 
 - (IBAction)done:(id)sender {	
 	NSURL * url = [NSURL URLWithString:[_urlField text]];
+	
 	if ([[_urlField text] isEmptyOrWhitespace] || !url) {
 		[_urlField becomeFirstResponder];
 		return [[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Input error",@"") 
@@ -101,7 +98,7 @@
 	}
 	
 	NSArray * accounts = [[NSUserDefaults standardUserDefaults] arrayForKey:@"accounts"];
-	if ([accounts containsObject:[url absoluteString]]) {
+	if ([accounts containsObject:[url stringByResolvingPathAndRemoveAuthentication]]) {
 		return [[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Account already exists",@"") 
 											message:NSLocalizedString(@"Do you really want to override this account with the specified URL?",@"") 
 										   delegate:self 
@@ -118,34 +115,10 @@
 		[self dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark -
-#pragma mark Selectors
-
-- (void)save:(id)sender {
+- (IBAction)save:(id)sender {
 	NSURL * url = [NSURL URLWithString:[_urlField text]];
-	if (!url) return;
-	
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableArray * accounts = [[defaults arrayForKey:@"accounts"] mutableCopy];
-
-	NSURLCredentialStorage * storage = [NSURLCredentialStorage sharedCredentialStorage];
-	NSURL * originalURL = [NSURL URLWithString:[[self query] objectForKey:@"url"]];
-	if (originalURL) {
-		NSURLProtectionSpace *originalSpace = [NSURLProtectionSpace protectionSpaceWithURL:originalURL];
-		NSDictionary * dict = [storage credentialsForProtectionSpace:originalSpace];
-		for (NSURLCredential * oldCredential in [dict allValues])
-			[storage removeCredential:oldCredential forProtectionSpace:originalSpace];
-		[accounts removeObject:[originalURL absoluteString]];
-	}
-
-	NSURLCredential * credential = [NSURLCredential credentialWithUser:[_loginField text] password:[_passwordField text] persistence:NSURLCredentialPersistencePermanent];
-	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
-	[storage setDefaultCredential:credential forProtectionSpace:protectionSpace];
-	
-	[accounts addObject:[url absoluteString]];
-	[defaults setObject:accounts forKey:@"accounts"];
-	[defaults synchronize];
-	
+	Account * account = [Account accountWithURL:[url stringByResolvingPathAndRemoveAuthentication] username:[_loginField text] password:[_passwordField text]];
+	[account save];
 	[self cancel:sender];
 }
 

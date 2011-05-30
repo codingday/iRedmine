@@ -13,11 +13,7 @@
 
 - (NSString *)stringByAppendingURLPathComponent:(NSString*)component {
 	NSURL * originalURL = [NSURL URLWithString:self];
-	NSString * path = [[originalURL path] stringByAppendingPathComponent:component];
-	if (![path hasPrefix:@"/"])
-		path = [@"/" stringByAppendingString:path];
-	NSURL * URL = [[[NSURL alloc] initWithScheme:[originalURL scheme] host:[originalURL host] path:path] autorelease];
-	return [URL absoluteString];
+	return [[originalURL URLByAppendingPathComponent:component] absoluteString];
 }
 
 - (NSString *)stringByEscapingHTML{

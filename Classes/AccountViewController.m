@@ -21,7 +21,7 @@
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
 		[self setTitle:[url host]];
 
-		NSString * URLString = [[url absoluteString] stringByAppendingURLPathComponent:@"projects.xml?limit=1000"];
+		NSString * URLString = [[[url absoluteString] stringByAppendingURLPathComponent:@"projects.xml"] stringByAppendingString:@"?limit=100"];
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 		[_request setHttpMethod:@"GET"];
@@ -34,6 +34,9 @@
 #pragma mark Request delegate
 
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
+	if ([error code] == 404) 
+		return NSLog(@"No REST API");
+	
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
 												 subtitle:[error localizedDescription]
@@ -56,18 +59,16 @@
 	[ds setSections:[NSMutableArray array]];
 	[ds setItems:[NSMutableArray array]];
 	
-	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];
-	NSURLProtectionSpace *protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:url];
-	NSDictionary * credentials = [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:protectionSpace];
-	if (credentials) {
+	Account * account = [Account accountWithURL:[[self query] valueForKey:@"url"]];
+	if ([account username] && [account password]) {
 		NSMutableArray * myPage = [NSMutableArray array];
 		NSMutableDictionary * newQuery = [[self query] mutableCopy];
 		
-		[newQuery setObject:@"issues.xml?assigned_to=me" forKey:@"path"];
+		[newQuery setObject:@"assigned_to=me" forKey:@"params"];
 		NSString * assignedURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
 		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Issues assigned to me",@"") URL:assignedURL]];
 			
-		[newQuery setObject:@"issues.xml?author=me" forKey:@"path"];
+		[newQuery setObject:@"author=me" forKey:@"params"];
 		NSString * authorURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
 		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Reported issues",@"") URL:authorURL]];
 

@@ -16,7 +16,6 @@
 		0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231294010BEF6A50097675F /* CFNetwork.framework */; };
 		0231295A10BEF6CF0097675F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231295910BEF6CF0097675F /* Security.framework */; };
 		0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231297010BEF76F0097675F /* libz.1.2.3.dylib */; };
-		023218370F94D2F900A95381 /* ActivityTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023218360F94D2F900A95381 /* ActivityTableController.m */; };
 		023218E20F94DE2100A95381 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023218E10F94DE2100A95381 /* ProjectViewController.m */; };
 		023DE6D21353233700C8285F /* Changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 023DE6D11353233700C8285F /* Changelog.txt */; };
 		02434FCC1030847600C62C58 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02434FCB1030847600C62C58 /* Default.png */; };
@@ -35,6 +34,8 @@
 		027898091349E50C00F678AB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027898081349E50C00F678AB /* StoreKit.framework */; };
 		0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278982B1349E91700F678AB /* iRedmineStyleSheet.m */; };
 		0278ED5C0F9E40CA000E8EED /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278ED5B0F9E40CA000E8EED /* AccountViewController.m */; };
+		02899D951393DE8400C013FE /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 02899D941393DE8400C013FE /* Account.m */; };
+		02899E1A1393F70E00C013FE /* NSURLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02899E191393F70E00C013FE /* NSURLAdditions.m */; };
 		028CFEFA12AD3AFF003FEC85 /* feature@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFEF912AD3AFF003FEC85 /* feature@2x.png */; };
 		028CFEFC12AD3B0B003FEC85 /* revision@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFEFB12AD3B0B003FEC85 /* revision@2x.png */; };
 		028CFEFE12AD3B13003FEC85 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 028CFEFD12AD3B13003FEC85 /* error@2x.png */; };
@@ -263,8 +264,6 @@
 		0231294010BEF6A50097675F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0231295910BEF6CF0097675F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0231297010BEF76F0097675F /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		023218350F94D2F900A95381 /* ActivityTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableController.h; sourceTree = "<group>"; };
-		023218360F94D2F900A95381 /* ActivityTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableController.m; sourceTree = "<group>"; };
 		023218E00F94DE2100A95381 /* ProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
 		023218E10F94DE2100A95381 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
 		023DE6D31353234600C8285F /* German */ = {isa = PBXFileReference; lastKnownFileType = text; name = German; path = German.lproj/Changelog.txt; sourceTree = "<group>"; };
@@ -298,6 +297,10 @@
 		0278982B1349E91700F678AB /* iRedmineStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRedmineStyleSheet.m; sourceTree = "<group>"; };
 		0278ED5A0F9E40CA000E8EED /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		0278ED5B0F9E40CA000E8EED /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		02899D931393DE8400C013FE /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
+		02899D941393DE8400C013FE /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
+		02899E181393F70E00C013FE /* NSURLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLAdditions.h; sourceTree = "<group>"; };
+		02899E191393F70E00C013FE /* NSURLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLAdditions.m; sourceTree = "<group>"; };
 		028CFEF912AD3AFF003FEC85 /* feature@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feature@2x.png"; sourceTree = "<group>"; };
 		028CFEFB12AD3B0B003FEC85 /* revision@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "revision@2x.png"; sourceTree = "<group>"; };
 		028CFEFD12AD3B13003FEC85 /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
@@ -530,8 +533,6 @@
 		02E2ED750F9F50F5003DDCB0 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				023218350F94D2F900A95381 /* ActivityTableController.h */,
-				023218360F94D2F900A95381 /* ActivityTableController.m */,
 				02936954134B23AC00DF334F /* IssueTableController.h */,
 				02936955134B23AC00DF334F /* IssueTableController.m */,
 				02936B16134B689B00DF334F /* IssueAddViewController.h */,
@@ -551,14 +552,18 @@
 				02C7769E11B6B1C900F10BC3 /* RMLogin.m */,
 				02F400CA119307F100E0B194 /* RMConnector.h */,
 				02F400CB119307F100E0B194 /* RMConnector.m */,
+				02E18E48138BB84200639A5D /* RESTRequest.h */,
+				02E18E49138BB84200639A5D /* RESTRequest.m */,
+				02899E181393F70E00C013FE /* NSURLAdditions.h */,
+				02899E191393F70E00C013FE /* NSURLAdditions.m */,
 				02D86C570F8E75E500EB1658 /* NSDateAdditions.h */,
 				02D86C580F8E75F400EB1658 /* NSDateAdditions.m */,
 				024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */,
 				024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */,
 				022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */,
 				022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */,
-				02E18E48138BB84200639A5D /* RESTRequest.h */,
-				02E18E49138BB84200639A5D /* RESTRequest.m */,
+				02899D931393DE8400C013FE /* Account.h */,
+				02899D941393DE8400C013FE /* Account.m */,
 			);
 			name = "WWK Library";
 			sourceTree = "<group>";
@@ -955,7 +960,6 @@
 				28C286E10D94DF7D0034E888 /* AccountsViewController.m in Sources */,
 				0222E7EF0F8D3D5000445AAD /* AccountAddViewController.m in Sources */,
 				02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */,
-				023218370F94D2F900A95381 /* ActivityTableController.m in Sources */,
 				023218E20F94DE2100A95381 /* ProjectViewController.m in Sources */,
 				0278ED5C0F9E40CA000E8EED /* AccountViewController.m in Sources */,
 				0231293410BEF65E0097675F /* Reachability.m in Sources */,
@@ -982,6 +986,8 @@
 				02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */,
 				02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */,
 				022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */,
+				02899D951393DE8400C013FE /* Account.m in Sources */,
+				02899E1A1393F70E00C013FE /* NSURLAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

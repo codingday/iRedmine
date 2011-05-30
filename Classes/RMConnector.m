@@ -24,10 +24,10 @@
 
 @implementation RMConnector
 
-@synthesize urlString;
+@synthesize URLString;
 @synthesize password;
 @synthesize username;
-@synthesize responseDictionary;
+@synthesize response;
 @synthesize delegate;
 @synthesize didStartSelector;
 @synthesize didFinishSelector;
@@ -38,38 +38,38 @@
 #pragma mark Connector Basics
 
 - (void) dealloc {
-	[urlString release];
+	[URLString release];
 	[username release];
 	[password release];
 	
-	[responseDictionary release];
+	[response release];
 	[delegate release];
 	[error release];
 	
 	[super dealloc];
 }
 
-+ (id) connectorWithUrlString:(NSString *) url username:(NSString *) user password:(NSString *) pass {
-	return [[[RMConnector alloc] initWithUrlString:url username:user password:pass] autorelease];
++ (id) connectorWithURL:(NSString *)URLString username:(NSString *)user password:(NSString *)pass {
+	return [[[RMConnector alloc] initWithURL:URLString username:user password:pass] autorelease];
 }
 
-+ (id) connectorWithUrlString:(NSString *) urlString {
-	return [RMConnector connectorWithUrlString:urlString username:nil password:nil];
++ (id) connectorWithURL:(NSString *)URLString {
+	return [RMConnector connectorWithURL:URLString username:nil password:nil];
 }
 
-- (id) initWithUrlString:(NSString *) url username:(NSString *) user password:(NSString *) pass {
+- (id) initWithURL:(NSString *)URLString username:(NSString *)user password:(NSString *)pass {
 	self = [super init];
 	
 	if (self) {
-		[self setUrlString:url];
+		[self setURLString:URLString];
 		[self setUsername:user];
 		[self setPassword:pass];
 		
-		responseDictionary = [[NSMutableDictionary dictionary] retain];
+		response = [[NSMutableDictionary dictionary] retain];
 		NSDictionary * accounts = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"accounts"];	
-		NSDictionary * account  = [accounts valueForKey:[self urlString]];
+		NSDictionary * account  = [accounts valueForKey:[self URLString]];
 		if (account != nil)
-			[responseDictionary setDictionary:[account valueForKey:@"data"]];
+			[response setDictionary:[account valueForKey:@"data"]];
 	}
 	
 	return self;
@@ -168,7 +168,7 @@
 #pragma mark Login Methods
 
 - (void) login {
-	NSURL * url = [NSURL URLWithString:[self urlString]];
+	NSURL * url = [NSURL URLWithString:[self URLString]];
 	RMLogin * login = [[RMLogin loginWithURL:url username:[self username] password:[self password]] retain];
 	[login setDidFinishSelector:@selector(loginCompleted:)];
 	[login setDidFailSelector:@selector(loginFailed:)];
@@ -195,7 +195,7 @@
 		NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[feed objectForKey:@"title"],@"title",[feed objectForKey:@"href"],@"href",nil];
 		[feedDicts setValue:dict forKey:[feed objectForKey:@"href"]];
 	}
-	[responseDictionary setValue:feedDicts forKey:@"myPage"];
+	[response setValue:feedDicts forKey:@"myPage"];
 	
 	[self fetchMyPageFeedsWithCookies:[aLogin responseCookies]];
 }
@@ -204,10 +204,10 @@
 #pragma mark Fetching My Page
 
 - (void) fetchMyPageFeedsWithCookies:(NSArray *)cookies {	
-	NSMutableDictionary * myPage = [[responseDictionary valueForKey:@"myPage"] mutableCopy];
+	NSMutableDictionary * myPage = [[response valueForKey:@"myPage"] mutableCopy];
 	for (NSDictionary * feed in [myPage allValues]) 
 	{
-		NSURL * feedURL = [NSURL URLWithString:[feed valueForKey:@"href"] relativeToURL:[NSURL URLWithString:[self urlString]]];
+		NSURL * feedURL = [NSURL URLWithString:[feed valueForKey:@"href"] relativeToURL:[NSURL URLWithString:[self URLString]]];
 		NSError * err;
 		NSDictionary * issuesDict = [self issuesWithURL:feedURL cookies:&cookies error:&err];
 		if (err) return [self didFailWithError:err];
@@ -217,7 +217,7 @@
 		[dict setValue:issuesDict forKey:@"issues"];
 		[myPage setValue:dict forKey:[feed objectForKey:@"href"]];
 	}
-	[responseDictionary setValue:myPage forKey:@"myPage"];
+	[response setValue:myPage forKey:@"myPage"];
 	
 	[self fetchProjectsPageWithCookies:cookies];
 }
@@ -226,11 +226,11 @@
 #pragma mark Fetching Projects
 
 - (void) fetchProjectsPageWithCookies:(NSArray *)cookies {
-	NSString * href = [responseDictionary valueForKeyPath:@"projects.href"];
+	NSString * href = [response valueForKeyPath:@"projects.href"];
 	if (href != nil) 
 		return [self fetchProjectsFeedWithCookies:cookies];
 	
-	NSURL * url = [NSURL URLWithString:@"projects" relativeToURL:[NSURL URLWithString:[self urlString]]];
+	NSURL * url = [NSURL URLWithString:@"projects" relativeToURL:[NSURL URLWithString:[self URLString]]];
 	[[self requestWithURL:url cookies:cookies startSelector:@selector(fetchProjectsPageBegan:) finishSelector:@selector(fetchProjectsPageCompleted:) failSelector:@selector(fetchProjectsPageFailed:)] startAsynchronous];
 }
 
@@ -253,13 +253,13 @@
 		return [self didFailWithError:err];
 	}
 	
-	[responseDictionary setValue:[NSMutableDictionary dictionaryWithObject:href forKey:@"href"] forKey:@"projects"];
+	[response setValue:[NSMutableDictionary dictionaryWithObject:href forKey:@"href"] forKey:@"projects"];
 	
 	[self fetchProjectsFeedWithCookies:[aRequest responseCookies]];
 }
 
 - (void) fetchProjectsFeedWithCookies:(NSArray *)cookies {
-	NSURL * url = [NSURL URLWithString:[responseDictionary valueForKeyPath:@"projects.href"] relativeToURL:[NSURL URLWithString:[self urlString]]];
+	NSURL * url = [NSURL URLWithString:[response valueForKeyPath:@"projects.href"] relativeToURL:[NSURL URLWithString:[self URLString]]];
 	[[self requestWithURL:url cookies:cookies startSelector:@selector(fetchProjectsFeedBegan:) finishSelector:@selector(fetchProjectsFeedCompleted:) failSelector:@selector(fetchProjectsFeedFailed:)] startAsynchronous];
 }
 
@@ -282,7 +282,7 @@
 	for (int i = 1; i <= [entries count]; i++) 
 	{
 		NSString * href = [[feedParser at:[NSString stringWithFormat:@"//feed/entry[%d]/link", i]] objectForKey:@"href"];
-		NSURL * projectURL = [NSURL URLWithString:href relativeToURL:[NSURL URLWithString:[self urlString]]];
+		NSURL * projectURL = [NSURL URLWithString:href relativeToURL:[NSURL URLWithString:[self URLString]]];
 		ASIHTTPRequest * projectRequest = [self requestWithURL:projectURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
 		[projectRequest startSynchronous];
 		cookies = [projectRequest responseCookies];
@@ -295,7 +295,7 @@
 		// Fetch activity
 		TFHpple * projectParser = [[[TFHpple alloc] initWithHTMLData:[projectRequest responseData]] autorelease];
 		NSString * activityLink = [[projectParser at:@"//link[@type='application/atom+xml']"] objectForKey:@"href"];
-		NSURL * activityURL = [NSURL URLWithString:activityLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+		NSURL * activityURL = [NSURL URLWithString:activityLink relativeToURL:[NSURL URLWithString:[self URLString]]];
 		NSError * activityError;
 		NSDictionary * activityDict = [self issuesWithURL:activityURL cookies:&cookies error:&activityError];
 		if (activityError) 
@@ -303,7 +303,7 @@
 		
 		// Fetch issues page
 		NSString * issuesPageLink = [[projectParser at:@"//a[@class='issues']"] objectForKey:@"href"];		
-		NSURL * issuesPageURL = [NSURL URLWithString:issuesPageLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+		NSURL * issuesPageURL = [NSURL URLWithString:issuesPageLink relativeToURL:[NSURL URLWithString:[self URLString]]];
 		ASIHTTPRequest * issuesPageRequest = [self requestWithURL:issuesPageURL cookies:cookies startSelector:nil finishSelector:nil failSelector:nil];
 		[issuesPageRequest startSynchronous];
 		cookies = [issuesPageRequest responseCookies];
@@ -314,7 +314,7 @@
 		// Fetch issues
 		TFHpple * issuesPageParser = [[[TFHpple alloc] initWithHTMLData:[issuesPageRequest responseData]] autorelease];
 		NSString * issuesLink = [[issuesPageParser at:@"//link[@type='application/atom+xml']"] objectForKey:@"href"];
-		NSURL * issuesURL = [NSURL URLWithString:issuesLink relativeToURL:[NSURL URLWithString:[self urlString]]];
+		NSURL * issuesURL = [NSURL URLWithString:issuesLink relativeToURL:[NSURL URLWithString:[self URLString]]];
 		NSError * issuesError;
 		NSDictionary * issuesDict = [self issuesWithURL:issuesURL cookies:&cookies error:&issuesError];
 		if (issuesError) 
@@ -331,7 +331,7 @@
 		[feedDicts setValue:dict forKey:href];
 	}
 	
-	[responseDictionary setValue:feedDicts forKeyPath:@"projects.content"];
+	[response setValue:feedDicts forKeyPath:@"projects.content"];
 	
 	[self didFinish];
 }

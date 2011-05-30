@@ -10,7 +10,7 @@
 
 @implementation ProjectViewController
 
-@synthesize connector=_connector;
+@synthesize request=_request;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -18,15 +18,15 @@
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		[self setTitle:TTLocalizedString(@"Loading...", @"")];
 		
-		NSString * login = [query valueForKey:@"login"];
-		NSString * password = [query valueForKey:@"password"];
-		_connector = [[RMConnector connectorWithUrlString:[url absoluteString] username:login password:password] retain];
-		[_connector setDidFinishSelector:@selector(didFinishConnect:)];
-		[_connector setDidFailSelector:@selector(didFailConnect:)];
-		[_connector setDelegate:self];
-		[_connector start];
+		NSString * identifier = [query valueForKey:@"project"];
+		NSString * path		  = [NSString stringWithFormat:@"projects/%@.xml",identifier];
+		NSString * URLString  = [[[url absoluteString] stringByAppendingURLPathComponent:path] stringByAppendingString:@"?limit=100"];
+
+		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
+		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
+		[_request setHttpMethod:@"GET"];
+		[_request send];
 	}
 	return self;
 }
@@ -34,20 +34,24 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	[self reloadData:self];
-	[_connector start];
+	[_request send];
 }
 
 #pragma mark -
-#pragma mark Connector
+#pragma mark Request delegate
 
-- (void)didFailConnect:(RMConnector*)connector {
+- (void)requestDidStartLoad:(TTURLRequest*)request {
+	[self setTitle:TTLocalizedString(@"Loading...", @"")];
+}
+
+- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
-												 subtitle:[[connector error] localizedDescription]
+												 subtitle:[error localizedDescription]
 													image:nil]];
 }
 
-- (void)didFinishConnect:(RMConnector*)connector {
+- (void)requestDidFinishLoad:(TTURLRequest*)request {	
 	[self reloadData:self];
 }
 
@@ -55,43 +59,43 @@
 #pragma mark Interface Builder actions
 
 - (IBAction)reloadData:(id)sender {
-	if (![[_connector responseDictionary] count]) 
-		return;
-		
-	NSString * projectURL = [[self query] valueForKey:@"project"];
-	NSString * login	= [[self query] valueForKey:@"login"];
-	NSString * password = [[self query] valueForKey:@"password"];	
-	NSString * activitiesURL = [@"iredmine://activities" stringByAddingQueryDictionary:[self query]];
-	NSString * issuesURL = [@"iredmine://issues" stringByAddingQueryDictionary:[self query]];
-
-	NSString * addURL = [@"iredmine://issue/add" stringByAddingQueryDictionary:[self query]];
-	NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
-	if (!purchases || ![purchases containsObject:kInAppPurchaseIdentifierPro])
-		addURL = @"iredmine://store";
+	NSDictionary * dict = [(TTURLXMLResponse *)[_request response] rootObject];
+	if (!dict) return;
 	
-	NSDictionary * projectsDict = [[_connector responseDictionary] valueForKeyPath:@"projects.content"];
-	NSDictionary * projectDict = [projectsDict valueForKey:projectURL];
-	NSDictionary * activityDict = [projectDict valueForKey:@"activity"];
-	NSDictionary * issuesDict = [projectDict valueForKey:@"issues"];
-
-	NSString * issuesTitle = [NSLocalizedString(@"Issues",@"") stringByAppendingFormat:@" (%d)",[issuesDict count]];
-	NSString * activityTitle = [NSLocalizedString(@"Activities",@"") stringByAppendingFormat:@" (%d)",[activityDict count]];
+	NSString * description = [dict valueForKeyPath:@"description.___Entity_Value___"];
+	NSString * identifier  = [dict valueForKeyPath:@"identifier.___Entity_Value___"];
+	NSString * projectName = [dict valueForKeyPath:@"name.___Entity_Value___"];
+	NSString * updated	   = [[NSDate dateFromXMLString:[dict valueForKeyPath:@"updated_on.___Entity_Value___"]] formatRelativeTime];
 	
-	NSArray * titleComps = [[projectDict valueForKey:@"title"] componentsSeparatedByString:@" - "];
-	[self setTitle:[titleComps objectAtIndex:0]];	
+	[self setTitle:projectName];	
+	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];
+	
+	NSMutableDictionary * newQuery = [[self query] mutableCopy];
+	[newQuery setObject:[NSString stringWithFormat:@"project_id=%@",identifier] forKey:@"params"];
+	NSString * issuesURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
+	NSString * projectURL = [[url absoluteString] stringByAppendingURLPathComponent:[NSString stringWithFormat:@"projects/%@",identifier]];
+
 	TTSectionedDataSource * ds =[TTSectionedDataSource dataSourceWithObjects:
-						 [titleComps lastObject],
-						 [TTTableLongTextItem itemWithText:[[projectDict valueForKey:@"content"] stringByRemovingHTMLTags]],
-						 @"",
-						 [TTTableTextItem itemWithText:issuesTitle  URL:issuesURL],
-						 [TTTableTextItem itemWithText:activityTitle URL:activitiesURL],
-						 @"",
-						 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:[projectDict valueForKey:@"href"]],
-						 nil];
-		
-	if (login && ![login isEmptyOrWhitespace] && password && ![password isEmptyOrWhitespace])
-		[[[ds items] lastObject] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New issue",@"") URL:addURL]];
+								 projectName,
+								 [TTTableTextItem itemWithText:NSLocalizedString(@"Issues",@"")  URL:issuesURL],
+								 @"",
+								 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:projectURL],
+								 @"",
+								 [TTTableGrayTextItem itemWithText:[NSString stringWithFormat:TTLocalizedString(@"Last updated: %@", @""),updated]],
+								 nil];
+
+	if (description && ![description isEmptyOrWhitespace])		
+		[[[ds items] objectAtIndex:0] insertObject:[TTTableLongTextItem itemWithText:description] atIndex:0];
 	
+	Account * account = [Account accountWithURL:[url absoluteString]];
+	if ([account username] && [account password]) {
+		NSString * addURL = @"iredmine://store";
+		NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
+		if (purchases && [purchases containsObject:kInAppPurchaseIdentifierPro])
+			addURL = [@"iredmine://issue/add" stringByAddingQueryDictionary:[self query]];
+		[[[ds items] objectAtIndex:1] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New issue",@"") URL:addURL]];
+	}
+		
 	[self setDataSource:ds];
 }
 
@@ -99,9 +103,8 @@
 #pragma mark Memory management
 
 - (void) dealloc {
-	[_connector cancel];
-	[_connector setDelegate:nil];
-	TT_RELEASE_SAFELY(_connector);
+	[_request cancel];
+	TT_RELEASE_SAFELY(_request);
 	[super dealloc];
 }
 

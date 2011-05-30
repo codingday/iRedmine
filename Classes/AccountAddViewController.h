@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "NSURLProtectionSpaceAdditions.h"
+#import "Account.h"
+#import "NSURLAdditions.h"
 
 @interface AccountAddViewController : BaseViewController <UITextFieldDelegate, UIAlertViewDelegate> {
 	UITextField * _loginField;
@@ -22,5 +23,6 @@
 
 - (IBAction)done:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)save:(id)sender;
 
 @end

@@ -13,11 +13,11 @@
 
 @interface RMConnector : NSObject {
 	
-	NSString	*urlString;
+	NSString	*URLString;
 	NSString	*username;
 	NSString	*password;
 	
-	NSMutableDictionary *responseDictionary;
+	NSMutableDictionary *response;
 	
 	// The delegate, you need to manage setting and talking to your delegate in your subclasses
 	id delegate;
@@ -35,10 +35,10 @@
 	NSError *error;	
 }
 
-@property(retain) NSString *urlString;
+@property(retain) NSString *URLString;
 @property(retain) NSString *username;
 @property(retain) NSString *password;
-@property(retain,readonly) NSMutableDictionary *responseDictionary;
+@property(retain,readonly) NSMutableDictionary *response;
 @property(assign) id delegate;
 @property(assign) SEL didStartSelector;
 @property(assign) SEL didFinishSelector;
@@ -46,9 +46,9 @@
 @property(retain, readonly) NSError *error;
 
 // Convenience constructors
-+ (id) connectorWithUrlString:(NSString *)urlString username:(NSString *)username password:(NSString *)password;
-+ (id) connectorWithUrlString:(NSString *)urlString;
-- (id) initWithUrlString:(NSString *)urlString username:(NSString *)username password:(NSString *)password;
++ (id) connectorWithURL:(NSString *)URLString username:(NSString *)username password:(NSString *)password;
++ (id) connectorWithURL:(NSString *)URLString;
+- (id) initWithURL:(NSString *)URLString username:(NSString *)username password:(NSString *)password;
 
 - (ASIHTTPRequest *)requestWithURL:(NSURL *)url cookies:(NSArray *)cookies startSelector:(SEL)startSelector finishSelector:(SEL)finishSelector failSelector:(SEL)failSelector;
 

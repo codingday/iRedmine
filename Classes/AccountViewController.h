@@ -10,7 +10,7 @@
 #import "BaseTableViewController.h"
 #import "RESTRequest.h"
 #import "NSStringAdditions.h"
-#import "NSURLProtectionSpaceAdditions.h"
+#import "Account.h"
 
 @interface AccountViewController : BaseTableViewController {
 	RESTRequest * _request;
