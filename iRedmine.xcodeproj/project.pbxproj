@@ -59,7 +59,7 @@
 		02A154DC1349C13F007A061B /* libThree20UINavigator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A154D21349C082007A061B /* libThree20UINavigator.a */; };
 		02A154F61349C16D007A061B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A154F51349C16D007A061B /* QuartzCore.framework */; };
 		02A8B04C0F98D6830077AB7F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* Icon.png */; };
-		02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* RMLogin.m */; };
+		02C7769F11B6B1C900F10BC3 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* Login.m */; };
 		02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */; };
 		02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CD7AAD12A56C2100841B5A /* iAd.framework */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
@@ -328,8 +328,8 @@
 		02A154CC1349C082007A061B /* Three20UINavigator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20UINavigator.xcodeproj; path = External/three20/src/Three20UINavigator/Three20UINavigator.xcodeproj; sourceTree = "<group>"; };
 		02A154F51349C16D007A061B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02A8B04B0F98D6830077AB7F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		02C7769D11B6B1C900F10BC3 /* RMLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLogin.h; sourceTree = "<group>"; };
-		02C7769E11B6B1C900F10BC3 /* RMLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLogin.m; sourceTree = "<group>"; };
+		02C7769D11B6B1C900F10BC3 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
+		02C7769E11B6B1C900F10BC3 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
 		02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
 		02CD7AAD12A56C2100841B5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
@@ -548,8 +548,10 @@
 		02E2EDB10F9F572F003DDCB0 /* WWK Library */ = {
 			isa = PBXGroup;
 			children = (
-				02C7769D11B6B1C900F10BC3 /* RMLogin.h */,
-				02C7769E11B6B1C900F10BC3 /* RMLogin.m */,
+				02899D931393DE8400C013FE /* Account.h */,
+				02899D941393DE8400C013FE /* Account.m */,
+				02C7769D11B6B1C900F10BC3 /* Login.h */,
+				02C7769E11B6B1C900F10BC3 /* Login.m */,
 				02F400CA119307F100E0B194 /* RMConnector.h */,
 				02F400CB119307F100E0B194 /* RMConnector.m */,
 				02E18E48138BB84200639A5D /* RESTRequest.h */,
@@ -562,8 +564,6 @@
 				024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */,
 				022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */,
 				022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */,
-				02899D931393DE8400C013FE /* Account.h */,
-				02899D941393DE8400C013FE /* Account.m */,
 			);
 			name = "WWK Library";
 			sourceTree = "<group>";
@@ -975,7 +975,7 @@
 				026A373911A34871003A6F9A /* XPathQuery.m in Sources */,
 				026A376111A34C11003A6F9A /* ASINetworkQueue.m in Sources */,
 				026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */,
-				02C7769F11B6B1C900F10BC3 /* RMLogin.m in Sources */,
+				02C7769F11B6B1C900F10BC3 /* Login.m in Sources */,
 				0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */,
 				02936956134B23AC00DF334F /* IssueTableController.m in Sources */,
 				02936A79134B5A5200DF334F /* BaseViewController.m in Sources */,

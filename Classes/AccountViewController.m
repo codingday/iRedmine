@@ -11,8 +11,6 @@
 
 @implementation AccountViewController
 
-@synthesize request=_request;
-
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -20,8 +18,8 @@
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
 		[self setTitle:[url host]];
-
-		NSString * URLString = [[[url absoluteString] stringByAppendingURLPathComponent:@"projects.xml"] stringByAppendingString:@"?limit=100"];
+				
+		NSString * URLString = [[NSURL URLWithString:@"projects.xml?limit=100" relativeToURL:url] absoluteString];		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 		[_request setHttpMethod:@"GET"];
@@ -102,8 +100,13 @@
 #pragma mark Memory management
 
 - (void) dealloc {
+	[_login setDelegate:nil];
+	[_login cancel];
+	TT_RELEASE_SAFELY(_login);
+	
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
+
 	[super dealloc];
 }
 

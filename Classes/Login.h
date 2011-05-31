@@ -1,5 +1,5 @@
 //
-//  RMLogin.h
+//  Login.h
 //  iRedmine
 //
 //  Created by Thomas Stägemann on 02.06.10.
@@ -11,25 +11,25 @@
 #import "TFHpple.h"
 
 
-@interface RMLogin : NSObject {
-	ASIFormDataRequest * loginRequest;
-	ASIHTTPRequest * fetchRequest;
-	NSURL * backURL;
+@interface Login : NSObject {
+	TTURLRequest * _loginRequest;
+	TTURLRequest * _fetchRequest;
+	NSURL * _backURL;
 		
 	// The delegate, you need to manage setting and talking to your delegate in your subclasses
-	id delegate;
+	id _delegate;
 	
 	// Called on the delegate when the connector starts
-	SEL didStartSelector;
+	SEL _didStartSelector;
 	
 	// Called on the delegate when the connector completes successfully
-	SEL didFinishSelector;
+	SEL _didFinishSelector;
 	
 	// Called on the delegate when the connector fails
-	SEL didFailSelector;	
+	SEL _didFailSelector;	
 	
 	// If an error occurs, error will contain an NSError
-	NSError *error;		
+	NSError * _error;		
 }
 
 @property(retain, nonatomic) NSURL * backURL;
@@ -45,9 +45,8 @@
 
 - (NSString *)responseString;
 - (NSData *)responseData;
-- (NSArray *)responseCookies;
 
-- (void) startAsynchronous;
+- (void) start;
 - (void) cancel;
 
 @end

@@ -22,7 +22,7 @@
 		[self setToolbarItems:[NSArray arrayWithObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cam:)]]];
 		[self setAutoresizesForKeyboard:YES];
 		
-		NSString * URLString = [[query valueForKey:@"url"] stringByAppendingURLPathComponent:@"issues.xml"];
+		NSString * URLString = [[query valueForKey:@"url"] stringByAppendingRelativeURL:@"issues.xml"];
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 		[_request setHttpMethod:@"POST"];
@@ -105,10 +105,6 @@
 	[self setLoadingView:activityLabel];
 }
 
-- (void)requestDidUploadData:(TTURLRequest*)request{
-	NSLog(@"did upload: %@",request);
-}
-
 - (void)requestDidFinishLoad:(TTURLRequest*)request {
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
 	NSString * description = [dict valueForKeyPath:@"description.___Entity_Value___" ];
@@ -134,10 +130,6 @@
 								delegate:nil 
 					   cancelButtonTitle:TTLocalizedString(@"OK", @"") 
 					   otherButtonTitles:nil] autorelease] show];
-}
-
-- (void)requestDidCancelLoad:(TTURLRequest*)request {
-	NSLog(@"did cancel load: %@",request);
 }
 
 @end

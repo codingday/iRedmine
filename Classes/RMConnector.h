@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import	"TFHpple.h"
 #import "ASIHTTPRequest.h"
-#import "RMLogin.h"
+#import "Login.h"
 
 @interface RMConnector : NSObject {
 	

@@ -11,11 +11,11 @@
 #import "RESTRequest.h"
 #import "NSStringAdditions.h"
 #import "Account.h"
+#import "Login.h"
 
 @interface AccountViewController : BaseTableViewController {
+	Login * _login;
 	RESTRequest * _request;
 }
-
-@property(nonatomic, retain, readonly) RESTRequest * request;
 
 @end

@@ -169,7 +169,7 @@
 
 - (void) login {
 	NSURL * url = [NSURL URLWithString:[self URLString]];
-	RMLogin * login = [[RMLogin loginWithURL:url username:[self username] password:[self password]] retain];
+	Login * login = [[Login loginWithURL:url username:[self username] password:[self password]] retain];
 	[login setDidFinishSelector:@selector(loginCompleted:)];
 	[login setDidFailSelector:@selector(loginFailed:)];
 	[login setDidStartSelector:@selector(loginBegan:)];	
@@ -177,14 +177,14 @@
 	[login startAsynchronous];
 }
 
-- (void) loginBegan:(RMLogin *)aLogin {
+- (void) loginBegan:(Login *)aLogin {
 }
 
-- (void) loginFailed:(RMLogin *)aLogin {
+- (void) loginFailed:(Login *)aLogin {
 	[self didFailWithError:[aLogin error]];
 }
 
-- (void) loginCompleted:(RMLogin *)aLogin {	
+- (void) loginCompleted:(Login *)aLogin {	
 	// extract feed urls for "my page"
 	TFHpple * myPageParser = [[[TFHpple alloc] initWithHTMLData:[aLogin responseData]] autorelease];
 	NSArray * feeds = [myPageParser search:@"//link[@type='application/atom+xml']"];

@@ -16,12 +16,10 @@
 #pragma mark View lifecycle
 
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
-	if (self = [super initWithNavigatorURL:URL query:query]) {
-		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		
+	if (self = [super initWithNavigatorURL:URL query:query]) {		
 		NSString * identifier = [query valueForKey:@"project"];
-		NSString * path		  = [NSString stringWithFormat:@"projects/%@.xml",identifier];
-		NSString * URLString  = [[[url absoluteString] stringByAppendingURLPathComponent:path] stringByAppendingString:@"?limit=100"];
+		NSString * path		  = [NSString stringWithFormat:@"projects/%@.xml?limit=100",identifier];
+		NSString * URLString  = [[query valueForKey:@"url"] stringByAppendingRelativeURL:path];
 
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
@@ -68,12 +66,11 @@
 	NSString * updated	   = [[NSDate dateFromXMLString:[dict valueForKeyPath:@"updated_on.___Entity_Value___"]] formatRelativeTime];
 	
 	[self setTitle:projectName];	
-	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];
 	
 	NSMutableDictionary * newQuery = [[self query] mutableCopy];
 	[newQuery setObject:[NSString stringWithFormat:@"project_id=%@",identifier] forKey:@"params"];
 	NSString * issuesURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
-	NSString * projectURL = [[url absoluteString] stringByAppendingURLPathComponent:[NSString stringWithFormat:@"projects/%@",identifier]];
+	NSString * projectURL = [[[self query] valueForKey:@"url"] stringByAppendingRelativeURL:[NSString stringWithFormat:@"projects/%@",identifier]];
 
 	TTSectionedDataSource * ds =[TTSectionedDataSource dataSourceWithObjects:
 								 projectName,
@@ -87,7 +84,7 @@
 	if (description && ![description isEmptyOrWhitespace])		
 		[[[ds items] objectAtIndex:0] insertObject:[TTTableLongTextItem itemWithText:description] atIndex:0];
 	
-	Account * account = [Account accountWithURL:[url absoluteString]];
+	Account * account = [Account accountWithURL:[[self query] valueForKey:@"url"]];
 	if ([account username] && [account password]) {
 		NSString * addURL = @"iredmine://store";
 		NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];

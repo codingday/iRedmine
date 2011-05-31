@@ -11,9 +11,9 @@
 
 @implementation NSString (NSStringAdditions)
 
-- (NSString *)stringByAppendingURLPathComponent:(NSString*)component {
-	NSURL * originalURL = [NSURL URLWithString:self];
-	return [[originalURL URLByAppendingPathComponent:component] absoluteString];
+- (NSString *)stringByAppendingRelativeURL:(NSString*)URLString {
+	NSURL * baseURL = [NSURL URLWithString:self];
+	return [[NSURL URLWithString:URLString relativeToURL:baseURL] absoluteString];
 }
 
 - (NSString *)stringByEscapingHTML{

@@ -19,8 +19,7 @@
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		[self setTitle:NSLocalizedString(@"Issues", @"")];
 		
-		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		NSMutableString * URLString = [[[url absoluteString] stringByAppendingURLPathComponent:@"issues.xml"] mutableCopy];
+		NSMutableString * URLString = [[[query valueForKey:@"url"] stringByAppendingRelativeURL:@"issues.xml"] mutableCopy];
 
 		NSString * params = [query valueForKey:@"params"];
 		if (params)	[URLString appendFormat:@"?%@",params];
@@ -72,7 +71,7 @@
 		NSString * identifier = [issue valueForKeyPath:@"id.___Entity_Value___"];
 		NSString * tracker = [issue valueForKeyPath:@"tracker.name"];
 		NSDate * timestamp = [NSDate dateFromXMLString:[issue valueForKeyPath:@"updated_on.___Entity_Value___"]];
-		NSString * URLString = [[[self query] valueForKey:@"url"] stringByAppendingURLPathComponent:[NSString stringWithFormat:@"issues/%@",identifier]];
+		NSString * URLString = [[[self query] valueForKey:@"url"] stringByAppendingRelativeURL:[NSString stringWithFormat:@"issues/%@",identifier]];
 		
 		NSString * imageURL = @"bundle://support.png";
 		if ([tracker matchedByPattern:featurePattern options:REG_ICASE])
