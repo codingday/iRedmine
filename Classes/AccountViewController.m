@@ -22,7 +22,6 @@
 		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"projects.xml?limit=100"];		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
-		[_request setHttpMethod:@"GET"];
 
 		Account * account = [Account accountWithURL:[url absoluteString]];
 		_login = [[Login loginWithURL:url username:[account username] password:[account password]] retain];

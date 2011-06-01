@@ -10,8 +10,6 @@
 
 @implementation IssueTableController
 
-@synthesize request=_request;
-
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -19,17 +17,39 @@
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		[self setTitle:NSLocalizedString(@"Issues", @"")];
 		
-		NSMutableString * URLString = [[[query valueForKey:@"url"] stringByAppendingRelativeURL:@"issues.xml"] mutableCopy];
+		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
+		NSMutableString * URLString = [[[url absoluteString] stringByAppendingRelativeURL:@"issues.xml"] mutableCopy];
 
 		NSString * params = [query valueForKey:@"params"];
 		if (params)	[URLString appendFormat:@"?%@",params];
 		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
-		[_request setHttpMethod:@"GET"];
-		[_request send];
+
+		Account * account = [Account accountWithURL:[url absoluteString]];
+		_login = [[Login loginWithURL:url username:[account username] password:[account password]] retain];
+		[_login setDelegate:self];
+		[_login setDidFinishSelector:@selector(loginFinished:)];
+		[_login setDidFailSelector:@selector(loginFailed:)];
+		
+		if (![_login start])
+			[_request send];
 	}
 	return self;
+}
+
+#pragma mark - 
+#pragma mark Login selectors
+
+- (void)loginFinished:(Login*)login {
+	[_request send];
+}
+
+- (void)loginFailed:(Login*)login {
+	[self setLoadingView:nil];
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Login failed", @"") 
+												 subtitle:[[login error] localizedDescription]
+													image:nil]];	
 }
 
 #pragma mark -
@@ -94,8 +114,13 @@
 #pragma mark Memory management
 
 - (void) dealloc {
+	[_login setDelegate:nil];
+	[_login cancel];
+	TT_RELEASE_SAFELY(_login);
+
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
+	
 	[super dealloc];
 }
 

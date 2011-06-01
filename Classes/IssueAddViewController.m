@@ -20,10 +20,18 @@
 		[self setToolbarItems:[NSArray arrayWithObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cam:)]]];
 		[self setAutoresizesForKeyboard:YES];
 		
-		NSString * URLString = [[query valueForKey:@"url"] stringByAppendingRelativeURL:@"issues.xml"];
+		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
+		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"issues.xml"];
+		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 		[_request setHttpMethod:@"POST"];
+
+		Account * account = [Account accountWithURL:[url absoluteString]];
+		_login = [[Login loginWithURL:url username:[account username] password:[account password]] retain];
+		[_login setDelegate:self];
+		[_login setDidFinishSelector:@selector(loginFinished:)];
+		[_login setDidFailSelector:@selector(loginFailed:)];
 	}
 	return self;
 }
@@ -52,16 +60,14 @@
 #pragma mark -
 #pragma mark Memory management
 
-- (void)viewDidUnload {
-	[super viewDidUnload];
-
-	TT_RELEASE_SAFELY(_request);
-	TT_RELEASE_SAFELY(_subjectField);
-	TT_RELEASE_SAFELY(_descriptionEditor);
-}
-
 - (void) dealloc {
+	[_login setDelegate:nil];
+	[_login cancel];
+	TT_RELEASE_SAFELY(_login);
+	
+	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
+	
 	TT_RELEASE_SAFELY(_subjectField);
 	TT_RELEASE_SAFELY(_descriptionEditor);
 	[super dealloc];
@@ -77,18 +83,33 @@
 						   @"subject",
 						   [_descriptionEditor text],
 						   @"description",
-						   [[[self query] valueForKey:@"project"] lastPathComponent],
+						   [[self query] valueForKey:@"project"],
 						   @"project_id",
-						   nil];
-	
-	// Send request
+						   nil];	
 	[_request setDictionary:[NSDictionary dictionaryWithObject:dict forKey:@"issue"]];
-	[_request send];
+	
+	if (![_login start])
+		[_request send];
 }
 
 - (IBAction)cancel:(id)sender {	
+	[_login cancel];
 	[_request cancel];
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - 
+#pragma mark Login selectors
+
+- (void)loginFinished:(Login*)login {
+	[_request send];
+}
+
+- (void)loginFailed:(Login*)login {
+	[self setLoadingView:nil];
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Login failed", @"") 
+												 subtitle:[[login error] localizedDescription]
+													image:nil]];	
 }
 
 #pragma mark -

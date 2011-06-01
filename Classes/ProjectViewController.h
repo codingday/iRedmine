@@ -10,15 +10,15 @@
 #import "BaseTableViewController.h"
 #import "NSStringAdditions.h"
 #import "NSDateAdditions.h"
-#import "Account.h"
-#import "RESTRequest.h"
 #import "Constants.h"
+#import "RESTRequest.h"
+#import "Account.h"
+#import "Login.h"
 
 @interface ProjectViewController : BaseTableViewController {
+	Login * _login;
 	RESTRequest * _request;
 }
-
-@property(nonatomic, retain, readonly) RESTRequest * request;
 
 - (IBAction)reloadData:(id)sender;
 

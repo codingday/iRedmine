@@ -10,9 +10,12 @@
 #import "BaseTableViewController.h"
 #import "NSStringAdditions.h"
 #import "RESTRequest.h"
+#import "Account.h"
+#import "Login.h"
 
 @interface IssueAddViewController : BaseTableViewController <TTURLRequestDelegate> {
 	RESTRequest * _request;
+	Login * _login;
 	UITextField * _subjectField;
 	TTTextEditor * _descriptionEditor;
 }

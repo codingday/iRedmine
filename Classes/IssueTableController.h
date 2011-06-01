@@ -9,14 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
 #import "RESTRequest.h"
+#import "Account.h"
+#import "Login.h"
 #import "NSStringAdditions.h"
 #import "CSRegex.h"
 #import "NSDateAdditions.h"
 
 @interface IssueTableController : BaseTableViewController {
 	RESTRequest * _request;
+	Login * _login;
 }
-
-@property(nonatomic, retain, readonly) RESTRequest * request;
 
 @end
