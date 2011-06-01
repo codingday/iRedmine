@@ -19,13 +19,35 @@
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
 		[self setTitle:[url host]];
 				
-		NSString * URLString = [[NSURL URLWithString:@"projects.xml?limit=100" relativeToURL:url] absoluteString];		
+		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"projects.xml?limit=100"];		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 		[_request setHttpMethod:@"GET"];
-		[_request send];
+
+		Account * account = [Account accountWithURL:[url absoluteString]];
+		_login = [[Login loginWithURL:url username:[account username] password:[account password]] retain];
+		[_login setDelegate:self];
+		[_login setDidFinishSelector:@selector(loginFinished:)];
+		[_login setDidFailSelector:@selector(loginFailed:)];
+
+		if (![_login start])
+			[_request send];
 	}
 	return self;
+}
+
+#pragma mark - 
+#pragma mark Login selectors
+
+- (void)loginFinished:(Login*)login {
+	[_request send];
+}
+
+- (void)loginFailed:(Login*)login {
+	[self setLoadingView:nil];
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Login failed", @"") 
+												 subtitle:[[login error] localizedDescription]
+													image:nil]];	
 }
 
 #pragma mark -

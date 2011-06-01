@@ -11,8 +11,6 @@
 
 @implementation IssueAddViewController
 
-@synthesize request=_request;
-
 #pragma mark -
 #pragma mark View lifecycle
 

@@ -18,6 +18,8 @@
 
 @implementation Login
 
+@synthesize username=_username;
+@synthesize password=_password;
 @synthesize backURL=_backURL;
 @synthesize delegate=_delegate;
 @synthesize didStartSelector=_didStartSelector;
@@ -29,6 +31,8 @@
 #pragma mark Connector Basics
 
 - (void)dealloc {
+	TT_RELEASE_SAFELY(_username);
+	TT_RELEASE_SAFELY(_password);
 	TT_RELEASE_SAFELY(_backURL);
 	TT_RELEASE_SAFELY(_fetchRequest);
 	TT_RELEASE_SAFELY(_loginRequest);
@@ -45,29 +49,32 @@
 - (id)initWithURL:(NSURL *)url username:(NSString *)user password:(NSString *)pass {
 	self = [super init];
 	
-	if (self) {						
+	if (self) {		
+		[self setUsername:user];
+		[self setPassword:pass];
 		[self setBackURL:[NSURL URLWithString:@"my/page" relativeToURL:url]];
 		NSURL * loginURL = [NSURL URLWithString:@"login" relativeToURL:url];
 		
 		_fetchRequest = [[TTURLRequest requestWithURL:[loginURL absoluteString] delegate:self] retain];
 		[_fetchRequest setResponse:[[[TTURLDataResponse alloc] init] autorelease]];
-		[_fetchRequest setContentType:@"text/html"];
+		[_fetchRequest setCachePolicy:TTURLRequestCachePolicyNone];
 
 		_loginRequest = [[TTURLRequest requestWithURL:[loginURL absoluteString] delegate:self] retain];
-		[_fetchRequest setResponse:[[[TTURLDataResponse alloc] init] autorelease]];
-		[_loginRequest setContentType:@"text/html"];
+		[_loginRequest setResponse:[[[TTURLDataResponse alloc] init] autorelease]];
+		[_loginRequest setCachePolicy:TTURLRequestCachePolicyNone];
 		[_loginRequest setFilterPasswordLogging:YES];
 		[_loginRequest setHttpMethod:@"POST"];
-		[[_loginRequest parameters] setValue:user forKey:@"username"];
-		[[_loginRequest parameters] setValue:pass forKey:@"password"];
-		[[_loginRequest parameters] setValue:@"1" forKey:@"autologin"];
+		[_loginRequest setValue:[loginURL absoluteString] forHTTPHeaderField:@"Referer"];
 	}
 	
 	return self;
 }
 
-- (void)start {
+- (BOOL)start {
+	if (!_username || !_password) 
+		return NO;
 	[_fetchRequest send];
+	return YES;
 }
 
 - (void)cancel {
@@ -134,6 +141,8 @@
 	if (token) 
 		[[_loginRequest parameters] setValue:token forKey:@"authenticity_token"];
 	[[_loginRequest parameters] setValue:[_backURL absoluteString] forKey:@"back_url"];
+	[[_loginRequest parameters] setValue:_username forKey:@"username"];
+	[[_loginRequest parameters] setValue:_password forKey:@"password"];
 	[_loginRequest send];	
 }
 

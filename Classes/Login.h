@@ -12,10 +12,14 @@
 
 
 @interface Login : NSObject {
-	TTURLRequest * _loginRequest;
-	TTURLRequest * _fetchRequest;
+	NSString * _username;
+	NSString * _password;
+	
 	NSURL * _backURL;
 		
+	TTURLRequest * _loginRequest;
+	TTURLRequest * _fetchRequest;
+
 	// The delegate, you need to manage setting and talking to your delegate in your subclasses
 	id _delegate;
 	
@@ -32,6 +36,8 @@
 	NSError * _error;		
 }
 
+@property(retain, nonatomic) NSString * username;
+@property(retain, nonatomic) NSString * password;
 @property(retain, nonatomic) NSURL * backURL;
 @property(assign) id delegate;
 @property(assign) SEL didStartSelector;
@@ -46,7 +52,7 @@
 - (NSString *)responseString;
 - (NSData *)responseData;
 
-- (void) start;
+- (BOOL) start;
 - (void) cancel;
 
 @end
