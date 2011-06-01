@@ -83,11 +83,11 @@
 		NSMutableArray * myPage = [NSMutableArray array];
 		NSMutableDictionary * newQuery = [[self query] mutableCopy];
 		
-		[newQuery setObject:@"assigned_to=me" forKey:@"params"];
+		[newQuery setObject:@"assigned_to_id=me" forKey:@"params"];
 		NSString * assignedURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
 		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Issues assigned to me",@"") URL:assignedURL]];
 			
-		[newQuery setObject:@"author=me" forKey:@"params"];
+		[newQuery setObject:@"author_id=me" forKey:@"params"];
 		NSString * authorURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
 		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Reported issues",@"") URL:authorURL]];
 
