@@ -8,36 +8,29 @@
 
 #import <Foundation/Foundation.h>
 #import	"TFHpple.h"
-#import "ASIHTTPRequest.h"
-#import "Login.h"
 
 @interface RMConnector : NSObject {
+	NSString	* _URLString;
 	
-	NSString	*URLString;
-	NSString	*username;
-	NSString	*password;
-	
-	NSMutableDictionary *response;
+	NSMutableDictionary * _response;
 	
 	// The delegate, you need to manage setting and talking to your delegate in your subclasses
-	id delegate;
+	id _delegate;
 	
 	// Called on the delegate when the connector starts
-	SEL didStartSelector;
+	SEL _didStartSelector;
 	
 	// Called on the delegate when the connector completes successfully
-	SEL didFinishSelector;
+	SEL _didFinishSelector;
 	
 	// Called on the delegate when the connector fails
-	SEL didFailSelector;	
+	SEL _didFailSelector;	
 	
 	// If an error occurs, error will contain an NSError
-	NSError *error;	
+	NSError * _error;	
 }
 
 @property(retain) NSString *URLString;
-@property(retain) NSString *username;
-@property(retain) NSString *password;
 @property(retain,readonly) NSMutableDictionary *response;
 @property(assign) id delegate;
 @property(assign) SEL didStartSelector;
@@ -46,11 +39,8 @@
 @property(retain, readonly) NSError *error;
 
 // Convenience constructors
-+ (id) connectorWithURL:(NSString *)URLString username:(NSString *)username password:(NSString *)password;
 + (id) connectorWithURL:(NSString *)URLString;
-- (id) initWithURL:(NSString *)URLString username:(NSString *)username password:(NSString *)password;
-
-- (ASIHTTPRequest *)requestWithURL:(NSURL *)url cookies:(NSArray *)cookies startSelector:(SEL)startSelector finishSelector:(SEL)finishSelector failSelector:(SEL)failSelector;
+- (id) initWithURL:(NSString *)URLString;
 
 - (void) start;
 - (void) cancel;

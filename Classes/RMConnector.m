@@ -15,61 +15,49 @@
 - (void) didFailWithError:(NSError*)anError;
 
 - (void) login;
-- (void) fetchMyPageFeedsWithCookies:(NSArray *)cookies;
+- (void) fetchMyPageFeeds;
 
-- (void) fetchProjectsPageWithCookies:(NSArray *)cookies;
-- (void) fetchProjectsFeedWithCookies:(NSArray *)cookies;
+- (void) fetchProjectsPage;
+- (void) fetchProjectsFeed;
 
 @end
 
 @implementation RMConnector
 
-@synthesize URLString;
-@synthesize password;
-@synthesize username;
-@synthesize response;
-@synthesize delegate;
-@synthesize didStartSelector;
-@synthesize didFinishSelector;
-@synthesize didFailSelector;
-@synthesize error;
+@synthesize URLString=_URLString;
+@synthesize response=_response;
+@synthesize delegate=_delegate;
+@synthesize didStartSelector=_didStartSelector;
+@synthesize didFinishSelector=_didFinishSelector;
+@synthesize didFailSelector=_didFailSelector;
+@synthesize error=_error;
 
 #pragma mark -
 #pragma mark Connector Basics
 
 - (void) dealloc {
-	[URLString release];
-	[username release];
-	[password release];
-	
-	[response release];
-	[delegate release];
-	[error release];
+	TT_RELEASE_SAFELY(_URLString);
+	TT_RELEASE_SAFELY(_response);
+	TT_RELEASE_SAFELY(_error);
 	
 	[super dealloc];
 }
 
-+ (id) connectorWithURL:(NSString *)URLString username:(NSString *)user password:(NSString *)pass {
-	return [[[RMConnector alloc] initWithURL:URLString username:user password:pass] autorelease];
-}
-
 + (id) connectorWithURL:(NSString *)URLString {
-	return [RMConnector connectorWithURL:URLString username:nil password:nil];
+	return [[[RMConnector alloc] initWithURL:URLString] autorelease];
 }
 
-- (id) initWithURL:(NSString *)URLString username:(NSString *)user password:(NSString *)pass {
+- (id) initWithURL:(NSString *)URLString {
 	self = [super init];
 	
 	if (self) {
 		[self setURLString:URLString];
-		[self setUsername:user];
-		[self setPassword:pass];
 		
-		response = [[NSMutableDictionary dictionary] retain];
+		_response = [[NSMutableDictionary dictionary] retain];
 		NSDictionary * accounts = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"accounts"];	
 		NSDictionary * account  = [accounts valueForKey:[self URLString]];
 		if (account != nil)
-			[response setDictionary:[account valueForKey:@"data"]];
+			[_response setDictionary:[account valueForKey:@"data"]];
 	}
 	
 	return self;
@@ -78,10 +66,7 @@
 - (void) start {
 	[self didStart];
 	
-	if ([[self username] length] > 0 && [[self password] length] > 0)
-		[self login];
-	else
-		[self fetchProjectsPageWithCookies:nil];
+	[self fetchProjectsPage];
 }
 
 - (void) cancel {
@@ -93,27 +78,27 @@
 
 - (void) didStart {
 	// Let the delegate know we have started
-	if ([self didStartSelector]  && [[self delegate] respondsToSelector:[self didStartSelector]])
-		[[self delegate] performSelectorOnMainThread:[self didStartSelector] withObject:self waitUntilDone:[NSThread isMainThread]];		
+	if (_didStartSelector  && [_delegate respondsToSelector:_didStartSelector])
+		[_delegate performSelectorOnMainThread:_didStartSelector withObject:self waitUntilDone:[NSThread isMainThread]];		
 }
 
 - (void) didFinish {
 	// Let the delegate know we are done
-	if ([self didFinishSelector] && [[self delegate] respondsToSelector:[self didFinishSelector]])
-		[[self delegate] performSelectorOnMainThread:[self didFinishSelector] withObject:self waitUntilDone:[NSThread isMainThread]];		
+	if (_didFinishSelector && [_delegate respondsToSelector:_didFinishSelector])
+		[_delegate performSelectorOnMainThread:_didFinishSelector withObject:self waitUntilDone:[NSThread isMainThread]];		
 }
 
 - (void) didFailWithError:(NSError*)anError {
-	error = [anError retain];
+	_error = [anError retain];
 	
 	// Let the delegate know something went wrong
-	if ([self didFailSelector] && [[self delegate] respondsToSelector:[self didFailSelector]])
-		[[self delegate] performSelectorOnMainThread:[self didFailSelector] withObject:self waitUntilDone:[NSThread isMainThread]];	
+	if (_didFailSelector && [_delegate respondsToSelector:_didFailSelector])
+		[_delegate performSelectorOnMainThread:_didFailSelector withObject:self waitUntilDone:[NSThread isMainThread]];	
 }
 
 #pragma mark -
 #pragma mark Helper Methods
-
+/*
 - (ASIHTTPRequest *)requestWithURL:(NSURL *)url cookies:(NSArray *)cookies startSelector:(SEL)startSelector finishSelector:(SEL)finishSelector failSelector:(SEL)failSelector {
 	ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url]; 
 	[request setTimeOutSeconds:100];
@@ -150,7 +135,7 @@
 		*err = [issueRequest error];
 		if (*err) return nil;
 		*/
-		
+		/*
 		// creating data structure to response	
 		NSMutableDictionary * issueDict = [NSMutableDictionary dictionary];
 		[issueDict setValue:href forKey:@"href"];
@@ -334,6 +319,6 @@
 	[response setValue:feedDicts forKeyPath:@"projects.content"];
 	
 	[self didFinish];
-}
+}*/
 
 @end

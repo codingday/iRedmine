@@ -23,13 +23,13 @@
 	// The delegate, you need to manage setting and talking to your delegate in your subclasses
 	id _delegate;
 	
-	// Called on the delegate when the connector starts
+	// Called on the delegate when the login starts
 	SEL _didStartSelector;
 	
-	// Called on the delegate when the connector completes successfully
+	// Called on the delegate when the login was successful
 	SEL _didFinishSelector;
 	
-	// Called on the delegate when the connector fails
+	// Called on the delegate when the login fails
 	SEL _didFailSelector;	
 	
 	// If an error occurs, error will contain an NSError

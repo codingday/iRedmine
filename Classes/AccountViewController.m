@@ -19,6 +19,12 @@
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
 		[self setTitle:[url host]];
 				
+		// Legacy support
+		_atomFeed = [[[AtomFeed alloc] initWithURL:[url absoluteString] path:@"projects" xPath:@"//a[@class='atom' or @class='feed']"] retain];
+		[_atomFeed setDelegate:self];
+		[_atomFeed setDidFinishSelector:@selector(fetchFinished:)];
+		[_atomFeed setDidFailSelector:@selector(fetchFailed:)];
+		
 		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"projects.xml?limit=100"];		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
@@ -35,6 +41,21 @@
 	return self;
 }
 
+#pragma mark - 
+#pragma mark Atom feed selectors
+
+- (void)fetchFinished:(AtomFeed*)feed {
+	[self setLoadingView:nil];
+	NSLog(@"response: %@",[feed response]);
+	// TODO: 
+}
+
+- (void)fetchFailed:(AtomFeed*)feed {
+	[self setLoadingView:nil];
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"") 
+												 subtitle:[[feed error] localizedDescription]
+													image:nil]];	
+}
 #pragma mark - 
 #pragma mark Login selectors
 
@@ -53,8 +74,8 @@
 #pragma mark Request delegate
 
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
-	if ([error code] == 404) 
-		return NSLog(@"No REST API");
+	if ([error code] == 404)
+		return [_atomFeed fetch];
 	
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 

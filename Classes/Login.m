@@ -36,7 +36,6 @@
 	TT_RELEASE_SAFELY(_backURL);
 	TT_RELEASE_SAFELY(_fetchRequest);
 	TT_RELEASE_SAFELY(_loginRequest);
-	TT_RELEASE_SAFELY(_delegate);
 	TT_RELEASE_SAFELY(_error);
 	
 	[super dealloc];
@@ -98,20 +97,20 @@
 
 - (void) didStart {
 	// Let the delegate know we have started
-	if ([self didStartSelector]  && [[self delegate] respondsToSelector:[self didStartSelector]])
-		[[self delegate] performSelectorOnMainThread:[self didStartSelector] withObject:self waitUntilDone:[NSThread isMainThread]];		
+	if (_didStartSelector  && [_delegate respondsToSelector:_didStartSelector])
+		[_delegate performSelectorOnMainThread:_didStartSelector withObject:self waitUntilDone:[NSThread isMainThread]];		
 }
 
 - (void) didFinish {
 	// Let the delegate know we are done
-	if ([self didFinishSelector] && [[self delegate] respondsToSelector:[self didFinishSelector]])
-		[[self delegate] performSelectorOnMainThread:[self didFinishSelector] withObject:self waitUntilDone:[NSThread isMainThread]];		
+	if (_didFinishSelector && [_delegate respondsToSelector:_didFinishSelector])
+		[_delegate performSelectorOnMainThread:_didFinishSelector withObject:self waitUntilDone:[NSThread isMainThread]];		
 }
 
 - (void) didFail {
 	// Let the delegate know something went wrong
-	if ([self didFailSelector] && [[self delegate] respondsToSelector:[self didFailSelector]])
-		[[self delegate] performSelectorOnMainThread:[self didFailSelector] withObject:self waitUntilDone:[NSThread isMainThread]];	
+	if (_didFailSelector && [_delegate respondsToSelector:_didFailSelector])
+		[_delegate performSelectorOnMainThread:_didFailSelector withObject:self waitUntilDone:[NSThread isMainThread]];	
 }
 
 #pragma mark -

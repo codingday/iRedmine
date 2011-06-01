@@ -12,10 +12,12 @@
 #import "NSStringAdditions.h"
 #import "Account.h"
 #import "Login.h"
+#import "AtomFeed.h"
 
 @interface AccountViewController : BaseTableViewController {
 	Login * _login;
 	RESTRequest * _request;
+	AtomFeed * _atomFeed;
 }
 
 @end

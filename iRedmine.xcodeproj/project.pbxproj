@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02014A1D1396680000C9C02C /* AtomFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 02014A1C1396680000C9C02C /* AtomFeed.m */; };
 		0203D7C010358BCE005E98F4 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0203D7BF10358BCE005E98F4 /* Entitlements.plist */; };
 		022130A3138D0E7900558495 /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221309D138D0E6200558495 /* libextThree20XML.a */; };
 		022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */; };
@@ -250,6 +251,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02014A1B1396680000C9C02C /* AtomFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomFeed.h; sourceTree = "<group>"; };
+		02014A1C1396680000C9C02C /* AtomFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtomFeed.m; sourceTree = "<group>"; };
 		0203D7BF10358BCE005E98F4 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		02213092138D0E6200558495 /* extThree20XML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extThree20XML.xcodeproj; path = External/three20/src/extThree20XML/extThree20XML.xcodeproj; sourceTree = "<group>"; };
 		022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLProtectionSpaceAdditions.h; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 				02C7769E11B6B1C900F10BC3 /* Login.m */,
 				02F400CA119307F100E0B194 /* RMConnector.h */,
 				02F400CB119307F100E0B194 /* RMConnector.m */,
+				02014A1B1396680000C9C02C /* AtomFeed.h */,
+				02014A1C1396680000C9C02C /* AtomFeed.m */,
 				02E18E48138BB84200639A5D /* RESTRequest.h */,
 				02E18E49138BB84200639A5D /* RESTRequest.m */,
 				02899E181393F70E00C013FE /* NSURLAdditions.h */,
@@ -988,6 +993,7 @@
 				022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */,
 				02899D951393DE8400C013FE /* Account.m in Sources */,
 				02899E1A1393F70E00C013FE /* NSURLAdditions.m in Sources */,
+				02014A1D1396680000C9C02C /* AtomFeed.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
