@@ -44,10 +44,61 @@
 #pragma mark - 
 #pragma mark Atom feed selectors
 
-- (void)fetchFinished:(AtomFeed*)feed {
-	[self setLoadingView:nil];
-	NSLog(@"response: %@",[feed response]);
-	// TODO: 
+- (void)fetchFinished:(AtomFeed*)feed {	
+	NSArray * projects = [[feed response] valueForKey:@"entry"];
+	
+	if (!projects || ![projects count]) {
+		[self setEmptyView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"No projects found", @"") 
+													 subtitle:nil
+														image:nil]];
+		return [self setLoadingView:nil];
+	}
+	
+	TTSectionedDataSource * ds = [[[TTSectionedDataSource alloc] init] autorelease];
+	[ds setSections:[NSMutableArray array]];
+	[ds setItems:[NSMutableArray array]];
+	
+	Account * account = [Account accountWithURL:[[self query] valueForKey:@"url"]];
+	if ([account username] && [account password]) {
+		NSMutableArray * myPage = [NSMutableArray array];
+		NSMutableDictionary * newQuery = [[self query] mutableCopy];
+		
+		[newQuery setObject:@"assigned_to_id=me" forKey:@"params"];
+		NSString * assignedURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
+		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Issues assigned to me",@"") URL:assignedURL]];
+		
+		[newQuery setObject:@"author_id=me" forKey:@"params"];
+		NSString * authorURL = [@"iredmine://issues" stringByAddingQueryDictionary:newQuery];
+		[myPage addObject:[TTTableTextItem itemWithText:NSLocalizedString(@"Reported issues",@"") URL:authorURL]];
+		
+		[[ds sections] addObject:NSLocalizedString(@"My Page",@"")]; 
+		[[ds items] addObject:myPage];
+	}
+	
+	NSMutableArray * rows = [NSMutableArray array];	
+	for (NSDictionary * project in projects) {
+		NSString * text = [[[project valueForKeyPath:@"title.___Entity_Value___"] componentsSeparatedByString:@" - "] objectAtIndex:0];
+		NSString * subtitle = [[[project valueForKeyPath:@"content.___Entity_Value___"] 
+								stringByReplacingOccurrencesOfString:@"\n" withString:@" "] 
+							   stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+		if ([[project valueForKeyPath:@"content.type"] isEqualToString:@"html"])
+			subtitle = [subtitle stringByRemovingHTMLTags];
+		NSString * identifier = [[project valueForKeyPath:@"id.___Entity_Value___"] lastPathComponent];
+		
+		NSMutableDictionary * newQuery = [[self query] mutableCopy];
+		[newQuery setObject:identifier forKey:@"project"];
+		
+		NSString * URLString = [@"iredmine://project" stringByAddingQueryDictionary:newQuery];
+		[rows addObject:[TTTableSubtitleItem itemWithText:text subtitle:subtitle?subtitle:@" " URL:URLString]];
+	}
+	
+	NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES];
+	[rows sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	
+	[[ds items] addObject:rows]; 
+	[[ds sections] addObject:NSLocalizedString(@"Projects",@"")]; 
+	
+	[self setDataSource:ds];
 }
 
 - (void)fetchFailed:(AtomFeed*)feed {
@@ -56,6 +107,7 @@
 												 subtitle:[[feed error] localizedDescription]
 													image:nil]];	
 }
+
 #pragma mark - 
 #pragma mark Login selectors
 
