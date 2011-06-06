@@ -32,3 +32,7 @@
 - In App Purchases added (create issues, hide the advertising)
 - User interface changes
 - Minor bug fixes
+
+* Mon Jun 6th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.1
+- Faster access using the REST API
+- Minor bug fixes
