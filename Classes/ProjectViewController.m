@@ -15,6 +15,8 @@
 
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
 	if (self = [super initWithNavigatorURL:URL query:query]) {		
+		[self setTitle:NSLocalizedString(@"Project",@"")];	
+		
 		NSString * identifier = [query valueForKey:@"project"];
 		NSString * path		  = [NSString stringWithFormat:@"projects/%@.xml?limit=100",identifier];
 		NSURL * url			  = [NSURL URLWithString:[query valueForKey:@"url"]];
@@ -26,7 +28,6 @@
 		[_atomFeed setDelegate:self];
 		[_atomFeed setDidFinishSelector:@selector(fetchFinished:)];
 		[_atomFeed setDidFailSelector:@selector(fetchFailed:)];
-		[_atomFeed setDidStartSelector:@selector(fetchStarted:)];
 		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
@@ -37,7 +38,6 @@
 		[_login setDelegate:self];
 		[_login setDidFinishSelector:@selector(loginFinished:)];
 		[_login setDidFailSelector:@selector(loginFailed:)];
-		[_login setDidStartSelector:@selector(loginStarted:)];
 		
 		if (![_login start])
 			[_request send];
@@ -54,9 +54,7 @@
 #pragma mark - 
 #pragma mark Atom feed selectors
 
-- (void)fetchFinished:(AtomFeed*)feed {	
-	[self setTitle:NSLocalizedString(@"Project",@"")];	
-	
+- (void)fetchFinished:(AtomFeed*)feed {		
 	id response = [[feed response] valueForKey:@"entry"];	
 	if (!response) {
 		[self setEmptyView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"No issues found", @"") 
@@ -106,30 +104,20 @@
 }
 
 - (void)fetchFailed:(AtomFeed*)feed {
-	[self setTitle:TTLocalizedString(@"Error", @"")];
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"") 
 												 subtitle:[[feed error] localizedDescription]
 													image:nil]];	
 }
 
-- (void)fetchStarted:(AtomFeed*)feed {
-	[self setTitle:TTLocalizedString(@"Loading...", @"")];
-}
-
 #pragma mark - 
 #pragma mark Login selectors
-
-- (void)loginStarted:(Login*)login {
-	[self setTitle:TTLocalizedString(@"Loading...", @"")];
-}
 
 - (void)loginFinished:(Login*)login {
 	[_request send];
 }
 
 - (void)loginFailed:(Login*)login {
-	[self setTitle:TTLocalizedString(@"Error", @"")];
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Login failed", @"") 
 												 subtitle:[[login error] localizedDescription]
@@ -139,15 +127,10 @@
 #pragma mark -
 #pragma mark Request delegate
 
-- (void)requestDidStartLoad:(TTURLRequest*)request {
-	[self setTitle:TTLocalizedString(@"Loading...", @"")];
-}
-
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
 	if ([error code] == 404)
 		return [_atomFeed fetch];
 	
-	[self setTitle:TTLocalizedString(@"Error", @"")];
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
 												 subtitle:[error localizedDescription]
@@ -156,8 +139,7 @@
 
 - (void)requestDidFinishLoad:(TTURLRequest*)request {	
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
-	if (!dict) 
-		return [self setTitle:NSLocalizedString(@"Project",@"")];
+	if (!dict) return;
 	
 	NSString * description = [dict valueForKeyPath:@"description.___Entity_Value___"];
 	NSString * identifier  = [dict valueForKeyPath:@"identifier.___Entity_Value___"];
