@@ -23,6 +23,13 @@
 		NSString * params = [query valueForKey:@"params"];
 		if (params)	[URLString appendFormat:@"?%@",params];
 		
+		// Legacy support
+		NSString * xPath = [NSString stringWithFormat:@"//link[@type='application/atom+xml' and contains(@href, '%@')]",params];
+		_atomFeed = [[[AtomFeed alloc] initWithURL:[url absoluteString] path:@"my/page" xPath:xPath] retain];
+		[_atomFeed setDelegate:self];
+		[_atomFeed setDidFinishSelector:@selector(fetchFinished:)];
+		[_atomFeed setDidFailSelector:@selector(fetchFailed:)];
+
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 
@@ -36,6 +43,64 @@
 			[_request send];
 	}
 	return self;
+}
+
+#pragma mark - 
+#pragma mark Atom feed selectors
+
+- (void)fetchFinished:(AtomFeed*)feed {	
+	id response = [[feed response] valueForKey:@"entry"];	
+	if (!response) {
+		[self setEmptyView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"No issues found", @"") 
+													 subtitle:nil
+														image:nil]];
+		return [self setLoadingView:nil];
+	}
+
+	BOOL isArray = [response isKindOfClass:[NSArray class]];
+	NSArray * issues = isArray? response : [NSArray arrayWithObject:response];
+	
+	NSArray * featureTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FeatureCellTypes"];
+	NSString * featurePattern = [NSString stringWithFormat:@".*(%@).*",[featureTypes componentsJoinedByString:@"|"]];
+	
+	NSArray * revisionTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"RevisionCellTypes"];
+	NSString * revisionPattern = [NSString stringWithFormat:@".*(%@).*",[revisionTypes componentsJoinedByString:@"|"]];
+	
+	NSArray * errorTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ErrorCellTypes"];
+	NSString * errorPattern = [NSString stringWithFormat:@".*(%@).*",[errorTypes componentsJoinedByString:@"|"]];
+	
+	TTListDataSource * ds = [TTListDataSource dataSourceWithItems:[NSMutableArray array]];
+	
+	for (NSDictionary * issue in issues) {
+		NSString * description = [[[issue valueForKeyPath:@"content.___Entity_Value___"] stringByRemovingHTMLTags] 
+								  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		NSString * author = [issue valueForKeyPath:@"author.name.___Entity_Value___"];
+		NSString * subject = [issue valueForKeyPath:@"title.___Entity_Value___"];
+		NSDate * timestamp = [NSDate dateFromXMLString:[issue valueForKeyPath:@"updated.___Entity_Value___"]];
+		NSString * URLString = [issue valueForKeyPath:@"link.href"];
+		
+		NSString * imageURL = @"bundle://support.png";
+		if ([subject matchedByPattern:featurePattern options:REG_ICASE])
+			imageURL = @"bundle://feature.png";
+		else if ([subject matchedByPattern:revisionPattern options:REG_ICASE])
+			imageURL = @"bundle://revision.png";
+		else if ([subject matchedByPattern:errorPattern options:REG_ICASE])
+			imageURL = @"bundle://error.png";
+		
+		[[ds items] addObject:[TTTableMessageItem itemWithTitle:subject caption:author text:description timestamp:timestamp imageURL:imageURL URL:URLString]];
+	}
+	
+	NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+	[[ds items] sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	
+	[self setDataSource:ds];
+}
+
+- (void)fetchFailed:(AtomFeed*)feed {
+	[self setLoadingView:nil];
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"") 
+												 subtitle:[[feed error] localizedDescription]
+													image:nil]];	
 }
 
 #pragma mark - 
@@ -56,6 +121,9 @@
 #pragma mark Request delegate
 
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
+	if ([error code] == 404)
+		return [_atomFeed fetch];
+
 	[self setLoadingView:nil];
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
 												 subtitle:[error localizedDescription]

@@ -14,10 +14,12 @@
 #import "NSStringAdditions.h"
 #import "CSRegex.h"
 #import "NSDateAdditions.h"
+#import "AtomFeed.h"
 
 @interface IssueTableController : BaseTableViewController {
 	RESTRequest * _request;
 	Login * _login;
+	AtomFeed * _atomFeed;
 }
 
 @end

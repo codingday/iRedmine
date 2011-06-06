@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSStringAdditions.h"
 #import	"TFHpple.h"
 
 @interface AtomFeed : NSObject {

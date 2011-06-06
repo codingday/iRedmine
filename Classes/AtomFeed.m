@@ -77,8 +77,9 @@
 		return [self didFinish];
 
 	TFHpple * parser = [[[TFHpple alloc] initWithHTMLData:[(TTURLDataResponse*)[request response] data]] autorelease];
-	NSString * path = [[parser at:_xPath] objectForKey:@"href"];
-	NSString * feedURL = [_URL stringByAppendingRelativeURL:path];
+	NSString * feedURL = [[parser at:_xPath] objectForKey:@"href"];
+	if (![feedURL hasPrefix:_URL])
+		feedURL = [_URL stringByAppendingRelativeURL:feedURL];
 	
 	[_feedRequest cancel];
 	TT_RELEASE_SAFELY(_feedRequest);

@@ -45,14 +45,16 @@
 #pragma mark Atom feed selectors
 
 - (void)fetchFinished:(AtomFeed*)feed {	
-	NSArray * projects = [[feed response] valueForKey:@"entry"];
-	
-	if (!projects || ![projects count]) {
+	id response = [[feed response] valueForKey:@"entry"];	
+	if (!response) {
 		[self setEmptyView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"No projects found", @"") 
 													 subtitle:nil
 														image:nil]];
 		return [self setLoadingView:nil];
 	}
+
+	BOOL isArray = [response isKindOfClass:[NSArray class]];
+	NSArray * projects = isArray? response : [NSArray arrayWithObject:response];
 	
 	TTSectionedDataSource * ds = [[[TTSectionedDataSource alloc] init] autorelease];
 	[ds setSections:[NSMutableArray array]];
@@ -78,12 +80,12 @@
 	NSMutableArray * rows = [NSMutableArray array];	
 	for (NSDictionary * project in projects) {
 		NSString * text = [[[project valueForKeyPath:@"title.___Entity_Value___"] componentsSeparatedByString:@" - "] objectAtIndex:0];
+		NSString * identifier = [[project valueForKeyPath:@"id.___Entity_Value___"] lastPathComponent];
 		NSString * subtitle = [[[project valueForKeyPath:@"content.___Entity_Value___"] 
 								stringByReplacingOccurrencesOfString:@"\n" withString:@" "] 
 							   stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 		if ([[project valueForKeyPath:@"content.type"] isEqualToString:@"html"])
 			subtitle = [subtitle stringByRemovingHTMLTags];
-		NSString * identifier = [[project valueForKeyPath:@"id.___Entity_Value___"] lastPathComponent];
 		
 		NSMutableDictionary * newQuery = [[self query] mutableCopy];
 		[newQuery setObject:identifier forKey:@"project"];
@@ -145,7 +147,6 @@
 															   image:nil]];
 		return [self setLoadingView:nil];
 	}
-	
 	
 	TTSectionedDataSource * ds = [[[TTSectionedDataSource alloc] init] autorelease];
 	[ds setSections:[NSMutableArray array]];
