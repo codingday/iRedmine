@@ -14,12 +14,13 @@
 #import "RESTRequest.h"
 #import "Account.h"
 #import "Login.h"
+#import "AtomFeed.h"
+#import "CSRegex.h"
 
 @interface ProjectViewController : BaseTableViewController {
 	Login * _login;
 	RESTRequest * _request;
+	AtomFeed * _atomFeed;
 }
-
-- (IBAction)reloadData:(id)sender;
 
 @end

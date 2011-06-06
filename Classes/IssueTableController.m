@@ -72,12 +72,13 @@
 	TTListDataSource * ds = [TTListDataSource dataSourceWithItems:[NSMutableArray array]];
 	
 	for (NSDictionary * issue in issues) {
-		NSString * description = [[[issue valueForKeyPath:@"content.___Entity_Value___"] stringByRemovingHTMLTags] 
-								  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		NSDate * timestamp = [NSDate dateFromXMLString:[issue valueForKeyPath:@"updated.___Entity_Value___"]];
 		NSString * author = [issue valueForKeyPath:@"author.name.___Entity_Value___"];
 		NSString * subject = [issue valueForKeyPath:@"title.___Entity_Value___"];
-		NSDate * timestamp = [NSDate dateFromXMLString:[issue valueForKeyPath:@"updated.___Entity_Value___"]];
 		NSString * URLString = [issue valueForKeyPath:@"link.href"];
+		NSString * description = [[issue valueForKeyPath:@"content.___Entity_Value___"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		if ([[issue valueForKeyPath:@"content.type"] isEqualToString:@"html"])
+			description = [description stringByRemovingHTMLTags];
 		
 		NSString * imageURL = @"bundle://support.png";
 		if ([subject matchedByPattern:featurePattern options:REG_ICASE])
