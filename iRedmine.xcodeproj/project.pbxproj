@@ -66,7 +66,6 @@
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E18E49138BB84200639A5D /* RESTRequest.m */; };
 		02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02EB331F1358AC8E00B18895 /* StoreViewController.m */; };
-		02F400CC119307F100E0B194 /* RMConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F400CB119307F100E0B194 /* RMConnector.m */; };
 		02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D4F0134DBC6B00154008 /* AccountsDataSource.m */; };
 		02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D79B134E0A0D00154008 /* AccountEditViewController.m */; };
 		1D3623260D0F684500981E51 /* iRedmineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */; };
@@ -342,8 +341,6 @@
 		02EB331E1358AC8E00B18895 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
 		02EB331F1358AC8E00B18895 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
 		02EF8786135DDAD800803764 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		02F400CA119307F100E0B194 /* RMConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMConnector.h; sourceTree = "<group>"; };
-		02F400CB119307F100E0B194 /* RMConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMConnector.m; sourceTree = "<group>"; };
 		02F6D4EF134DBC6B00154008 /* AccountsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsDataSource.h; sourceTree = "<group>"; };
 		02F6D4F0134DBC6B00154008 /* AccountsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsDataSource.m; sourceTree = "<group>"; };
 		02F6D79A134E0A0D00154008 /* AccountEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountEditViewController.h; sourceTree = "<group>"; };
@@ -555,8 +552,6 @@
 				02899D941393DE8400C013FE /* Account.m */,
 				02C7769D11B6B1C900F10BC3 /* Login.h */,
 				02C7769E11B6B1C900F10BC3 /* Login.m */,
-				02F400CA119307F100E0B194 /* RMConnector.h */,
-				02F400CB119307F100E0B194 /* RMConnector.m */,
 				02014A1B1396680000C9C02C /* AtomFeed.h */,
 				02014A1C1396680000C9C02C /* AtomFeed.m */,
 				02E18E48138BB84200639A5D /* RESTRequest.h */,
@@ -970,7 +965,6 @@
 				0231293410BEF65E0097675F /* Reachability.m in Sources */,
 				024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */,
 				0252E07710CD4913003881B2 /* CSRegex.m in Sources */,
-				02F400CC119307F100E0B194 /* RMConnector.m in Sources */,
 				026A372B11A34849003A6F9A /* ASIAuthenticationDialog.m in Sources */,
 				026A372C11A34849003A6F9A /* ASIFormDataRequest.m in Sources */,
 				026A372D11A34849003A6F9A /* ASIHTTPRequest.m in Sources */,
