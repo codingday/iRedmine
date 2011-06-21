@@ -39,3 +39,4 @@
 
 * Tue Jun 21st 2011 Thomas Stägemann <ts@weisshuhn.de> 2.2
 - Erstellen neuer Projekte (iRedmine Pro)
+- Kleine Fehlerbehebungen
