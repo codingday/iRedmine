@@ -6,31 +6,40 @@
    Copyright 2009 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
  */
 
-"Issues"					= "Issues";
-"Activities"				= "Activities";
-"My Page"					= "My Page";
-"Project"					= "Project";
-"Projects"					= "Projects";
+/* Misc */
 "No projects found"			= "No projects found";
 "No issues found"			= "No issues found";
-"Issues assigned to me"		= "Issues assigned to me";
-"Reported issues"			= "Reported issues";
-"Add new account ..."		= "Add new account ...";
 "Input error"				= "Input error";
 "Please enter a valid host" = "Please enter a valid host";
-"New account"				= "New account";
-"Edit account"				= "Edit account";
-"Username: %@"				= "Username: %@";
-"Anonymous"					= "Anonymous";
-"Accounts"					= "Accounts";
 "Show in web view"			= "Show in web view";
-"New issue"				    = "New issue";
-"Subject"					= "Subject";
-"Description"				= "Description";
 "Login failed"				= "Login failed";
 "Account already exists"	= "Account already exists";
 "Do you really want to override this account with the specified URL?" = "Do you really want to override this account with the specified URL?";
-"Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted" = "Invalid XML responded\n\nPossible reasons:\n1. password or username incorrect\n2. Too many requests\n3. Mobile skin corrupted";
+
+/* Navigation Titles */
+"Edit account"				= "Edit account";
+"New account"				= "New account";
+"New project"				= "New project";
+"New issue"				    = "New issue";
+"Project"					= "Project";
+
+/* Cell Labels */
+"Username: %@"				= "Username: %@";
+"Anonymous"					= "Anonymous";
+"Add new account ..."		= "Add new account ...";
+"Issues assigned to me"		= "Issues assigned to me";
+"Reported issues"			= "Reported issues";
+"Issues"					= "Issues";
+"Subject"					= "Subject";
+"Identifier"				= "Identifier";
+"Homepage"					= "Homepage";
+"Public"					= "Public";
+
+/* Section Titles */
+"Accounts"					= "Accounts";
+"My Page"					= "My Page";
+"Projects"					= "Projects";
+"Description"				= "Description";
 
 /* Store View Controller */
 "Store"						= "Store";
@@ -39,4 +48,4 @@
 "Restore purchases"			= "Restore purchases";
 
 // Error descriptions
-"RMProjectsFeedNotFound" = "Couldn't found projects feed. Please check login and password.";
+"RMProjectCreationValidationFailures" = "Project was not created due to wrong input.";

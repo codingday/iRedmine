@@ -35,7 +35,7 @@
     [super viewDidLoad];
 	
 	if ([[[self navigationController] topViewController] isEqual:self]) {
-		UIBarButtonItem * cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)] autorelease];
+		UIBarButtonItem * cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancel:)] autorelease];
 		[[self navigationItem] setLeftBarButtonItem:cancelButton];
 	}
 }

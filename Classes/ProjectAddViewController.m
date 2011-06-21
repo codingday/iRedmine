@@ -1,27 +1,27 @@
 //
-//  IssueAddViewController.m
+//  ProjectAddViewController.m
 //  iRedmine
 //
 //  Created by Thomas Stägemann on 05.04.11.
 //  Copyright 2011 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
 //
 
-#import "IssueAddViewController.h"
+#import "ProjectAddViewController.h"
 
 
-@implementation IssueAddViewController
+@implementation ProjectAddViewController
 
 #pragma mark -
 #pragma mark View lifecycle
 
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
 	if (self = [super initWithNavigatorURL:URL query:query]) {
-		[self setTitle:NSLocalizedString(@"New issue",@"")];
+		[self setTitle:NSLocalizedString(@"New project",@"")];
 		[self setToolbarItems:[NSArray arrayWithObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cam:)]]];
 		[self setAutoresizesForKeyboard:YES];
 		
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"issues.xml"];
+		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"projects.xml"];
 		
 		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
@@ -48,13 +48,27 @@
 	UIBarButtonItem * sendButton = [[[UIBarButtonItem alloc] initWithTitle:TTLocalizedString(@"Send", @"") style:UIBarButtonItemStyleDone target:self action:@selector(send:)] autorelease];
 	[[self navigationItem] setRightBarButtonItem:sendButton];
 	
-	_subjectField = [[[UITextField alloc] init] retain];
-	TTTableControlItem * subjectItem = [TTTableControlItem itemWithCaption:NSLocalizedString(@"Subject", @"") control:_subjectField];
+	_nameField = [[[UITextField alloc] init] retain];
+	TTTableControlItem * nameItem = [TTTableControlItem itemWithCaption:NSLocalizedString(@"Name", @"") control:_nameField];
 
+	_identifierField = [[[UITextField alloc] init] retain];
+	[_identifierField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+	TTTableControlItem * identifierItem = [TTTableControlItem itemWithCaption:NSLocalizedString(@"Identifier", @"") control:_identifierField];
+	
+	_homepageField = [[[UITextField alloc] init] retain];
+	[_homepageField setKeyboardType:UIKeyboardTypeURL];
+	[_homepageField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+	[_homepageField setAutocorrectionType:UITextAutocorrectionTypeNo];
+	TTTableControlItem * homepageItem = [TTTableControlItem itemWithCaption:NSLocalizedString(@"Homepage", @"") control:_homepageField];
+	
+	_isPublicSwitch = [[[UISwitch alloc] init] retain];
+	[_isPublicSwitch setOn:YES];
+	TTTableControlItem * isPublicItem = [TTTableControlItem itemWithCaption:NSLocalizedString(@"Public", @"") control:_isPublicSwitch];
+	
 	_descriptionEditor = [[[TTTextEditor alloc] init] retain];
 	TTTableControlItem * descriptionItem = [TTTableControlItem itemWithCaption:nil control:(UIControl*)_descriptionEditor];
 	
-	[self setDataSource:[TTSectionedDataSource dataSourceWithObjects:@"",subjectItem,NSLocalizedString(@"Description", @""),descriptionItem,nil]];	
+	[self setDataSource:[TTSectionedDataSource dataSourceWithObjects:@"",nameItem,identifierItem,homepageItem,isPublicItem,NSLocalizedString(@"Description", @""),descriptionItem,nil]];	
 }
 
 #pragma mark -
@@ -68,7 +82,10 @@
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
 	
-	TT_RELEASE_SAFELY(_subjectField);
+	TT_RELEASE_SAFELY(_nameField);
+	TT_RELEASE_SAFELY(_identifierField);
+	TT_RELEASE_SAFELY(_homepageField);
+	TT_RELEASE_SAFELY(_isPublicSwitch);
 	TT_RELEASE_SAFELY(_descriptionEditor);
 	[super dealloc];
 }
@@ -79,10 +96,12 @@
 
 - (IBAction)send:(id)sender {	
 	NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-	[dict setNonEmptyString:[_subjectField text] forKey:@"subject"];
+	[dict setNonEmptyString:[_nameField text] forKey:@"name"];
+	[dict setNonEmptyString:[_identifierField text] forKey:@"identifier"];
+	[dict setNonEmptyString:[_homepageField text] forKey:@"homepage"];
 	[dict setNonEmptyString:[_descriptionEditor text] forKey:@"description"];
-	[dict setNonEmptyString:[[self query] valueForKey:@"project"] forKey:@"project_id"];
-	[_request setDictionary:[NSDictionary dictionaryWithObject:dict forKey:@"issue"]];
+	[dict setObject:[NSNumber numberWithBool:[_isPublicSwitch isOn]] forKey:@"is_public"];
+	[_request setDictionary:[NSDictionary dictionaryWithObject:dict forKey:@"project"]];
 	
 	if (![_login start])
 		[_request send];
@@ -122,8 +141,9 @@
 
 - (void)requestDidFinishLoad:(TTURLRequest*)request {
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
-	NSString * subject = [dict valueForKeyPath:@"subject.___Entity_Value___" ];
-	if ([subject isEqualToString:[_subjectField text]])
+	NSString * identifier	= [dict valueForKeyPath:@"identifier.___Entity_Value___" ];
+	NSString * name			= [dict valueForKeyPath:@"name.___Entity_Value___" ];
+	if ([identifier isEqualToString:[_identifierField text]] && [name isEqualToString:[_nameField text]])
 		return [self cancel:self];
 	
 	[[[self navigationItem] rightBarButtonItem] setEnabled:YES];
@@ -137,10 +157,14 @@
 
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
 	[[[self navigationItem] rightBarButtonItem] setEnabled:YES];
-	
 	[self setLoadingView:nil];
+
+	NSString * errorMessage = [error localizedDescription];
+	if ([error code] == 422)
+		errorMessage = NSLocalizedString(@"RMProjectCreationValidationFailures",@"");
+		
 	[[[[UIAlertView alloc] initWithTitle:TTLocalizedString(@"Error", @"") 
-								 message:[error localizedDescription] 
+								 message:errorMessage
 								delegate:nil 
 					   cancelButtonTitle:TTLocalizedString(@"OK", @"") 
 					   otherButtonTitles:nil] autorelease] show];

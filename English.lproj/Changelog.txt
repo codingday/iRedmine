@@ -36,3 +36,6 @@
 * Mon Jun 6th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.1
 - Faster access using the REST API
 - Minor bug fixes
+
+* Tue Jun 21st 2011 Thomas Stägemann <ts@weisshuhn.de> 2.2
+- Creating new projects (iRedmine Pro)

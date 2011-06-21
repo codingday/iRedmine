@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02014A1D1396680000C9C02C /* AtomFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 02014A1C1396680000C9C02C /* AtomFeed.m */; };
 		0203D7C010358BCE005E98F4 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0203D7BF10358BCE005E98F4 /* Entitlements.plist */; };
+		0206812813B0BF43002F1B0F /* ProjectAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0206812713B0BF43002F1B0F /* ProjectAddViewController.m */; };
 		022130A3138D0E7900558495 /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221309D138D0E6200558495 /* libextThree20XML.a */; };
 		022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */; };
 		0222E7EF0F8D3D5000445AAD /* AccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */; };
@@ -253,6 +254,8 @@
 		02014A1B1396680000C9C02C /* AtomFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomFeed.h; sourceTree = "<group>"; };
 		02014A1C1396680000C9C02C /* AtomFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtomFeed.m; sourceTree = "<group>"; };
 		0203D7BF10358BCE005E98F4 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		0206812613B0BF43002F1B0F /* ProjectAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectAddViewController.h; sourceTree = "<group>"; };
+		0206812713B0BF43002F1B0F /* ProjectAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectAddViewController.m; sourceTree = "<group>"; };
 		02213092138D0E6200558495 /* extThree20XML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extThree20XML.xcodeproj; path = External/three20/src/extThree20XML/extThree20XML.xcodeproj; sourceTree = "<group>"; };
 		022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLProtectionSpaceAdditions.h; sourceTree = "<group>"; };
 		022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLProtectionSpaceAdditions.m; sourceTree = "<group>"; };
@@ -539,6 +542,8 @@
 				02936B17134B689B00DF334F /* IssueAddViewController.m */,
 				023218E00F94DE2100A95381 /* ProjectViewController.h */,
 				023218E10F94DE2100A95381 /* ProjectViewController.m */,
+				0206812613B0BF43002F1B0F /* ProjectAddViewController.h */,
+				0206812713B0BF43002F1B0F /* ProjectAddViewController.m */,
 				02EB331E1358AC8E00B18895 /* StoreViewController.h */,
 				02EB331F1358AC8E00B18895 /* StoreViewController.m */,
 			);
@@ -988,6 +993,7 @@
 				02899D951393DE8400C013FE /* Account.m in Sources */,
 				02899E1A1393F70E00C013FE /* NSURLAdditions.m in Sources */,
 				02014A1D1396680000C9C02C /* AtomFeed.m in Sources */,
+				0206812813B0BF43002F1B0F /* ProjectAddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
