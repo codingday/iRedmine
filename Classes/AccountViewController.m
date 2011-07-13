@@ -125,6 +125,20 @@
 }
 
 #pragma mark -
+#pragma mark Alert view delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if ([alertView cancelButtonIndex] == buttonIndex) 
+		return (void)[[self navigationController] popViewControllerAnimated:YES];
+	
+	NSURL * url = [NSURL URLWithString:[[self query] valueForKey:@"url"]];
+	[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]]; // undocumented class method
+
+	if (![_login start])
+		[_request send];
+}
+
+#pragma mark -
 #pragma mark Request delegate
 
 - (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
@@ -132,6 +146,13 @@
 		return [_atomFeed fetch];
 	
 	[self setLoadingView:nil];
+	if ([error code] == NSURLErrorServerCertificateUntrusted)
+		return [[[[UIAlertView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
+											 message:[error localizedDescription] 
+											delegate:self 
+								   cancelButtonTitle:TTLocalizedString(@"Cancel", @"") 
+								   otherButtonTitles:NSLocalizedString(@"Continue", @""), nil] autorelease] show];
+	
 	[self setErrorView:[[TTErrorView alloc] initWithTitle:TTLocalizedString(@"Connection Error", @"") 
 												 subtitle:[error localizedDescription]
 													image:nil]];

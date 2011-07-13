@@ -40,3 +40,6 @@
 * Tue Jun 21st 2011 Thomas Stägemann <ts@weisshuhn.de> 2.2
 - Creating new projects (iRedmine Pro)
 - Minor bug fixes
+
+* Wed Jul 13th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.3
+- Added the capability to deal with untrusted SSL certificates
