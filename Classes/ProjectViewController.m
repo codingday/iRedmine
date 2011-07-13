@@ -119,7 +119,7 @@
 
 - (void)loginFailed:(Login*)login {
 	[self setLoadingView:nil];
-	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Login failed", @"") 
+	[self setErrorView:[[TTErrorView alloc] initWithTitle:NSLocalizedString(@"Authentication failed", @"") 
 												 subtitle:[[login error] localizedDescription]
 													image:nil]];	
 }

@@ -60,12 +60,15 @@
 		<string>fehler</string>
 		<string>defekt</string>
 		<string>störfall</string>
+		<string>brisés</string>
+		<string>erreur</string>
 	</array>
 	<key>FeatureCellTypes</key>
 	<array>
 		<string>feature</string>
 		<string>patch</string>
 		<string>funktion</string>
+		<string>fonction</string>
 	</array>
 </dict>
 </plist>

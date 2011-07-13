@@ -1,0 +1,52 @@
+/* 
+   Localizable.strings
+   iRedmine
+
+   Created by Thomas Stägemann on 26.11.09.
+   Copyright 2009 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
+ */
+
+/* Misc */
+"Continue"					= "Continuer";
+"No projects found"			= "Aucun projet trouvé";
+"No issues found"			= "Aucun demande trouvé";
+"Input error"				= "Erreur de saisie";
+"Please enter a valid host" = "S'il vous plaît entrer un hôte valide";
+"Show in web view"			= "Afficher dans Web View";
+"Authentication failed"		= "L'authentification a échoué";
+"Account already exists"	= "Compte existe déjà";
+"Do you really want to override this account with the specified URL?" = "Voulez-vous vraiment pour passer outre ce compte avec l'URL spécifiée?";
+
+/* Navigation Titles */
+"Edit account"				= "Modifier compte";
+"New account"				= "Nouveau compte";
+"New project"				= "Nouveau projet";
+"New issue"				    = "Nouvelle demande";
+"Project"					= "Projet";
+
+/* Cell Labels */
+"Login: %@"					= "Identifiant: %@";
+"Anonymous"					= "Anonyme";
+"Add new account ..."		= "Ajouter un nouveau compte ...";
+"Issues assigned to me"		= "Demandes qui me sont assignées";
+"Reported issues"			= "Demandes soumises";
+"Issues"					= "Demandes";
+"Subject"					= "Sujet";
+"Identifier"				= "Identifiant";
+"Homepage"					= "Site web";
+"Public"					= "Public";
+
+/* Section Titles */
+"Accounts"					= "Comptes";
+"My Page"					= "Ma page";
+"Projects"					= "Projets";
+"Description"				= "Description";
+
+/* Store View Controller */
+"Store"						= "Store";
+"Installed"					= "Installé";
+"Purchase %@ (%@)"			= "Achat %@ (%@)";
+"Restore purchases"			= "Restaurer les achats";
+
+// Error descriptions
+"RMProjectCreationValidationFailures" = "Projet n'a pas été créé à cause de mauvaise entrée.";

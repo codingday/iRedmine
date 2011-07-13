@@ -273,6 +273,8 @@
 		023218E10F94DE2100A95381 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
 		023DE6D31353234600C8285F /* German */ = {isa = PBXFileReference; lastKnownFileType = text; name = German; path = German.lproj/Changelog.txt; sourceTree = "<group>"; };
 		02434FCB1030847600C62C58 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		0244A47413CDEF13000934C7 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = French.lproj/AccountView.xib; sourceTree = "<group>"; };
+		0244A47613CDF2C0000934C7 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		024FDE9C10C676EB001FD4CD /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
 		024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
 		0252E02110CD304C003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1048,6 +1050,7 @@
 			children = (
 				0231285F10BEE12A0097675F /* English */,
 				0252E02110CD304C003881B2 /* German */,
+				0244A47613CDF2C0000934C7 /* French */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1066,6 +1069,7 @@
 			children = (
 				0222E7FA0F8D3EC700445AAD /* English */,
 				0252E06610CD3E3B003881B2 /* German */,
+				0244A47413CDEF13000934C7 /* French */,
 			);
 			name = AccountView.xib;
 			sourceTree = "<group>";

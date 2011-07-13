@@ -157,7 +157,7 @@
 	NSMutableArray * accounts = [NSMutableArray array];
 	for (NSString * accountURL in [_accountsModel accounts]) {
 		Account * account = [Account accountWithURL:accountURL];
-		NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Username: %@",@""),[account username]?[account username]:NSLocalizedString(@"Anonymous",@"")];
+		NSString * subtitle = [NSString stringWithFormat:NSLocalizedString(@"Login: %@",@""),[account username]?[account username]:NSLocalizedString(@"Anonymous",@"")];
 		NSString * URLString = [NSString stringWithFormat:_urlFormat,accountURL];
 		[accounts addObject:[TTTableSubtitleItem itemWithText:accountURL subtitle:subtitle URL:URLString]];
 	}

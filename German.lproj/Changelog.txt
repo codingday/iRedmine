@@ -42,4 +42,5 @@
 - Kleine Fehlerbehebungen
 
 * Wed Jul 13th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.3
-- Fähigkeit hinzugefügt mit nicht vertrauenswürdigen SSL-Zertifikate umzugehen
+- Fähigkeit hinzugefügt mit nicht vertrauenswürdigen SSL-Zertifikaten umzugehen
+- Französische Übersetzung hinzugefügt

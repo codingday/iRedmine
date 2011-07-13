@@ -13,7 +13,7 @@
 "Input error"				= "Eingabefehler";
 "Please enter a valid host" = "Bitte geben Sie einen gültigen Host ein";
 "Show in web view"			= "In Webansicht zeigen";
-"Login failed"				= "Login fehlgeschlagen";
+"Authentication failed"		= "Authentifizierung fehlgeschlagen";
 "Account already exists"	= "Konto existiert bereits";
 "Do you really want to override this account with the specified URL?" = "Möchten Sie das Konto mit der angegebenen URL wirklich überschreiben?";
 
@@ -25,7 +25,7 @@
 "Project"					= "Projekt";
 
 /* Cell Labels */
-"Username: %@"				= "Mitgliedsname: %@";
+"Login: %@"					= "Mitgliedsname: %@";
 "Anonymous"					= "Anonymus";
 "Add new account ..."		= "Neues Konto hinzufügen ...";
 "Issues assigned to me"		= "Mir zugewiesene Tickets";
