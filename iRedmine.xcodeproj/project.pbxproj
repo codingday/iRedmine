@@ -360,6 +360,8 @@
 		28C286DF0D94DF7D0034E888 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsViewController.h; sourceTree = "<group>"; };
 		28C286E00D94DF7D0034E888 /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		60DBE10F13FE5D1000B7BAF9 /* tr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		60DBE11013FE614800B7BAF9 /* tr */ = {isa = PBXFileReference; lastKnownFileType = file; name = tr; path = tr.lproj/AccountView.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8FAA3A712A40C390001996C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		F8FAA3AD12A40C390001996C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 				French,
 				German,
 				en,
+				tr,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1051,6 +1054,7 @@
 				0231285F10BEE12A0097675F /* English */,
 				0252E02110CD304C003881B2 /* German */,
 				0244A47613CDF2C0000934C7 /* French */,
+				60DBE10F13FE5D1000B7BAF9 /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1070,6 +1074,7 @@
 				0222E7FA0F8D3EC700445AAD /* English */,
 				0252E06610CD3E3B003881B2 /* German */,
 				0244A47413CDEF13000934C7 /* French */,
+				60DBE11013FE614800B7BAF9 /* tr */,
 			);
 			name = AccountView.xib;
 			sourceTree = "<group>";
