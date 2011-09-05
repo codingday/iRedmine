@@ -1,0 +1,52 @@
+/* 
+   Localizable.strings
+   iRedmine
+
+   Created by Thomas Stägemann on 26.11.09.
+   Copyright 2009 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
+ */
+
+/* Misc */
+"Continue"					= "Devam";
+"No projects found"			= "Proje bulunamadı";
+"No issues found"			= "İleti bulunamadı";
+"Input error"				= "Girdi hatası";
+"Please enter a valid host" = "Lütfen geçerli bir adres girin";
+"Show in web view"			= "Sayfayı göster";
+"Authentication failed"		= "Yetkilendirme başarısız";
+"Account already exists"	= "Hesap zaten mevcut";
+"Do you really want to override this account with the specified URL?" = "Gerçekten belirttiğiniz adresle bu hesabın üzerine yazmak istiyor musunuz?";
+
+/* Navigation Titles */
+"Edit account"				= "Hesabı düzenle";
+"New account"				= "Yeni hesap";
+"New project"				= "Yeni proje";
+"New issue"				    = "Yeni ileti";
+"Project"					= "Proje";
+
+/* Cell Labels */
+"Login: %@"					= "Giriş: %@";
+"Anonymous"					= "Anonim";
+"Add new account ..."		= "Yeni hesap ekle ...";
+"Issues assigned to me"		= "Bana atanan iletiler";
+"Reported issues"			= "Raporlanan iletiler";
+"Issues"					= "İletiler";
+"Subject"					= "Konu";
+"Identifier"				= "Belirteç";
+"Homepage"					= "Homepage";
+"Public"					= "Herkes görebilir";
+
+/* Section Titles */
+"Accounts"					= "Hesaplar";
+"My Page"					= "Sayfam";
+"Projects"					= "Projeler";
+"Description"				= "Açıklama";
+
+/* Store View Controller */
+"Store"						= "Mağaza";
+"Installed"					= "Yüklendi";
+"Purchase %@ (%@)"			= "Satın al %@ (%@)";
+"Restore purchases"			= "Daha önce satın aldım";
+
+// Error descriptions
+"RMProjectCreationValidationFailures" = "Hatalı girdi sebebiyle proje oluşturulamadı.";
