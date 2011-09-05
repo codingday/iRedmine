@@ -360,8 +360,8 @@
 		28C286DF0D94DF7D0034E888 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsViewController.h; sourceTree = "<group>"; };
 		28C286E00D94DF7D0034E888 /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		60DBE10F13FE5D1000B7BAF9 /* tr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		60DBE11013FE614800B7BAF9 /* tr */ = {isa = PBXFileReference; lastKnownFileType = file; name = tr; path = tr.lproj/AccountView.xib; sourceTree = "<group>"; };
+		60DBE10F13FE5D1000B7BAF9 /* tr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		60DBE11013FE614800B7BAF9 /* tr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = tr; path = tr.lproj/AccountView.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8FAA3A712A40C390001996C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		F8FAA3AD12A40C390001996C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -1082,50 +1082,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		0203D7AB10358AC5005E98F4 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Weisshuhn & Weishuhn Kommunikationsmanagement GmbH";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-ObjC";
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB410D2A-D8B2-42D3-A7E3-71AD77645131";
-				SDKROOT = iphoneos4.2;
-				USER_HEADER_SEARCH_PATHS = "";
-			};
-			name = Distribution;
-		};
-		0203D7AC10358AC5005E98F4 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Weisshuhn & Weishuhn Kommunikationsmanagement GmbH";
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
-				HEADER_SEARCH_PATHS = (
-					"External/three20/Build/Products/three20/**",
-					"${SDKROOT}/usr/include/libxml2/**",
-				);
-				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
-				PRODUCT_NAME = iRedmine;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "76AF09CC-1D0B-49BA-BDD2-8986FBAE9C4D";
-				SDKROOT = iphoneos;
-			};
-			name = Distribution;
-		};
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1176,7 +1132,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iRedmine;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "76AF09CC-1D0B-49BA-BDD2-8986FBAE9C4D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4BDD2487-1A45-4EB1-AC4E-361EA5844F22";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1225,7 +1181,6 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
-				0203D7AC10358AC5005E98F4 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1235,7 +1190,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-				0203D7AB10358AC5005E98F4 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
