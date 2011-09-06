@@ -1,31 +1,35 @@
-//
-//  IssueAddViewController.m
+    //
+//  IssueNotesViewController.m
 //  iRedmine
 //
-//  Created by Thomas Stägemann on 05.04.11.
+//  Created by Thomas Stägemann on 06.09.11.
 //  Copyright 2011 Weißhuhn & Weißhuhn Kommunikationsmanagement GmbH. All rights reserved.
 //
 
-#import "IssueAddViewController.h"
+#import "IssueNotesViewController.h"
 
 
-@implementation IssueAddViewController
+@implementation IssueNotesViewController
 
 #pragma mark -
 #pragma mark View lifecycle
 
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
 	if (self = [super initWithNavigatorURL:URL query:query]) {
-		[self setTitle:NSLocalizedString(@"New issue",@"")];
+		[self setTitle:NSLocalizedString(@"New notes",@"")];
+		[self setToolbarItems:[NSArray arrayWithObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cam:)]]];
 		[self setAutoresizesForKeyboard:YES];
 		
-		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		NSString * URLString = [[url absoluteString] stringByAppendingRelativeURL:@"issues.xml"];
-		
-		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
-		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
-		[_request setHttpMethod:@"POST"];
+		NSString * identifier = [query valueForKey:@"issue"];
+		NSString * path		  = [NSString stringWithFormat:@"issues/%@.xml",identifier];
+		NSURL * url			  = [NSURL URLWithString:[query valueForKey:@"url"]];
+		NSString * URLString  = [[url absoluteString] stringByAppendingRelativeURL:path];
 
+		_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
+		[_request setResponse:[[[TTURLDataResponse alloc] init] autorelease]];
+		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
+		[_request setHttpMethod:@"PUT"];
+		
 		Account * account = [Account accountWithURL:[url absoluteString]];
 		_login = [[Login loginWithURL:url username:[account username] password:[account password]] retain];
 		[_login setDelegate:self];
@@ -38,7 +42,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	
 	if ([[[self navigationController] topViewController] isEqual:self]) {
 		UIBarButtonItem * cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)] autorelease];
 		[[self navigationItem] setLeftBarButtonItem:cancelButton];
@@ -47,13 +51,10 @@
 	UIBarButtonItem * sendButton = [[[UIBarButtonItem alloc] initWithTitle:TTLocalizedString(@"Send", @"") style:UIBarButtonItemStyleDone target:self action:@selector(send:)] autorelease];
 	[[self navigationItem] setRightBarButtonItem:sendButton];
 	
-	_subjectField = [[[UITextField alloc] init] retain];
-	TTTableControlItem * subjectItem = [TTTableControlItem itemWithCaption:NSLocalizedString(@"Subject", @"") control:_subjectField];
-
-	_descriptionEditor = [[[TTTextEditor alloc] init] retain];
-	TTTableControlItem * descriptionItem = [TTTableControlItem itemWithCaption:nil control:(UIControl*)_descriptionEditor];
+	_notesEditor = [[[TTTextEditor alloc] init] retain];
+	TTTableControlItem * notesItem = [TTTableControlItem itemWithCaption:nil control:(UIControl*)_notesEditor];
 	
-	[self setDataSource:[TTSectionedDataSource dataSourceWithObjects:@"",subjectItem,NSLocalizedString(@"Description", @""),descriptionItem,nil]];	
+	[self setDataSource:[TTSectionedDataSource dataSourceWithObjects:NSLocalizedString(@"Notes", @""),notesItem,nil]];	
 }
 
 #pragma mark -
@@ -67,8 +68,7 @@
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
 	
-	TT_RELEASE_SAFELY(_subjectField);
-	TT_RELEASE_SAFELY(_descriptionEditor);
+	TT_RELEASE_SAFELY(_notesEditor);
 	[super dealloc];
 }
 
@@ -78,9 +78,7 @@
 
 - (IBAction)send:(id)sender {	
 	NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-	[dict setNonEmptyString:[_subjectField text] forKey:@"subject"];
-	[dict setNonEmptyString:[_descriptionEditor text] forKey:@"description"];
-	[dict setNonEmptyString:[[self query] valueForKey:@"project"] forKey:@"project_id"];
+	[dict setNonEmptyString:[_notesEditor text] forKey:@"notes"];
 	[_request setDictionary:[NSDictionary dictionaryWithObject:dict forKey:@"issue"]];
 	
 	if (![_login start])
@@ -120,10 +118,8 @@
 }
 
 - (void)requestDidFinishLoad:(TTURLRequest*)request {
-	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
-	NSString * subject = [dict valueForKeyPath:@"subject.___Entity_Value___" ];
-	if ([subject isEqualToString:[_subjectField text]])
-		return [self cancel:self];
+	NSData * data = [(TTURLDataResponse *)[request response] data];
+	if (data) return [self cancel:self];
 	
 	[[[self navigationItem] rightBarButtonItem] setEnabled:YES];
 	[self setLoadingView:nil];

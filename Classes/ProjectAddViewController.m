@@ -147,6 +147,7 @@
 		return [self cancel:self];
 	
 	[[[self navigationItem] rightBarButtonItem] setEnabled:YES];
+	[self setLoadingView:nil];
 	
 	[[[[UIAlertView alloc] initWithTitle:TTLocalizedString(@"Error", @"") 
 								 message:TTLocalizedString(@"Sorry, there was an error.", @"") 

@@ -131,7 +131,7 @@
 		NSString * addURL = @"iredmine://store";
 		NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
 		if (purchases && [purchases containsObject:kInAppPurchaseIdentifierPro])
-			addURL = [@"iredmine://issue/comment" stringByAddingQueryDictionary:[self query]];
+			addURL = [@"iredmine://issue/notes/add" stringByAddingQueryDictionary:[self query]];
 		[[[ds items] objectAtIndex:1] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New notes",@"") URL:addURL]];
 	}
 	

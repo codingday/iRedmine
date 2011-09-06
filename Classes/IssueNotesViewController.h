@@ -1,5 +1,5 @@
 //
-//  IssueViewController.h
+//  IssueNotesViewController.h
 //  iRedmine
 //
 //  Created by Thomas Stägemann on 06.09.11.
@@ -9,16 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
 #import "NSStringAdditions.h"
-#import "NSDateAdditions.h"
-#import "Constants.h"
 #import "RESTRequest.h"
 #import "Account.h"
 #import "Login.h"
-#import "CSRegex.h"
 
-@interface IssueViewController : BaseTableViewController <TTURLRequestDelegate> {
-	Login * _login;
+@interface IssueNotesViewController : BaseTableViewController <TTURLRequestDelegate> {
 	RESTRequest * _request;
+	Login * _login;
+	TTTextEditor * _notesEditor;
 }
+
+- (IBAction)send:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

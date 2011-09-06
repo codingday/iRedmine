@@ -9,4 +9,5 @@
 	#import <SystemConfiguration/SystemConfiguration.h>
 	#import <Three20/Three20+Additions.h>
 	#import <extThree20XML/extThree20XML.h>
+	#import <extThree20JSON/extThree20JSON.h>
 #endif

@@ -14,6 +14,7 @@
 #import "AccountEditViewController.h"
 #import "ProjectAddViewController.h"
 #import "ProjectViewController.h"
+#import "IssueNotesViewController.h"
 #import "IssueAddViewController.h"
 #import "IssueTableController.h"
 #import "IssueViewController.h"

@@ -16,7 +16,7 @@
 #import "NSDateAdditions.h"
 #import "AtomFeed.h"
 
-@interface IssueTableController : BaseTableViewController {
+@interface IssueTableController : BaseTableViewController <TTURLRequestDelegate> {
 	RESTRequest * _request;
 	Login * _login;
 	AtomFeed * _atomFeed;

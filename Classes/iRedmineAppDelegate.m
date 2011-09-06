@@ -42,6 +42,7 @@
 	[map from:@"iredmine://issues" toViewController:[IssueTableController class]];
 	[map from:@"iredmine://issue" toViewController:[IssueViewController class]];
 	[map from:@"iredmine://issue/add" toModalViewController:[IssueAddViewController class]];
+	[map from:@"iredmine://issue/notes/add" toModalViewController:[IssueNotesViewController class]];
 	
 	if (![[TTNavigator navigator] restoreViewControllers])
 		TTOpenURL(@"iredmine://accounts");
