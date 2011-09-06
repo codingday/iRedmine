@@ -160,7 +160,10 @@
 		NSString * identifier = [issue valueForKeyPath:@"id.___Entity_Value___"];
 		NSString * tracker = [issue valueForKeyPath:@"tracker.name"];
 		NSDate * timestamp = [NSDate dateFromXMLString:[issue valueForKeyPath:@"updated_on.___Entity_Value___"]];
-		NSString * URLString = [[[self query] valueForKey:@"url"] stringByAppendingRelativeURL:[NSString stringWithFormat:@"issues/%@",identifier]];
+		
+		NSMutableDictionary * newQuery = [[self query] mutableCopy];
+		[newQuery setObject:identifier forKey:@"issue"];		
+		NSString * URLString = [@"iredmine://issue" stringByAddingQueryDictionary:newQuery];
 		
 		NSString * imageURL = @"bundle://support.png";
 		if ([tracker matchedByPattern:featurePattern options:REG_ICASE])

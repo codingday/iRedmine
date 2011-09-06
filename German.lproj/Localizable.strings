@@ -16,13 +16,16 @@
 "Authentication failed"		= "Authentifizierung fehlgeschlagen";
 "Account already exists"	= "Konto existiert bereits";
 "Do you really want to override this account with the specified URL?" = "Möchten Sie das Konto mit der angegebenen URL wirklich überschreiben?";
+"%0.0f hours"				= "%0.0f Stunden";
 
 /* Navigation Titles */
 "Edit account"				= "Konto bearbeiten";
 "New account"				= "Neues Konto";
 "New project"				= "Neues Projekt";
 "New issue"				    = "Neues Ticket";
+"New notes"					= "Neue Kommentare";
 "Project"					= "Projekt";
+"Issue"						= "Ticket";
 
 /* Cell Labels */
 "Login: %@"					= "Mitgliedsname: %@";
@@ -35,6 +38,17 @@
 "Identifier"				= "Kennung";
 "Homepage"					= "Homepage";
 "Public"					= "Öffentlich";
+"Tracker"					= "Tracker";
+"Status"					= "Status";
+"Priority"					= "Priorität";
+"Assignee"					= "Zugewiesen";
+"Start date"				= "Beginn";
+"Due date"					= "Abgabe";
+"Estimated"					= "Geschätzt";
+"Spent"						= "Aufwand";
+"Done"						= "Erledigt";
+"Created"					= "Angelegt";
+"Author"					= "Autor";
 
 /* Section Titles */
 "Accounts"					= "Konten";

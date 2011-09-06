@@ -13,9 +13,13 @@
 
 + (NSDate *)dateFromXMLString:(NSString *)string{
 	NSString * normalizedString = [string stringByReplacingOccurrencesOfString:@":" withString:@""];
+	return [NSDate dateFromString:normalizedString withFormat:@"yyyy-MM-dd'T'HHmmssz"];
+}
+
++ (NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format{
 	NSDateFormatter * dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HHmmssz"];
-	return [dateFormatter dateFromString:normalizedString];
+	[dateFormatter setDateFormat:format];
+	return [dateFormatter dateFromString:string];
 }
 
 @end

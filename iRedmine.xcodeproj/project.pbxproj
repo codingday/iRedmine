@@ -24,15 +24,9 @@
 		024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */; };
 		0252E06410CD3E36003881B2 /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0252E06310CD3E36003881B2 /* AccountView.xib */; };
 		0252E07710CD4913003881B2 /* CSRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0252E07610CD4913003881B2 /* CSRegex.m */; };
-		026A372B11A34849003A6F9A /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A371D11A34849003A6F9A /* ASIAuthenticationDialog.m */; };
-		026A372C11A34849003A6F9A /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A371F11A34849003A6F9A /* ASIFormDataRequest.m */; };
-		026A372D11A34849003A6F9A /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A372111A34849003A6F9A /* ASIHTTPRequest.m */; };
-		026A373011A34849003A6F9A /* ASINSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A372911A34849003A6F9A /* ASINSStringAdditions.m */; };
 		026A373711A34871003A6F9A /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A373211A34871003A6F9A /* TFHpple.m */; };
 		026A373811A34871003A6F9A /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A373411A34871003A6F9A /* TFHppleElement.m */; };
 		026A373911A34871003A6F9A /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A373611A34871003A6F9A /* XPathQuery.m */; };
-		026A376111A34C11003A6F9A /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A376011A34C11003A6F9A /* ASINetworkQueue.m */; };
-		026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 026A377311A34FA7003A6F9A /* ASIInputStream.m */; };
 		027898091349E50C00F678AB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027898081349E50C00F678AB /* StoreKit.framework */; };
 		0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278982B1349E91700F678AB /* iRedmineStyleSheet.m */; };
 		0278ED5C0F9E40CA000E8EED /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278ED5B0F9E40CA000E8EED /* AccountViewController.m */; };
@@ -67,6 +61,7 @@
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E18E49138BB84200639A5D /* RESTRequest.m */; };
 		02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02EB331F1358AC8E00B18895 /* StoreViewController.m */; };
+		02F68727141622A300CEA7DC /* IssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F68726141622A300CEA7DC /* IssueViewController.m */; };
 		02F6D4F1134DBC6B00154008 /* AccountsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D4F0134DBC6B00154008 /* AccountsDataSource.m */; };
 		02F6D79C134E0A0D00154008 /* AccountEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F6D79B134E0A0D00154008 /* AccountEditViewController.m */; };
 		1D3623260D0F684500981E51 /* iRedmineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */; };
@@ -281,24 +276,12 @@
 		0252E06610CD3E3B003881B2 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/AccountView.xib; sourceTree = "<group>"; };
 		0252E07510CD4913003881B2 /* CSRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRegex.h; sourceTree = "<group>"; };
 		0252E07610CD4913003881B2 /* CSRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRegex.m; sourceTree = "<group>"; };
-		026A371C11A34849003A6F9A /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIAuthenticationDialog.h; path = Classes/ASIAuthenticationDialog.h; sourceTree = "<group>"; };
-		026A371D11A34849003A6F9A /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIAuthenticationDialog.m; path = Classes/ASIAuthenticationDialog.m; sourceTree = "<group>"; };
-		026A371E11A34849003A6F9A /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIFormDataRequest.h; path = Classes/ASIFormDataRequest.h; sourceTree = "<group>"; };
-		026A371F11A34849003A6F9A /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIFormDataRequest.m; path = Classes/ASIFormDataRequest.m; sourceTree = "<group>"; };
-		026A372011A34849003A6F9A /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequest.h; path = Classes/ASIHTTPRequest.h; sourceTree = "<group>"; };
-		026A372111A34849003A6F9A /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIHTTPRequest.m; path = Classes/ASIHTTPRequest.m; sourceTree = "<group>"; };
-		026A372811A34849003A6F9A /* ASINSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASINSStringAdditions.h; path = Classes/ASINSStringAdditions.h; sourceTree = "<group>"; };
-		026A372911A34849003A6F9A /* ASINSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASINSStringAdditions.m; path = Classes/ASINSStringAdditions.m; sourceTree = "<group>"; };
 		026A373111A34871003A6F9A /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		026A373211A34871003A6F9A /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		026A373311A34871003A6F9A /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
 		026A373411A34871003A6F9A /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
 		026A373511A34871003A6F9A /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
 		026A373611A34871003A6F9A /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
-		026A375F11A34C11003A6F9A /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASINetworkQueue.h; path = Classes/ASINetworkQueue.h; sourceTree = "<group>"; };
-		026A376011A34C11003A6F9A /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASINetworkQueue.m; path = Classes/ASINetworkQueue.m; sourceTree = "<group>"; };
-		026A377211A34FA7003A6F9A /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIInputStream.h; path = Classes/ASIInputStream.h; sourceTree = "<group>"; };
-		026A377311A34FA7003A6F9A /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIInputStream.m; path = Classes/ASIInputStream.m; sourceTree = "<group>"; };
 		027898081349E50C00F678AB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0278982A1349E91700F678AB /* iRedmineStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmineStyleSheet.h; sourceTree = "<group>"; };
 		0278982B1349E91700F678AB /* iRedmineStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRedmineStyleSheet.m; sourceTree = "<group>"; };
@@ -346,6 +329,8 @@
 		02EB331E1358AC8E00B18895 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
 		02EB331F1358AC8E00B18895 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
 		02EF8786135DDAD800803764 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		02F68725141622A300CEA7DC /* IssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueViewController.h; sourceTree = "<group>"; };
+		02F68726141622A300CEA7DC /* IssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueViewController.m; sourceTree = "<group>"; };
 		02F6D4EF134DBC6B00154008 /* AccountsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsDataSource.h; sourceTree = "<group>"; };
 		02F6D4F0134DBC6B00154008 /* AccountsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsDataSource.m; sourceTree = "<group>"; };
 		02F6D79A134E0A0D00154008 /* AccountEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountEditViewController.h; sourceTree = "<group>"; };
@@ -437,7 +422,6 @@
 		0231292010BEF5E90097675F /* External */ = {
 			isa = PBXGroup;
 			children = (
-				02F400BB1192F9F400E0B194 /* asi-http-request */,
 				02F400BA1192F9E000E0B194 /* hpple */,
 				0252E07510CD4913003881B2 /* CSRegex.h */,
 				0252E07610CD4913003881B2 /* CSRegex.m */,
@@ -540,6 +524,8 @@
 		02E2ED750F9F50F5003DDCB0 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				02F68725141622A300CEA7DC /* IssueViewController.h */,
+				02F68726141622A300CEA7DC /* IssueViewController.m */,
 				02936954134B23AC00DF334F /* IssueTableController.h */,
 				02936955134B23AC00DF334F /* IssueTableController.m */,
 				02936B16134B689B00DF334F /* IssueAddViewController.h */,
@@ -588,25 +574,6 @@
 				026A373611A34871003A6F9A /* XPathQuery.m */,
 			);
 			path = hpple;
-			sourceTree = "<group>";
-		};
-		02F400BB1192F9F400E0B194 /* asi-http-request */ = {
-			isa = PBXGroup;
-			children = (
-				026A377211A34FA7003A6F9A /* ASIInputStream.h */,
-				026A377311A34FA7003A6F9A /* ASIInputStream.m */,
-				026A375F11A34C11003A6F9A /* ASINetworkQueue.h */,
-				026A376011A34C11003A6F9A /* ASINetworkQueue.m */,
-				026A371C11A34849003A6F9A /* ASIAuthenticationDialog.h */,
-				026A371D11A34849003A6F9A /* ASIAuthenticationDialog.m */,
-				026A371E11A34849003A6F9A /* ASIFormDataRequest.h */,
-				026A371F11A34849003A6F9A /* ASIFormDataRequest.m */,
-				026A372011A34849003A6F9A /* ASIHTTPRequest.h */,
-				026A372111A34849003A6F9A /* ASIHTTPRequest.m */,
-				026A372811A34849003A6F9A /* ASINSStringAdditions.h */,
-				026A372911A34849003A6F9A /* ASINSStringAdditions.m */,
-			);
-			path = "asi-http-request";
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -975,15 +942,9 @@
 				0231293410BEF65E0097675F /* Reachability.m in Sources */,
 				024FDE9E10C676EB001FD4CD /* NSStringAdditions.m in Sources */,
 				0252E07710CD4913003881B2 /* CSRegex.m in Sources */,
-				026A372B11A34849003A6F9A /* ASIAuthenticationDialog.m in Sources */,
-				026A372C11A34849003A6F9A /* ASIFormDataRequest.m in Sources */,
-				026A372D11A34849003A6F9A /* ASIHTTPRequest.m in Sources */,
-				026A373011A34849003A6F9A /* ASINSStringAdditions.m in Sources */,
 				026A373711A34871003A6F9A /* TFHpple.m in Sources */,
 				026A373811A34871003A6F9A /* TFHppleElement.m in Sources */,
 				026A373911A34871003A6F9A /* XPathQuery.m in Sources */,
-				026A376111A34C11003A6F9A /* ASINetworkQueue.m in Sources */,
-				026A377411A34FA7003A6F9A /* ASIInputStream.m in Sources */,
 				02C7769F11B6B1C900F10BC3 /* Login.m in Sources */,
 				0278982C1349E91700F678AB /* iRedmineStyleSheet.m in Sources */,
 				02936956134B23AC00DF334F /* IssueTableController.m in Sources */,
@@ -999,6 +960,7 @@
 				02899E1A1393F70E00C013FE /* NSURLAdditions.m in Sources */,
 				02014A1D1396680000C9C02C /* AtomFeed.m in Sources */,
 				0206812813B0BF43002F1B0F /* ProjectAddViewController.m in Sources */,
+				02F68727141622A300CEA7DC /* IssueViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,9 +1,6 @@
 [submodule "External/hpple"]
 	path = External/hpple
 	url = git://github.com/topfunky/hpple.git
-[submodule "External/asi-http-request"]
-	path = External/asi-http-request
-	url = git://github.com/pokeb/asi-http-request.git
 [submodule "External/three20"]
 	path = External/three20
 	url = git@github.com:wwk/three20.git

@@ -16,6 +16,7 @@
 #import "ProjectViewController.h"
 #import "IssueAddViewController.h"
 #import "IssueTableController.h"
+#import "IssueViewController.h"
 #import "StoreViewController.h"
 
 @interface iRedmineAppDelegate : NSObject <UIApplicationDelegate> {

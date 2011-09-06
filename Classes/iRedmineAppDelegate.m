@@ -40,6 +40,7 @@
 	[map from:@"iredmine://project" toViewController:[ProjectViewController class]];
 	[map from:@"iredmine://project/add" toModalViewController:[ProjectAddViewController class]];
 	[map from:@"iredmine://issues" toViewController:[IssueTableController class]];
+	[map from:@"iredmine://issue" toViewController:[IssueViewController class]];
 	[map from:@"iredmine://issue/add" toModalViewController:[IssueAddViewController class]];
 	
 	if (![[TTNavigator navigator] restoreViewControllers])

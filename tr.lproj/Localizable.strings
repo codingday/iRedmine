@@ -16,13 +16,16 @@
 "Authentication failed"		= "Yetkilendirme başarısız";
 "Account already exists"	= "Hesap zaten mevcut";
 "Do you really want to override this account with the specified URL?" = "Gerçekten belirttiğiniz adresle bu hesabın üzerine yazmak istiyor musunuz?";
+"%0.0f hours"				= "%0.0f saatler";
 
 /* Navigation Titles */
 "Edit account"				= "Hesabı düzenle";
 "New account"				= "Yeni hesap";
 "New project"				= "Yeni proje";
 "New issue"				    = "Yeni ileti";
+"New notes"					= "Yeni notlar";
 "Project"					= "Proje";
+"Issue"						= "İleti";
 
 /* Cell Labels */
 "Login: %@"					= "Giriş: %@";
@@ -35,6 +38,17 @@
 "Identifier"				= "Belirteç";
 "Homepage"					= "Homepage";
 "Public"					= "Herkes görebilir";
+"Tracker"					= "Takipçi";
+"Status"					= "Durum";
+"Priority"					= "Öncelik";
+"Assignee"					= "Atanan";
+"Start date"				= "Başlangıç";
+"Due date"					= "Bitiş Tarihi";
+"Estimated"					= "Kalan";
+"Spent"						= "Harcanan";
+"Done"						= "Yapılmış";
+"Created"					= "Hazırlandı";
+"Author"					= "Yazar";
 
 /* Section Titles */
 "Accounts"					= "Hesaplar";

@@ -16,13 +16,16 @@
 "Authentication failed"		= "Authentication failed";
 "Account already exists"	= "Account already exists";
 "Do you really want to override this account with the specified URL?" = "Do you really want to override this account with the specified URL?";
+"%0.0f hours"				= "%0.0f hours";
 
 /* Navigation Titles */
 "Edit account"				= "Edit account";
 "New account"				= "New account";
 "New project"				= "New project";
 "New issue"				    = "New issue";
+"New notes"					= "New notes";
 "Project"					= "Project";
+"Issue"						= "Issue";
 
 /* Cell Labels */
 "Login: %@"					= "Login: %@";
@@ -35,6 +38,17 @@
 "Identifier"				= "Identifier";
 "Homepage"					= "Homepage";
 "Public"					= "Public";
+"Tracker"					= "Tracker";
+"Status"					= "Status";
+"Priority"					= "Priority";
+"Assignee"					= "Assignee";
+"Start date"				= "Start date";
+"Due date"					= "Due date";
+"Estimated"					= "Estimated";
+"Spent"						= "Spent";
+"Done"						= "Done";
+"Created"					= "Created";
+"Author"					= "Author";
 
 /* Section Titles */
 "Accounts"					= "Accounts";

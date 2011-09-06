@@ -12,5 +12,6 @@
 @interface NSDate (NSDateAdditions)
 
 + (NSDate *)dateFromXMLString:(NSString *)string;
++ (NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format;
 
 @end
