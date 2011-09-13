@@ -47,3 +47,6 @@
 
 * Mon Sep 5th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.4
 - Türkische Übersetzung hinzugefügt (Vielen Dank an Ahmet Aygun)
+
+* Tue Sep 13th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.5
+- Man kann nun Tickets kommentieren (benötigt iRedmine Pro)

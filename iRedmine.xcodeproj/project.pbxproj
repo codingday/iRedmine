@@ -249,28 +249,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 02F688791416735800CEA7DC /* extThree20JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BEF31F3A0F352DF5000DE5D2 /* libextThree20JSON+SBJSON.a */;
+			remoteGlobalIDString = BEF31F3A0F352DF5000DE5D2;
 			remoteInfo = "extThree20JSON+SBJSON";
 		};
 		02F688861416735900CEA7DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02F688791416735800CEA7DC /* extThree20JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 6E645BD91187751200F08CB1 /* libextThree20JSON+YAJL.a */;
+			remoteGlobalIDString = 6E645BD91187751200F08CB1;
 			remoteInfo = "extThree20JSON+YAJL";
 		};
 		02F688881416735900CEA7DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02F688791416735800CEA7DC /* extThree20JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = EB9E6C6210B6A8F800DE563C /* extJSONUnitTests+SBJSON.octest */;
+			remoteGlobalIDString = EB9E6C6210B6A8F800DE563C;
 			remoteInfo = "extThree20JSONUnitTests+SBJSON";
 		};
 		02F6888C1416737D00CEA7DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02F688791416735800CEA7DC /* extThree20JSON.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = BEF31F390F352DF5000DE5D2 /* extThree20JSON+SBJSON */;
+			remoteGlobalIDString = BEF31F390F352DF5000DE5D2;
 			remoteInfo = "extThree20JSON+SBJSON";
 		};
 /* End PBXContainerItemProxy section */
@@ -1146,7 +1146,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iRedmine;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "64095727-95C4-455E-BC2C-60044C7CCE27";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "233BDCD4-CFD0-4FBD-98CA-8D3A26CBD39A";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
