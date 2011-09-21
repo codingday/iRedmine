@@ -50,3 +50,5 @@
 
 * Tue Sep 13th 2011 Thomas Stägemann <ts@weisshuhn.de> 2.5
 - Added the capability to note an issue (requires iRedmine Pro)
+- Minor bug fixes
+- Improved SSL support
