@@ -121,7 +121,7 @@
 		return [self didStart];
 }
 
-- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
+- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {	
 	_error = [error retain];
 	[self didFail];
 }
@@ -144,6 +144,5 @@
 	[[_loginRequest parameters] setValue:_password forKey:@"password"];
 	[_loginRequest send];	
 }
-
 
 @end

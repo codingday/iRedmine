@@ -13,6 +13,7 @@
 		022130A3138D0E7900558495 /* libextThree20XML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221309D138D0E6200558495 /* libextThree20XML.a */; };
 		022130E4138D463100558495 /* NSURLProtectionSpaceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */; };
 		0222E7EF0F8D3D5000445AAD /* AccountAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */; };
+		022BE3B7142A465900014D95 /* NSURLRequestAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 022BE3B6142A465900014D95 /* NSURLRequestAdditions.m */; };
 		0231286210BEE1310097675F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0231286110BEE1310097675F /* Localizable.strings */; };
 		0231293410BEF65E0097675F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0231293310BEF65E0097675F /* Reachability.m */; };
 		0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231294010BEF6A50097675F /* CFNetwork.framework */; };
@@ -288,6 +289,8 @@
 		0222E7EE0F8D3D5000445AAD /* AccountAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountAddViewController.m; sourceTree = "<group>"; };
 		0222E7FA0F8D3EC700445AAD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AccountView.xib; sourceTree = "<group>"; };
 		022ABE9710C020880023AD77 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = English; path = English.lproj/Changelog.txt; sourceTree = "<group>"; };
+		022BE3B5142A465900014D95 /* NSURLRequestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLRequestAdditions.h; sourceTree = "<group>"; };
+		022BE3B6142A465900014D95 /* NSURLRequestAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLRequestAdditions.m; sourceTree = "<group>"; };
 		0231285F10BEE12A0097675F /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0231293210BEF65E0097675F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		0231293310BEF65E0097675F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -595,6 +598,8 @@
 				024FDE9D10C676EB001FD4CD /* NSStringAdditions.m */,
 				022130E2138D463100558495 /* NSURLProtectionSpaceAdditions.h */,
 				022130E3138D463100558495 /* NSURLProtectionSpaceAdditions.m */,
+				022BE3B5142A465900014D95 /* NSURLRequestAdditions.h */,
+				022BE3B6142A465900014D95 /* NSURLRequestAdditions.m */,
 			);
 			name = "WWK Library";
 			sourceTree = "<group>";
@@ -1035,6 +1040,7 @@
 				0206812813B0BF43002F1B0F /* ProjectAddViewController.m in Sources */,
 				02F68727141622A300CEA7DC /* IssueViewController.m in Sources */,
 				02F687DC14165CD900CEA7DC /* IssueNotesViewController.m in Sources */,
+				022BE3B7142A465900014D95 /* NSURLRequestAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

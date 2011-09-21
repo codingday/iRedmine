@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NSStringAdditions.h"
 #import	"TFHpple.h"
+#import "NSURLRequestAdditions.h"
 
 @interface AtomFeed : NSObject {
 	NSString * _URL;

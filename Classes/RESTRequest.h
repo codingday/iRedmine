@@ -10,7 +10,7 @@
 #import <libxml/encoding.h>
 #import <libxml/xmlwriter.h>
 #import "Account.h"
-#import "Login.h"
+#import "NSURLRequestAdditions.h"
 
 @interface RESTRequest : TTURLRequest {
 	NSDictionary * _dictionary;

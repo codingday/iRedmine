@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TFHpple.h"
+#import "NSURLRequestAdditions.h"
 
-
-@interface Login : NSObject {
+@interface Login : NSObject <TTURLRequestDelegate> {
 	NSString * _username;
 	NSString * _password;
 	
