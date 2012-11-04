@@ -18,7 +18,6 @@
 		0231293410BEF65E0097675F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0231293310BEF65E0097675F /* Reachability.m */; };
 		0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231294010BEF6A50097675F /* CFNetwork.framework */; };
 		0231295A10BEF6CF0097675F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231295910BEF6CF0097675F /* Security.framework */; };
-		0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0231297010BEF76F0097675F /* libz.1.2.3.dylib */; };
 		023218E20F94DE2100A95381 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023218E10F94DE2100A95381 /* ProjectViewController.m */; };
 		023DE6D21353233700C8285F /* Changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 023DE6D11353233700C8285F /* Changelog.txt */; };
 		02434FCC1030847600C62C58 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02434FCB1030847600C62C58 /* Default.png */; };
@@ -57,7 +56,6 @@
 		02A154F61349C16D007A061B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A154F51349C16D007A061B /* QuartzCore.framework */; };
 		02A8B04C0F98D6830077AB7F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* Icon.png */; };
 		02C7769F11B6B1C900F10BC3 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* Login.m */; };
-		02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */; };
 		02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CD7AAD12A56C2100841B5A /* iAd.framework */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E18E49138BB84200639A5D /* RESTRequest.m */; };
@@ -71,6 +69,8 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		26D2CC2816471AE400F66119 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D2CC2716471AE400F66119 /* libz.1.dylib */; };
+		26D2CC2A16471AEB00F66119 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D2CC2916471AEB00F66119 /* libxml2.dylib */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28C286E10D94DF7D0034E888 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* AccountsViewController.m */; };
 		F8FAA3B512A40C390001996C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3A712A40C390001996C /* Default@2x.png */; };
@@ -296,7 +296,6 @@
 		0231293310BEF65E0097675F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		0231294010BEF6A50097675F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0231295910BEF6CF0097675F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0231297010BEF76F0097675F /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		023218E00F94DE2100A95381 /* ProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
 		023218E10F94DE2100A95381 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
 		023DE6D31353234600C8285F /* German */ = {isa = PBXFileReference; lastKnownFileType = text; name = German; path = German.lproj/Changelog.txt; sourceTree = "<group>"; };
@@ -353,7 +352,6 @@
 		02A8B04B0F98D6830077AB7F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		02C7769D11B6B1C900F10BC3 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
 		02C7769E11B6B1C900F10BC3 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
-		02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
 		02CD7AAD12A56C2100841B5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		02D86C580F8E75F400EB1658 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
@@ -376,6 +374,8 @@
 		1D3623250D0F684500981E51 /* iRedmineAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRedmineAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* iRedmine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRedmine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		26D2CC2716471AE400F66119 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
+		26D2CC2916471AEB00F66119 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* iRedmine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmine_Prefix.pch; sourceTree = "<group>"; };
 		28C286DF0D94DF7D0034E888 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsViewController.h; sourceTree = "<group>"; };
@@ -393,14 +393,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26D2CC2A16471AEB00F66119 /* libxml2.dylib in Frameworks */,
+				26D2CC2816471AE400F66119 /* libz.1.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */,
 				0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */,
 				0231295A10BEF6CF0097675F /* Security.framework in Frameworks */,
-				0231297110BEF76F0097675F /* libz.1.2.3.dylib in Frameworks */,
-				02C777D011B6FC7000F10BC3 /* libxml2.2.7.3.dylib in Frameworks */,
 				02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */,
 				02A154D61349C139007A061B /* libThree20.a in Frameworks */,
 				02A154D71349C139007A061B /* libThree20Core.a in Frameworks */,
@@ -690,6 +690,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26D2CC2916471AEB00F66119 /* libxml2.dylib */,
+				26D2CC2716471AE400F66119 /* libz.1.dylib */,
 				027898081349E50C00F678AB /* StoreKit.framework */,
 				02937CB710738AE30069E480 /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -698,8 +700,6 @@
 				0231294010BEF6A50097675F /* CFNetwork.framework */,
 				0231295910BEF6CF0097675F /* Security.framework */,
 				02CD7AAD12A56C2100841B5A /* iAd.framework */,
-				0231297010BEF76F0097675F /* libz.1.2.3.dylib */,
-				02C777CF11B6FC7000F10BC3 /* libxml2.2.7.3.dylib */,
 				02A154F51349C16D007A061B /* QuartzCore.framework */,
 				02A154701349C04F007A061B /* Three20.xcodeproj */,
 				02A1549F1349C058007A061B /* Three20Core.xcodeproj */,
@@ -1142,8 +1142,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
-					"External/three20/Build/Products/three20/**",
 					"${SDKROOT}/usr/include/libxml2/**",
+					"\"$(BUILT_PRODUCTS_DIR)/../three20\"",
+					"\"$(BUILT_PRODUCTS_DIR)/../../three20\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1169,8 +1170,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iRedmine_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
-					"External/three20/Build/Products/three20/**",
 					"${SDKROOT}/usr/include/libxml2/**",
+					"\"$(BUILT_PRODUCTS_DIR)/../three20\"",
+					"\"$(BUILT_PRODUCTS_DIR)/../../three20\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
