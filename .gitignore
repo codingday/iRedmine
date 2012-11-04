@@ -5,6 +5,8 @@ build/*
 *.mode1v3
 *.perspectivev3
 ._*
+iRedmine.xcodeproj/project.xcworkspace/
+iRedmine.xcodeproj/xcuserdata/
 
 # old skool
 .svn
@@ -12,3 +14,7 @@ build/*
 # osx noise
 .DS_Store
 profile
+
+#vim-swaps
+.*.swp
+.*.swo

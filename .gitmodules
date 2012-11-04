@@ -3,4 +3,4 @@
 	url = git://github.com/topfunky/hpple.git
 [submodule "External/three20"]
 	path = External/three20
-	url = git@github.com:wwk/three20.git
+	url = git@github.com:tzwenn/three20.git
