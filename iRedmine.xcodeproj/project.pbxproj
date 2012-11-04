@@ -56,7 +56,6 @@
 		02A154F61349C16D007A061B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A154F51349C16D007A061B /* QuartzCore.framework */; };
 		02A8B04C0F98D6830077AB7F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A8B04B0F98D6830077AB7F /* Icon.png */; };
 		02C7769F11B6B1C900F10BC3 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7769E11B6B1C900F10BC3 /* Login.m */; };
-		02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CD7AAD12A56C2100841B5A /* iAd.framework */; };
 		02D86C590F8E75F400EB1658 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D86C580F8E75F400EB1658 /* NSDateAdditions.m */; };
 		02E18E4A138BB84200639A5D /* RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E18E49138BB84200639A5D /* RESTRequest.m */; };
 		02EB33201358AC8E00B18895 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02EB331F1358AC8E00B18895 /* StoreViewController.m */; };
@@ -352,7 +351,6 @@
 		02A8B04B0F98D6830077AB7F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		02C7769D11B6B1C900F10BC3 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
 		02C7769E11B6B1C900F10BC3 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
-		02CD7AAD12A56C2100841B5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		02D86C570F8E75E500EB1658 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
 		02D86C580F8E75F400EB1658 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
 		02E18E48138BB84200639A5D /* RESTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTRequest.h; sourceTree = "<group>"; };
@@ -401,7 +399,6 @@
 				02937CB810738AE30069E480 /* SystemConfiguration.framework in Frameworks */,
 				0231294110BEF6A50097675F /* CFNetwork.framework in Frameworks */,
 				0231295A10BEF6CF0097675F /* Security.framework in Frameworks */,
-				02CD7AAE12A56C2100841B5A /* iAd.framework in Frameworks */,
 				02A154D61349C139007A061B /* libThree20.a in Frameworks */,
 				02A154D71349C139007A061B /* libThree20Core.a in Frameworks */,
 				02A154D81349C13A007A061B /* libThree20Network.a in Frameworks */,
@@ -699,7 +696,6 @@
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
 				0231294010BEF6A50097675F /* CFNetwork.framework */,
 				0231295910BEF6CF0097675F /* Security.framework */,
-				02CD7AAD12A56C2100841B5A /* iAd.framework */,
 				02A154F51349C16D007A061B /* QuartzCore.framework */,
 				02A154701349C04F007A061B /* Three20.xcodeproj */,
 				02A1549F1349C058007A061B /* Three20Core.xcodeproj */,

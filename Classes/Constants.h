@@ -7,4 +7,3 @@
 //
 
 #define kInAppPurchaseIdentifierPro @"de.weisshuhn.iRedmine.Pro"
-#define kInAppPurchaseIdentifierAdsFree @"de.weisshuhn.iRedmine.AdsFree"
