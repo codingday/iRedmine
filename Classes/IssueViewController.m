@@ -128,10 +128,7 @@
 	
 	Account * account = [Account accountWithURL:[[self query] valueForKey:@"url"]];
 	if ([account username] && [account password]) {
-		NSString * addURL = @"iredmine://store";
-		NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
-		if (purchases && [purchases containsObject:kInAppPurchaseIdentifierPro])
-			addURL = [@"iredmine://issue/notes/add" stringByAddingQueryDictionary:[self query]];
+		NSString * addURL = [@"iredmine://issue/notes/add" stringByAddingQueryDictionary:[self query]];
 		[[[ds items] objectAtIndex:1] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New notes",@"") URL:addURL]];
 	}
 	

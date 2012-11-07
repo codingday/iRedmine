@@ -19,7 +19,7 @@
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		[self setTitle:NSLocalizedString(@"Store",@"")];
 		
-		NSSet * productSet = [NSSet setWithObjects:kInAppPurchaseIdentifierPro,nil];
+		NSSet * productSet = [NSSet setWithObjects:nil];
 		_request = [[[SKProductsRequest alloc] initWithProductIdentifiers:productSet] retain];
 		[_request setDelegate:self];
 		[_request start];

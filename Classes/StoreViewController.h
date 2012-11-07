@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseTableViewController.h"
-#import "Constants.h"
 
 @interface StoreViewController : BaseTableViewController <SKProductsRequestDelegate, SKPaymentTransactionObserver> {
 	SKProductsRequest * _request;

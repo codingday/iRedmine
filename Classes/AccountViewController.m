@@ -168,10 +168,7 @@
 		[[ds sections] addObject:NSLocalizedString(@"My Page",@"")]; 
 		[[ds items] addObject:myPage];
 
-		NSString * addURL = @"iredmine://store";
-		NSArray * purchases = [[NSUserDefaults standardUserDefaults] valueForKey:@"purchases"];
-		if (purchases && [purchases containsObject:kInAppPurchaseIdentifierPro])
-			addURL = [@"iredmine://project/add" stringByAddingQueryDictionary:[self query]];
+		NSString * addURL = [@"iredmine://project/add" stringByAddingQueryDictionary:[self query]];
 		[[ds items] addObject:[NSArray arrayWithObject:[TTTableButton itemWithText:NSLocalizedString(@"New project",@"") URL:addURL]]];
 		[[ds sections] addObject:@""]; 
 	}

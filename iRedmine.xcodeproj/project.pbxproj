@@ -357,7 +357,6 @@
 		02E18E49138BB84200639A5D /* RESTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequest.m; sourceTree = "<group>"; };
 		02EB331E1358AC8E00B18895 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
 		02EB331F1358AC8E00B18895 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
-		02EF8786135DDAD800803764 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		02F68725141622A300CEA7DC /* IssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueViewController.h; sourceTree = "<group>"; };
 		02F68726141622A300CEA7DC /* IssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueViewController.m; sourceTree = "<group>"; };
 		02F687DA14165CD900CEA7DC /* IssueNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueNotesViewController.h; sourceTree = "<group>"; };
@@ -627,7 +626,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				02EF8786135DDAD800803764 /* Constants.h */,
 				0278982A1349E91700F678AB /* iRedmineStyleSheet.h */,
 				0278982B1349E91700F678AB /* iRedmineStyleSheet.m */,
 				1D3623240D0F684500981E51 /* iRedmineAppDelegate.h */,
