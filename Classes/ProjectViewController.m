@@ -40,9 +40,8 @@
 		[_login setDidFailSelector:@selector(loginFailed:)];
 		
 		
-		_timeInfo = [[TimeInformationRequest alloc]
-					 initWithURL:[query valueForKey:@"url"]
-					 forProject:[query valueForKey:@"project"]];
+		_timeInfo = [TimeInformationRequest	withURL:[query valueForKey:@"url"]
+										 forProject:[query valueForKey:@"project"]];
 		_timeInfo.delegate = self;
 		
 		if (![_login start])
@@ -163,10 +162,10 @@
 								 projectName,
 								 [TTTableTextItem itemWithText:NSLocalizedString(@"Issues",@"")  URL:issuesURL],
 								 @"",
-								 [TTTableCaptionItem itemWithText:@"Loading" caption:NSLocalizedString(@"Spent",@"")],
-								 [TTTableCaptionItem itemWithText:@"Loading" caption:NSLocalizedString(@"Estimated",@"")],
-								 @"",
 								 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:projectURL],
+								 @"",
+								 [TTTableTextItem itemWithText:NSLocalizedString(@"Time management",@"") URL:@""],
+								 @"",
 								 [TTTableGrayTextItem itemWithText:[NSString stringWithFormat:TTLocalizedString(@"Last updated: %@", @""),updated]],
 								 nil];
 
@@ -178,17 +177,25 @@
 		NSString * addURL = [@"iredmine://issue/add" stringByAddingQueryDictionary:[self query]];
 		[[[ds items] objectAtIndex:1] addObject:[TTTableButton itemWithText:NSLocalizedString(@"New issue",@"") URL:addURL]];
 	}
-		
+
 	[self setDataSource:ds];
 	[_timeInfo start];
 }
 
 #pragma mark -
-#pragma mark Updated Estimated and Spend time
+#pragma mark Updated Estimated and Spent time
 
-- (void) setTimeSpend:(int)timeSpend andEstimated:(int)timeEstimated
+- (void) setTimeEstimated:(double)timeEstimated andSpent:(double)timeSpent
 {
-	NSLog(@"Spend %d and estimated %d\n", timeSpend, timeEstimated);
+	TTSectionedDataSource * ds = self.dataSource;
+	NSMutableArray * timeSection = [[ds items] objectAtIndex:2];
+	NSString * estimated   = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeEstimated];
+	NSString * spent   = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeSpent];
+	
+	
+	[timeSection addObject:[TTTableCaptionItem itemWithText:spent caption:NSLocalizedString(@"Spent",@"")]];
+	[timeSection addObject:[TTTableCaptionItem itemWithText:estimated caption:NSLocalizedString(@"Estimated",@"")]];
+	[self refresh];
 }
 
 #pragma mark -
@@ -202,10 +209,8 @@
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
 
-	if (_timeInfo) {
-		[_timeInfo cancel];
-		TT_RELEASE_SAFELY(_timeInfo);
-	}
+	[_timeInfo cancel];
+	TT_RELEASE_SAFELY(_timeInfo);
 
 	[super dealloc];
 }

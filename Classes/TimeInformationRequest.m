@@ -21,6 +21,11 @@
 @synthesize delegate=_delegate;
 @synthesize alreadyStarted = _alreadyStarted;
 
++ (id) withURL:(NSString *)baseUrlString forProject:(NSString *)project
+{
+	return [[self alloc] initWithURL:baseUrlString forProject:project];
+}
+
 - (id)initWithURL:(NSString *)baseUrlString forProject:(NSString*)project
 {
 	[super init];
@@ -92,8 +97,9 @@
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
 	
 	if (self.delegate) {
-		[self.delegate setTimeSpend:(int)0 andEstimated:(int)0];
+		[self.delegate setTimeEstimated:13.0 andSpent:0.5];
 	}
+	self.alreadyStarted = NO;
 }
 
 #pragma mark -

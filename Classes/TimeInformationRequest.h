@@ -11,8 +11,8 @@
 
 @protocol TimeInformationDelegate <NSObject>
 @required
-- (void) setTimeSpend:(int)timeSpend
-		 andEstimated:(int)timeEstimated;
+- (void) setTimeEstimated:(double)timeEstimated
+				 andSpent:(double)timeSpent;
 @end
 
 @interface TimeInformationRequest : NSObject {
@@ -22,7 +22,8 @@
 	BOOL started;
 }
 
-- (id)initWithURL:(NSString *)baseUrlString forProject:(NSString*)project;
++ (id)withURL:(NSString *)baseUrlString forProject:(NSString *) project;
+- (id)initWithURL:(NSString *)baseUrlString forProject:(NSString *)project;
 - (void)start;
 - (void)cancel;
 

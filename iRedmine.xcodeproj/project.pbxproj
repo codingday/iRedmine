@@ -374,8 +374,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		26D2CC2716471AE400F66119 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
 		26D2CC2916471AEB00F66119 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		26EDA7F4164E7F3B008AEBAE /* TimeInformationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeInformationRequest.h; path = Classes/TimeInformationRequest.h; sourceTree = "<group>"; };
-		26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeInformationRequest.m; path = Classes/TimeInformationRequest.m; sourceTree = "<group>"; };
+		26EDA7F4164E7F3B008AEBAE /* TimeInformationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeInformationRequest.h; sourceTree = "<group>"; };
+		26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeInformationRequest.m; sourceTree = "<group>"; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* iRedmine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmine_Prefix.pch; sourceTree = "<group>"; };
 		28C286DF0D94DF7D0034E888 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsViewController.h; sourceTree = "<group>"; };
@@ -629,6 +629,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				26EDA7F4164E7F3B008AEBAE /* TimeInformationRequest.h */,
+				26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */,
 				0278982A1349E91700F678AB /* iRedmineStyleSheet.h */,
 				0278982B1349E91700F678AB /* iRedmineStyleSheet.m */,
 				1D3623240D0F684500981E51 /* iRedmineAppDelegate.h */,
@@ -652,8 +654,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				26EDA7F4164E7F3B008AEBAE /* TimeInformationRequest.h */,
-				26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */,
 				0231292010BEF5E90097675F /* External */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
