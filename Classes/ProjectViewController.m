@@ -39,6 +39,12 @@
 		[_login setDidFinishSelector:@selector(loginFinished:)];
 		[_login setDidFailSelector:@selector(loginFailed:)];
 		
+		
+		_timeInfo = [[TimeInformationRequest alloc]
+					 initWithURL:[query valueForKey:@"url"]
+					 forProject:[query valueForKey:@"project"]];
+		_timeInfo.delegate = self;
+		
 		if (![_login start])
 			[_request send];
 	}
@@ -157,8 +163,10 @@
 								 projectName,
 								 [TTTableTextItem itemWithText:NSLocalizedString(@"Issues",@"")  URL:issuesURL],
 								 @"",
-								 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:projectURL],
+								 [TTTableCaptionItem itemWithText:@"Loading" caption:NSLocalizedString(@"Spent",@"")],
+								 [TTTableCaptionItem itemWithText:@"Loading" caption:NSLocalizedString(@"Estimated",@"")],
 								 @"",
+								 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:projectURL],
 								 [TTTableGrayTextItem itemWithText:[NSString stringWithFormat:TTLocalizedString(@"Last updated: %@", @""),updated]],
 								 nil];
 
@@ -172,6 +180,15 @@
 	}
 		
 	[self setDataSource:ds];
+	[_timeInfo start];
+}
+
+#pragma mark -
+#pragma mark Updated Estimated and Spend time
+
+- (void) setTimeSpend:(int)timeSpend andEstimated:(int)timeEstimated
+{
+	NSLog(@"Spend %d and estimated %d\n", timeSpend, timeEstimated);
 }
 
 #pragma mark -
@@ -184,6 +201,11 @@
 	
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
+
+	if (_timeInfo) {
+		[_timeInfo cancel];
+		TT_RELEASE_SAFELY(_timeInfo);
+	}
 
 	[super dealloc];
 }

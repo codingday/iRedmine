@@ -15,11 +15,15 @@
 #import "Login.h"
 #import "AtomFeed.h"
 #import "CSRegex.h"
+#import "TimeInformationRequest.h"
 
-@interface ProjectViewController : BaseTableViewController {
+@interface ProjectViewController : BaseTableViewController <TimeInformationDelegate> {
 	Login * _login;
 	RESTRequest * _request;
 	AtomFeed * _atomFeed;
+	
+	TimeInformationRequest * _timeInfo;
 }
+
 
 @end

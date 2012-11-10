@@ -70,6 +70,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		26D2CC2816471AE400F66119 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D2CC2716471AE400F66119 /* libz.1.dylib */; };
 		26D2CC2A16471AEB00F66119 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26D2CC2916471AEB00F66119 /* libxml2.dylib */; };
+		26EDA7F6164E7F3B008AEBAE /* TimeInformationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28C286E10D94DF7D0034E888 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* AccountsViewController.m */; };
 		F8FAA3B512A40C390001996C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8FAA3A712A40C390001996C /* Default@2x.png */; };
@@ -373,6 +374,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		26D2CC2716471AE400F66119 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
 		26D2CC2916471AEB00F66119 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		26EDA7F4164E7F3B008AEBAE /* TimeInformationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeInformationRequest.h; path = Classes/TimeInformationRequest.h; sourceTree = "<group>"; };
+		26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeInformationRequest.m; path = Classes/TimeInformationRequest.m; sourceTree = "<group>"; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* iRedmine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRedmine_Prefix.pch; sourceTree = "<group>"; };
 		28C286DF0D94DF7D0034E888 /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsViewController.h; sourceTree = "<group>"; };
@@ -649,6 +652,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				26EDA7F4164E7F3B008AEBAE /* TimeInformationRequest.h */,
+				26EDA7F5164E7F3B008AEBAE /* TimeInformationRequest.m */,
 				0231292010BEF5E90097675F /* External */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -1035,6 +1040,7 @@
 				02F68727141622A300CEA7DC /* IssueViewController.m in Sources */,
 				02F687DC14165CD900CEA7DC /* IssueNotesViewController.m in Sources */,
 				022BE3B7142A465900014D95 /* NSURLRequestAdditions.m in Sources */,
+				26EDA7F6164E7F3B008AEBAE /* TimeInformationRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
