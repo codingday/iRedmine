@@ -6,21 +6,29 @@
 //
 
 #import "TimeInformationRequest.h"
-#import "Account.h"
+#import "RESTRequest.h"
 
 @interface TimeInformationRequest ()
 
 - (void) didFail;
-- (void) finishWithEstimated:(double)estimated andSpent:(double)spent;
+- (void) sendOff;
 
+@property (nonatomic) double estimated;
+@property (nonatomic) double spent;
 @property (nonatomic) BOOL alreadyStarted;
+@property (nonatomic, retain, readonly) NSString * requestBaseUrl;
+@property (nonatomic, strong) RESTRequest * request;
+@property (nonatomic) int pendingIssues;
 
 @end
 
 @implementation TimeInformationRequest
 
-@synthesize delegate=_delegate;
+@synthesize requestBaseUrl = _requestBaseUrl;
+@synthesize delegate = _delegate;
 @synthesize alreadyStarted = _alreadyStarted;
+@synthesize request = _request;
+@synthesize pendingIssues = _pendingIssues;
 
 + (id) withURL:(NSString *)baseUrlString forProject:(NSString *)project
 {
@@ -30,15 +38,14 @@
 - (id)initWithURL:(NSString *)baseUrlString forProject:(NSString*)project
 {
 	[super init];
-	NSURL * url = [NSURL URLWithString: baseUrlString];
+	_requestBaseUrl = [baseUrlString retain];
+	
 	NSString * URLString = [baseUrlString stringByAppendingFormat:
 							@"issues.xml?project_id=%@",project];
 	
 
-	_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
-	[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
-	
-	self.alreadyStarted = NO;
+	self.request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
+	[self.request setCachePolicy:TTURLRequestCachePolicyNoCache];
 	
 	return self;
 }
@@ -48,20 +55,22 @@
 	if (self.alreadyStarted)
 		return;
 
-	[_request send];
+	self.alreadyStarted = YES;
+	[self.request send];
 }
 
 - (void)cancel
 {
-	[_request cancel];
-	TT_RELEASE_SAFELY(_request);
+	[self.request cancel];
 }
 
-- (void) finishWithEstimated:(double)estimated andSpent:(double)spent
+- (void) sendOff
 {
 	if (self.delegate) {
-		[self.delegate setTimeEstimated:estimated andSpent:spent];
+		[self.delegate setTimeEstimated:self.estimated andSpent:self.spent];
 	}
+	self.estimated = 0.0;
+	self.spent = 0.0;
 	self.alreadyStarted = NO;
 }
 
@@ -73,24 +82,43 @@
 #pragma mark -
 #pragma mark Request delegate
 
-- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error {
+- (void)request:(TTURLRequest*)request didFailLoadWithError:(NSError*)error
+{
 	[self didFail];
 }
 
-- (void)requestDidFinishLoad:(TTURLRequest*)request {
+- (void)requestDidFinishLoad:(TTURLRequest*)request
+{
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
 	
-	double estimated = 0.0;
-	double spent = 0.0;
-	
 	NSArray * issues = [dict valueForKey:@"___Array___" ];
-	if (issues && [issues count]) {
-		for (NSDictionary * issue in issues) {
-			estimated += [[issue valueForKeyPath:@"estimated_hours.___Entity_Value___"] doubleValue];
-			spent += [[issue valueForKeyPath:@"spent_hours.___Entity_Value___"] doubleValue];
-		}
+	if (!issues || ![issues count]) {
+		[self sendOff];
+		return;
 	}
-	[self finishWithEstimated:estimated andSpent:spent];
+	
+	self.pendingIssues = [issues count];
+	
+	for (NSDictionary * issue in issues) {
+		int issueId = [[issue valueForKeyPath:@"id.___Entity_Value___"] intValue];
+		
+		// Get a somewhat more detailed issue that containes spent_hours
+		[IssueInfoRequest issue:issueId at:[self requestBaseUrl] for:self];
+	}
+}
+
+#pragma mark -
+#pragma mark Issue Info Request Delegate
+
+- (void) receiveIssue:(NSDictionary *)moreDetailedIssue
+{
+	self.pendingIssues--;
+
+	self.estimated += [[moreDetailedIssue valueForKeyPath:@"estimated_hours.___Entity_Value___"] doubleValue];
+	self.spent += [[moreDetailedIssue valueForKeyPath:@"spent_hours.___Entity_Value___"] doubleValue];
+	
+	if (self.pendingIssues <= 0 && self.alreadyStarted)
+		[self sendOff];
 }
 
 #pragma mark -

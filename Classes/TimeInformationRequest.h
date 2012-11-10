@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RESTRequest.h"
+#import "IssueInfoRequest.h"
 
 @protocol TimeInformationDelegate <NSObject>
 @required
@@ -14,10 +14,7 @@
 				 andSpent:(double)timeSpent;
 @end
 
-@interface TimeInformationRequest : NSObject {
-	RESTRequest * _request;	
-	BOOL started;
-}
+@interface TimeInformationRequest : NSObject <IssueInfoDelegate>
 
 + (id)withURL:(NSString *)baseUrlString forProject:(NSString *) project;
 - (id)initWithURL:(NSString *)baseUrlString forProject:(NSString *)project;
