@@ -7,7 +7,6 @@
 
 #import <Foundation/Foundation.h>
 #import "RESTRequest.h"
-#import "Login.h"
 
 @protocol TimeInformationDelegate <NSObject>
 @required
@@ -16,9 +15,7 @@
 @end
 
 @interface TimeInformationRequest : NSObject {
-	RESTRequest * _request;
-	Login * _login;
-	
+	RESTRequest * _request;	
 	BOOL started;
 }
 

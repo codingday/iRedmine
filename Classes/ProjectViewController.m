@@ -165,6 +165,8 @@
 								 [TTTableButton itemWithText:NSLocalizedString(@"Show in web view",@"") URL:projectURL],
 								 @"",
 								 [TTTableTextItem itemWithText:NSLocalizedString(@"Time management",@"") URL:@""],
+								 [TTTableCaptionItem itemWithText:NSLocalizedString(@"Loading",@"") caption:NSLocalizedString(@"Spent",@"")],
+								 [TTTableCaptionItem itemWithText:NSLocalizedString(@"Loading",@"") caption:NSLocalizedString(@"Estimated",@"")],
 								 @"",
 								 [TTTableGrayTextItem itemWithText:[NSString stringWithFormat:TTLocalizedString(@"Last updated: %@", @""),updated]],
 								 nil];
@@ -192,9 +194,9 @@
 	NSString * estimated   = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeEstimated];
 	NSString * spent   = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeSpent];
 	
-	
-	[timeSection addObject:[TTTableCaptionItem itemWithText:spent caption:NSLocalizedString(@"Spent",@"")]];
-	[timeSection addObject:[TTTableCaptionItem itemWithText:estimated caption:NSLocalizedString(@"Estimated",@"")]];
+	[[timeSection objectAtIndex:1] setText:spent];
+	[[timeSection objectAtIndex:2] setText:estimated];
+
 	[self refresh];
 }
 

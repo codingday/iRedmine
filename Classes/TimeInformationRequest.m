@@ -11,6 +11,7 @@
 @interface TimeInformationRequest ()
 
 - (void) didFail;
+- (void) finishWithEstimated:(double)estimated andSpent:(double)spent;
 
 @property (nonatomic) BOOL alreadyStarted;
 
@@ -37,14 +38,6 @@
 	_request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 	[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 	
-	Account * account = [Account accountWithURL:[url absoluteString]];
-	_login = [[Login loginWithURL:url
-						 username:[account username]
-						 password:[account password]] retain];
-	[_login setDelegate:self];
-	[_login setDidFinishSelector:@selector(loginFinished:)];
-	[_login setDidFailSelector:@selector(loginFailed:)];
-	
 	self.alreadyStarted = NO;
 	
 	return self;
@@ -54,36 +47,27 @@
 {
 	if (self.alreadyStarted)
 		return;
-		
-	self.alreadyStarted = YES;
-	if (![_login start])
-		[_request send];
+
+	[_request send];
 }
 
 - (void)cancel
 {
-	[_login setDelegate:nil];
-	[_login cancel];
-	TT_RELEASE_SAFELY(_login);
-	
 	[_request cancel];
 	TT_RELEASE_SAFELY(_request);
 }
 
+- (void) finishWithEstimated:(double)estimated andSpent:(double)spent
+{
+	if (self.delegate) {
+		[self.delegate setTimeEstimated:estimated andSpent:spent];
+	}
+	self.alreadyStarted = NO;
+}
+
 - (void) didFail
 {
-	
-}
-
-#pragma mark -
-#pragma mark Login selectors
-
-- (void)loginFinished:(Login*)login {
-	[_request send];
-}
-
-- (void)loginFailed:(Login*)login {
-	[self didFail];
+	NSLog(@"Failed to load estimated and spent time");
 }
 
 #pragma mark -
@@ -96,10 +80,17 @@
 - (void)requestDidFinishLoad:(TTURLRequest*)request {
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
 	
-	if (self.delegate) {
-		[self.delegate setTimeEstimated:13.0 andSpent:0.5];
+	double estimated = 0.0;
+	double spent = 0.0;
+	
+	NSArray * issues = [dict valueForKey:@"___Array___" ];
+	if (issues && [issues count]) {
+		for (NSDictionary * issue in issues) {
+			estimated += [[issue valueForKeyPath:@"estimated_hours.___Entity_Value___"] doubleValue];
+			spent += [[issue valueForKeyPath:@"spent_hours.___Entity_Value___"] doubleValue];
+		}
 	}
-	self.alreadyStarted = NO;
+	[self finishWithEstimated:estimated andSpent:spent];
 }
 
 #pragma mark -
