@@ -12,6 +12,7 @@
 
 - (void) didFail;
 - (void) sendOff;
+- (void) reset;
 
 @property (nonatomic) double estimated;
 @property (nonatomic) double spent;
@@ -69,6 +70,11 @@
 	if (self.delegate) {
 		[self.delegate setTimeEstimated:self.estimated andSpent:self.spent];
 	}
+}
+
+- (void) reset
+{
+	self.pendingIssues = 0;
 	self.estimated = 0.0;
 	self.spent = 0.0;
 	self.alreadyStarted = NO;
@@ -116,9 +122,11 @@
 
 	self.estimated += [[moreDetailedIssue valueForKeyPath:@"estimated_hours.___Entity_Value___"] doubleValue];
 	self.spent += [[moreDetailedIssue valueForKeyPath:@"spent_hours.___Entity_Value___"] doubleValue];
-	
+
+	[self sendOff];
+
 	if (self.pendingIssues <= 0 && self.alreadyStarted)
-		[self sendOff];
+		[self reset];
 }
 
 #pragma mark -

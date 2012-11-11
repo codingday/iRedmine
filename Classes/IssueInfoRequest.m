@@ -55,7 +55,7 @@
 
 - (void) didFail
 {
-	
+	[self dealloc];
 }
 
 #pragma mark -
@@ -71,6 +71,7 @@
 	NSDictionary * issue = [(TTURLXMLResponse *)[request response] rootObject];
 	if (issue && self.delegate)
 		[self.delegate receiveIssue:issue];
+	[self dealloc];
 }
 
 #pragma mark -
