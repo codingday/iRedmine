@@ -47,6 +47,7 @@
 
 	self.request = [[RESTRequest requestWithURL:URLString delegate:self] retain];
 	[self.request setCachePolicy:TTURLRequestCachePolicyNoCache];
+	[self.request setHttpMethod:@"GET"];
 	
 	return self;
 }
