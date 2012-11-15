@@ -26,9 +26,9 @@
 - (id)initWithURL:(NSString*)url username:(NSString*)user password:(NSString*)pwd {
 	if (self = [super init]) {
 		[self setURLString:url];
-		if (![user isEmptyOrWhitespace])
+		if (TTIsStringWithAnyText(user))
 			[self setUsername:user];
-		if (![pwd isEmptyOrWhitespace])
+		if (TTIsStringWithAnyText(pwd))
 			[self setPassword:pwd];
 	}
 	return self;
@@ -52,7 +52,7 @@
 	NSURL * URL = [NSURL URLWithString:_URLString];
 	if (!URL) return;
 	
-	if (_username && ![_username isEmptyOrWhitespace] && _password && ![_password isEmptyOrWhitespace]) {
+	if (_username && TTIsStringWithAnyText(_username) && _password && TTIsStringWithAnyText(_password)) {
 		NSURLProtectionSpace * protectionSpace = [NSURLProtectionSpace protectionSpaceWithURL:URL];
 		NSURLCredentialStorage * storage = [NSURLCredentialStorage sharedCredentialStorage];	
 		NSURLCredential * credential = [NSURLCredential credentialWithUser:_username password:_password persistence:NSURLCredentialPersistencePermanent];

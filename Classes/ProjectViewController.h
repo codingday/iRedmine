@@ -17,7 +17,7 @@
 #import "CSRegex.h"
 #import "TimeInformationRequest.h"
 
-@interface ProjectViewController : BaseTableViewController <TimeInformationDelegate> {
+@interface ProjectViewController : BaseTableViewController <TTURLRequestDelegate, TimeInformationDelegate> {
 	Login * _login;
 	RESTRequest * _request;
 	AtomFeed * _atomFeed;

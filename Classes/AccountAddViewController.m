@@ -88,7 +88,7 @@
 - (IBAction)done:(id)sender {	
 	NSURL * url = [NSURL URLWithString:[_urlField text]];
 	
-	if ([[_urlField text] isEmptyOrWhitespace] || !url) {
+	if (!TTIsStringWithAnyText([_urlField text]) || !url) {
 		[_urlField becomeFirstResponder];
 		return [[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Input error",@"") 
 											message:NSLocalizedString(@"Please enter a valid host",@"") 

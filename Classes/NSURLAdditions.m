@@ -17,7 +17,7 @@
 		[new appendFormat:@":%@",[self port]];
 	
 	NSString * path = [NSString pathWithComponents:[[self path] pathComponents]];
-	if ([path isEmptyOrWhitespace]) {
+	if (!TTIsStringWithAnyText(path)) {
 		[new appendString:@"/"];
 		return new;
 	}
