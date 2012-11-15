@@ -162,7 +162,7 @@
 								 [TTTableGrayTextItem itemWithText:[NSString stringWithFormat:TTLocalizedString(@"Last updated: %@", @""),updated]],
 								 nil];
 
-	if (description && ![description isEmptyOrWhitespace])		
+	if (description && TTIsStringWithAnyText(description))
 		[[[ds items] objectAtIndex:0] insertObject:[TTTableLongTextItem itemWithText:description] atIndex:0];
 	
 	Account * account = [Account accountWithURL:[[self query] valueForKey:@"url"]];

@@ -115,7 +115,7 @@
 								 [TTTableCaptionItem itemWithText:dueDate caption:NSLocalizedString(@"Due date",@"")],
 								 [TTTableCaptionItem itemWithText:spent caption:NSLocalizedString(@"Spent",@"")],
 								 [TTTableCaptionItem itemWithText:estimated caption:NSLocalizedString(@"Estimated",@"")],
-								 [TTTableControlItem itemWithCaption:NSLocalizedString(@"Done",@"") control:progressBar],
+								 [TTTableControlItem itemWithCaption:NSLocalizedString(@"Done",@"") control:(UIControl*)progressBar],
 								 @"",
 								 [TTTableCaptionItem itemWithText:created caption:NSLocalizedString(@"Created",@"")],
 								 [TTTableCaptionItem itemWithText:author caption:NSLocalizedString(@"Author",@"")],
@@ -123,7 +123,7 @@
 								 [TTTableGrayTextItem itemWithText:[NSString stringWithFormat:TTLocalizedString(@"Last updated: %@", @""),updated]],
 								 nil];
 	
-	if (description && ![description isEmptyOrWhitespace])		
+	if (description && TTIsStringWithAnyText(description))
 		[[[ds items] objectAtIndex:0] insertObject:[TTTableLongTextItem itemWithText:description] atIndex:0];
 	
 	Account * account = [Account accountWithURL:[[self query] valueForKey:@"url"]];
