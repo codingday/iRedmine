@@ -61,7 +61,7 @@
 
 - (IBAction)cancel:(id)sender {	
 	[_request cancel];
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)reloadData:(id)sender {

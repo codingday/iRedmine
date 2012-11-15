@@ -112,7 +112,7 @@
 
 - (IBAction)cancel:(id)sender {	
 	if ([[[self navigationController] topViewController] isEqual:self])
-		[self dismissModalViewControllerAnimated:YES];
+		[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)save:(id)sender {

@@ -110,7 +110,7 @@
 - (IBAction)cancel:(id)sender {	
 	[_login cancel];
 	[_request cancel];
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - 
