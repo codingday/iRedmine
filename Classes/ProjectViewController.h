@@ -16,7 +16,7 @@
 #import "AtomFeed.h"
 #import "CSRegex.h"
 
-@interface ProjectViewController : BaseTableViewController {
+@interface ProjectViewController : BaseTableViewController <TTURLRequestDelegate> {
 	Login * _login;
 	RESTRequest * _request;
 	AtomFeed * _atomFeed;

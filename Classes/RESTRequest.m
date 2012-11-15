@@ -19,6 +19,11 @@
 
 @synthesize dictionary=_dictionary;
 
++ (RESTRequest*)requestWithURL:(NSString*)URL delegate:(id <TTURLRequestDelegate>)delegate
+{
+	return [[[self alloc] initWithURL:URL delegate:delegate] autorelease];
+}
+
 #pragma mark -
 #pragma mark Private methods
 

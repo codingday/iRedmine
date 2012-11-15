@@ -17,5 +17,7 @@
 }
 
 @property(nonatomic, retain) NSDictionary * dictionary;
++ (RESTRequest*)requestWithURL:(NSString*)URL delegate:(id <TTURLRequestDelegate>)delegate;
+
 
 @end
