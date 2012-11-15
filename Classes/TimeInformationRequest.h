@@ -12,6 +12,7 @@
 @required
 - (void) setTimeEstimated:(double)timeEstimated
 				 andSpent:(double)timeSpent;
+- (void) fetchingTimeInfoFailed;
 @end
 
 @interface TimeInformationRequest : NSObject <TTURLRequestDelegate, IssueInfoDelegate>

@@ -8,7 +8,15 @@
 
 #import "ProjectViewController.h"
 
+@interface ProjectViewController ()
+
+@property (nonatomic) BOOL didAlreadyHandleReceive;
+
+@end
+
 @implementation ProjectViewController
+
+@synthesize didAlreadyHandleReceive = _didAlreadyHandleReceive;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -142,7 +150,12 @@
 													image:nil]];
 }
 
-- (void)requestDidFinishLoad:(TTURLRequest*)request {	
+- (void)requestDidFinishLoad:(TTURLRequest*)request
+{
+	if (self.didAlreadyHandleReceive)
+		return;
+	self.didAlreadyHandleReceive = YES;
+	
 	NSDictionary * dict = [(TTURLXMLResponse *)[request response] rootObject];
 	if (!dict) return;
 	
@@ -187,16 +200,32 @@
 #pragma mark -
 #pragma mark Updated Estimated and Spent time
 
-- (void) setTimeEstimated:(double)timeEstimated andSpent:(double)timeSpent
+- (NSMutableArray *) timeSection
 {
 	TTSectionedDataSource * ds = self.dataSource;
-	NSMutableArray * timeSection = [[ds items] objectAtIndex:2];
-	NSString * estimated   = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeEstimated];
-	NSString * spent   = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeSpent];
-	
+	return [[ds items] objectAtIndex:2];
+}
+
+- (void) setTimeEstimated:(double)timeEstimated andSpent:(double)timeSpent
+{
+	NSString * estimated = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeEstimated];
+	NSString * spent = [NSString stringWithFormat:NSLocalizedString(@"%0.1f hours",@""),timeSpent];
+
+	NSMutableArray * timeSection = [self timeSection];
 	[[timeSection objectAtIndex:1] setText:spent];
 	[[timeSection objectAtIndex:2] setText:estimated];
 
+	[self refresh];
+}
+
+- (void) fetchingTimeInfoFailed
+{
+	NSString * failedText = NSLocalizedString(@"Failed", @"");
+
+	NSMutableArray * timeSection = [self timeSection];
+	[[timeSection objectAtIndex:1] setText:failedText];
+	[[timeSection objectAtIndex:2] setText:failedText];
+	
 	[self refresh];
 }
 

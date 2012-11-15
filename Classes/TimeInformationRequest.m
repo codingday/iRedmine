@@ -16,7 +16,6 @@
 
 @property (nonatomic) double estimated;
 @property (nonatomic) double spent;
-@property (nonatomic) BOOL alreadyStarted;
 @property (nonatomic, retain, readonly) NSString * requestBaseUrl;
 @property (nonatomic, strong) RESTRequest * request;
 @property (nonatomic) int pendingIssues;
@@ -27,7 +26,6 @@
 
 @synthesize requestBaseUrl = _requestBaseUrl;
 @synthesize delegate = _delegate;
-@synthesize alreadyStarted = _alreadyStarted;
 @synthesize request = _request;
 @synthesize pendingIssues = _pendingIssues;
 
@@ -54,10 +52,6 @@
 
 - (void)start
 {
-	if (self.alreadyStarted)
-		return;
-
-	self.alreadyStarted = YES;
 	[self.request send];
 }
 
@@ -78,12 +72,14 @@
 	self.pendingIssues = 0;
 	self.estimated = 0.0;
 	self.spent = 0.0;
-	self.alreadyStarted = NO;
 }
 
 - (void) didFail
 {
 	NSLog(@"Failed to load estimated and spent time");
+	if (self.delegate) {
+		[self.delegate fetchingTimeInfoFailed];
+	}
 }
 
 #pragma mark -
@@ -126,7 +122,7 @@
 
 	[self sendOff];
 
-	if (self.pendingIssues <= 0 && self.alreadyStarted)
+	if (self.pendingIssues <= 0 /* && self.alreadyStarted */)
 		[self reset];
 }
 
