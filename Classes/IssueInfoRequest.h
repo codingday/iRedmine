@@ -12,11 +12,11 @@
 - (void) receiveIssue:(NSDictionary *)issue;
 @end
 
-@interface IssueInfoRequest : NSObject
+@interface IssueInfoRequest: NSObject <TTURLRequestDelegate>
 
-@property(assign) id <IssueInfoDelegate> delegate;
+@property(assign) id <TTURLRequestDelegate, IssueInfoDelegate> delegate;
 
-+ (id) issue:(int)issueNumber at:(NSString *)baseUrlString for:(id<IssueInfoDelegate>)delegate;
++ (id) issue:(int)issueNumber at:(NSString *)baseUrlString for:(id<TTURLRequestDelegate, IssueInfoDelegate>)delegate;
 
 - (id) initForIssue:(int)issueNumber at:(NSString *)baseUrlString;
 

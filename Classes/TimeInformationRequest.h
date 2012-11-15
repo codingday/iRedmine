@@ -14,7 +14,7 @@
 				 andSpent:(double)timeSpent;
 @end
 
-@interface TimeInformationRequest : NSObject <IssueInfoDelegate>
+@interface TimeInformationRequest : NSObject <TTURLRequestDelegate, IssueInfoDelegate>
 
 + (id)withURL:(NSString *)baseUrlString forProject:(NSString *) project;
 - (id)initWithURL:(NSString *)baseUrlString forProject:(NSString *)project;

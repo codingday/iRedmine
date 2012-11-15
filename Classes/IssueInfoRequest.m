@@ -22,7 +22,7 @@
 @synthesize delegate = _delegate;
 @synthesize request = _request;
 
-+ (id) issue:(int)issueNumber at:(NSString *)baseUrlString for:(id<IssueInfoDelegate>)delegate
++ (id) issue:(int)issueNumber at:(NSString *)baseUrlString for:(id<TTURLRequestDelegate, IssueInfoDelegate>)delegate
 {
 	IssueInfoRequest * issueRequest = [[self alloc] initForIssue:issueNumber
 															  at:baseUrlString];
