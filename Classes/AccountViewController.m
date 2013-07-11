@@ -17,7 +17,7 @@
 - (id) initWithNavigatorURL:(NSURL *)URL query:(NSDictionary *)query{
 	if (self = [super initWithNavigatorURL:URL query:query]) {
 		NSURL * url = [NSURL URLWithString:[query valueForKey:@"url"]];
-		[self setTitle:[url host]];
+		[self setTitle:[query valueForKey:@"username"]];
 				
 		// Legacy support
 		_atomFeed = [[[AtomFeed alloc] initWithURL:[url absoluteString] path:@"projects" xPath:@"//a[@class='atom' or @class='feed']"] retain];
@@ -30,6 +30,7 @@
 		[_request setCachePolicy:TTURLRequestCachePolicyNoCache];
 
 		Account * account = [Account accountWithURL:[url absoluteString]];
+        [self setTitle:[account username]];
 		_login = [[Login loginWithURL:url username:[account username] password:[account password]] retain];
 		[_login setDelegate:self];
 		[_login setDidFinishSelector:@selector(loginFinished:)];
