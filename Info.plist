@@ -43,10 +43,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>DemoURLs</key>
-	<array>
-		<string>http://demo.redmine.org/</string>
-		<string>http://www.redmine.org/</string>
-	</array>
+	<array/>
 	<key>RevisionCellTypes</key>
 	<array>
 		<string>revision</string>
